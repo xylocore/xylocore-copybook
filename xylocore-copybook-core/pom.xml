@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.xylocore.copybook</groupId>
+  <artifactId>copybook-core</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <name>Xylocore Copybook Core Library</name>
+
+  <parent>
+    <groupId>com.xylocore.copybook</groupId>
+    <artifactId>copybook-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </reporting>
+  
+  <build>
+
+    <resources>
+      <resource>
+        <directory>${basedir}/src/main/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+          <include>**/*.properties</include>
+        </includes>
+      </resource>
+    </resources>
+
+    <plugins>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>target/generated-sources/antlr4</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+ 
+      <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>4.1</version>
+        <configuration>
+          <sourceDirectory>src/main/java</sourceDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <testFailureIgnore>true</testFailureIgnore>
+        </configuration>
+      </plugin>
+
+<!--
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antlr-plugin</artifactId>
+        <configuration>
+          <sourceDirectory>${basedir}/src/main/antlr</sourceDirectory>
+          <outputDirectory>${basedir}/src/main/generated-sources</outputDirectory>
+          <grammars>com/xylocore/commons/data/copybook/parser/Copybook.g</grammars>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+- ->
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>IPPFX7Gen</id>
+            <phase>generate-test-sources</phase>
+            <configuration>
+              <tasks>
+                <java classname="com.xylocore.commons.data.copybook.generator.CopybookClassGeneratorApplication">
+                  <arg value="-metafile"/>
+                  <arg value="${basedir}/src/test/copybooks/ippfx7.cpymeta"/>
+                  <classpath>
+                    <path refid="maven.compile.classpath"/>
+                    <path refid="maven.runtime.classpath"/>
+                    <path refid="maven.test.classpath"/>
+                  </classpath>
+                </java>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+<!- -
+          <execution>
+            <id>Reuters</id>
+            <phase>generate-test-sources</phase>
+            <configuration>
+              <tasks>
+                <java classname="com.xylocore.commons.data.copybook.generator.CopybookClassGeneratorApplication">
+                  <arg value="-metafile"/>
+                  <arg value="c:/workspace/HistoricalPrices/src/main/copybooks/ReutersHistoricalPricingRecord.cpymeta"/>
+                  <classpath>
+                    <path refid="maven.compile.classpath"/>
+                    <path refid="maven.runtime.classpath"/>
+                    <path refid="maven.test.classpath"/>
+                  </classpath>
+                </java>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+- ->
+        </executions>
+      </plugin>
+-->
+    </plugins>
+  </build>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4</artifactId>
+      <version>4.1</version>
+      <scope>compile</scope>
+    </dependency>
+<!--
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <version>1.3</version>
+      <scope>compile</scope>
+    </dependency>
+-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+      <scope>compile</scope>
+    </dependency>
+<!--
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+-->
+    <dependency>
+      <groupId>org.codehaus.castor</groupId>
+      <artifactId>castor</artifactId>
+      <version>1.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+</project>

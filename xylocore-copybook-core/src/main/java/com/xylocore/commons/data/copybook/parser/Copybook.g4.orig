@@ -1,0 +1,1249 @@
+header
+{
+    package com.xylocore.commons.data.copybook.parser;
+
+    import java.io.InputStream;
+    import java.math.BigDecimal;
+    import java.util.ArrayList;
+    import java.util.Collections;
+    import java.util.Comparator;
+    import java.util.List;
+    import java.util.Map;
+    import java.util.TreeMap;
+
+    import antlr.ByteBuffer;
+    import antlr.TokenStreamSelector;
+    import antlr.TokenStreamRetryException;
+
+    import com.xylocore.commons.data.copybook.domain.AccessorMethodInfo;
+    import com.xylocore.commons.data.copybook.domain.CharacterLiteralType;
+    import com.xylocore.commons.data.copybook.domain.Copybook;
+    import com.xylocore.commons.data.copybook.domain.DataElement;
+    import com.xylocore.commons.data.copybook.domain.Element;
+    import com.xylocore.commons.data.copybook.domain.ElementProxy;
+    import com.xylocore.commons.data.copybook.domain.FillerElement;
+    import com.xylocore.commons.data.copybook.domain.HighValue;
+    import com.xylocore.commons.data.copybook.domain.ImplicitRecordInfo;
+    import com.xylocore.commons.data.copybook.domain.Level66Element;
+    import com.xylocore.commons.data.copybook.domain.Level88Element;
+    import com.xylocore.commons.data.copybook.domain.LowValue;
+    import com.xylocore.commons.data.copybook.domain.NoNameElement;
+    import com.xylocore.commons.data.copybook.domain.NullValue;
+    import com.xylocore.commons.data.copybook.domain.NumericValue;
+    import com.xylocore.commons.data.copybook.domain.QuoteValue;
+    import com.xylocore.commons.data.copybook.domain.SpaceValue;
+    import com.xylocore.commons.data.copybook.domain.StringValue;
+    import com.xylocore.commons.data.copybook.domain.Value;
+    import com.xylocore.commons.data.copybook.domain.ValueRange;
+    import com.xylocore.commons.data.copybook.domain.ZeroValue;
+    import com.xylocore.commons.data.copybook.domain.config.Environment;
+    import com.xylocore.commons.data.copybook.domain.config.MappingMetadata;
+    import com.xylocore.commons.data.copybook.parser.pic.PICLexer;
+    import com.xylocore.commons.data.copybook.parser.pic.PICLexerListener;
+    import com.xylocore.commons.data.copybook.parser.pic.PICToken;
+    import com.xylocore.commons.data.copybook.runtime.DataType;
+    import com.xylocore.commons.data.copybook.runtime.SignPosition;
+    import com.xylocore.commons.data.copybook.runtime.SignType;
+    import com.xylocore.commons.data.copybook.runtime.SyncPosition;
+    import com.xylocore.commons.data.copybook.runtime.UsageType;
+}
+
+
+
+
+class CopybookParser extends Parser;
+
+options
+{
+    k                           = 2;            // two token lookahead
+    exportVocab                 = Copybook;
+    codeGenMakeSwitchThreshold  = 2;            // Some optimizations
+    codeGenBitsetTestThreshold  = 3;
+    defaultErrorHandler         = false;        // Don't generate parser error handlers
+    buildAST                    = false;
+}
+
+
+tokens
+{
+    ARE                     = "ARE";
+    ASCENDING               = "ASCENDING";
+    BINARY                  = "BINARY";
+    BLANK                   = "BLANK";
+    BY                      = "BY";
+    CHARACTER               = "CHARACTER";
+    COMP                    = "COMP";
+    COMP_1                  = "COMP-1";
+    COMP_2                  = "COMP-2";
+    COMP_3                  = "COMP-3";
+    COMP_4                  = "COMP-4";
+    COMP_5                  = "COMP-5";
+    COMPUTATIONAL           = "COMPUTATIONAL";
+    COMPUTATIONAL_1         = "COMPUTATIONAL-1";
+    COMPUTATIONAL_2         = "COMPUTATIONAL-2";
+    COMPUTATIONAL_3         = "COMPUTATIONAL-3";
+    COMPUTATIONAL_4         = "COMPUTATIONAL-4";
+    COMPUTATIONAL_5         = "COMPUTATIONAL-5";
+    DATE                    = "DATE";
+    DEPENDING               = "DEPENDING";
+    DESCENDING              = "DESCENDING";
+    DISPLAY                 = "DISPLAY";
+    DISPLAY_1               = "DISPLAY-1";
+    DOT                     = ".";
+    EXTERNAL                = "EXTERNAL";
+    FILLER                  = "FILLER";
+    FORMAT                  = "FORMAT";
+    FUNCTION_POINTER        = "FUNCTION-POINTER";
+    GLOBAL                  = "GLOBAL";
+    GROUP_USAGE             = "GROUP-USAGE";
+    HIGH_VALUE              = "HIGH-VALUE";
+    HIGH_VALUES             = "HIGH-VALUES";
+    INDEX                   = "INDEX";
+    INDEXED                 = "INDEXED";
+    IS                      = "IS";
+    JUST                    = "JUST";
+    JUSTIFIED               = "JUSTIFIED";
+    KEY                     = "KEY";
+    LEADING                 = "LEADING";
+    LEFT                    = "LEFT";
+    LOW_VALUE               = "LOW-VALUE";
+    LOW_VALUES              = "LOW-VALUES";
+    NATIONAL                = "NATIONAL";
+    NATIVE                  = "NATIVE";
+    NULL                    = "NULL";
+    NULLS                   = "NULLS";
+    OBJECT                  = "OBJECT";
+    OCCURS                  = "OCCURS";
+    ON                      = "ON";
+    PACKED_DECIMAL          = "PACKED-DECIMAL";
+    PIC                     = "PIC";
+    PICTURE                 = "PICTURE";
+    POINTER                 = "POINTER";
+    PROCEDURE_POINTER       = "PROCEDURE-POINTER";
+    QUOTE                   = "QUOTE";
+    QUOTES                  = "QUOTES";
+    REDEFINES               = "REDEFINES";
+    REFERENCE               = "REFERENCE";
+    RENAMES                 = "RENAMES";
+    RIGHT                   = "RIGHT";
+    SEPARATE                = "SEPARATE";
+    SIGN                    = "SIGN";
+    SPACE                   = "SPACE";
+    SPACES                  = "SPACES";
+    SYNC                    = "SYNC";
+    SYNCHRONIZED            = "SYNCHRONIZED";
+    THROUGH                 = "THROUGH";
+    THRU                    = "THRU";
+    TIMES                   = "TIMES";
+    TO                      = "TO";
+    TRAILING                = "TRAILING";
+    USAGE                   = "USAGE";
+    VALUE                   = "VALUE";
+    VALUES                  = "VALUES";
+    WHEN                    = "WHEN";
+    ZERO                    = "ZERO";
+    ZEROES                  = "ZEROES";
+    ZEROS                   = "ZEROS";
+    CHARACTER_LITERAL;
+    FLOATING_POINT_LITERAL;
+    INTEGER_LITERAL;
+    PICTURE_STRING;
+    WORD;
+}
+
+
+{
+    //
+    // Members
+    //
+
+
+    private Environment            environment;
+    private Copybook               copybook;
+    private Element                lastElement;
+    private TokenStreamSelector    selector;
+
+
+
+
+    //
+    // Some local code
+    //
+
+
+    /**
+     * FILLIN
+     *
+     * @param       aInputStream
+     * @param       aRightMarginLimit
+     *
+     * @return
+     */
+    public static CopybookParser create( InputStream   aInputStream,
+                                         int           aRightMarginLimit )
+    {
+        TokenStreamSelector mySelector      = new TokenStreamSelector();
+        CopybookLexer       myCopybookLexer = CopybookLexer.create( aInputStream, aRightMarginLimit );
+
+        mySelector.addInputStream( myCopybookLexer, "copybook" );
+        mySelector.select( "copybook" );
+
+        myCopybookLexer.setSelector( mySelector );
+
+        CopybookParser myParser = new CopybookParser( mySelector );
+        myParser.selector = mySelector;
+
+        return myParser;
+    }
+
+
+    /**
+     * FILLIN
+     *
+     * @param       aElement
+     */
+    private void addElement( Element aElement )
+    {
+        assert aElement != null;
+        
+        // Is this the first element processed?
+        if ( lastElement == copybook )
+        {
+            // Is the first element a non-record level element?
+            if ( aElement.getLevel() != 1 && aElement.getLevel() != 77 )
+            {
+                // Is there an implicit record name available?
+                String myImplicitRecordName = environment.getImplicitRecordName();
+                if ( myImplicitRecordName == null )
+                {
+                    // TODO: implicit record information is required whenever the first element is not a record-level element (1 or 77)
+                    throw new RuntimeException( "an implicit record name is required but not available" );
+                }
+                
+                addElement( new DataElement( myImplicitRecordName, 1 ) );
+            }
+        }
+
+        while ( aElement.getLevel() < lastElement.getLevel() )
+        {
+            lastElement = lastElement.getParent();
+        }
+
+        Element myParent = ( aElement.getLevel() == lastElement.getLevel() ) ? lastElement.getParent() : lastElement;
+        myParent.addChild( aElement );
+
+        lastElement = aElement;
+    }
+    
+    
+    /**
+     * FILLIN
+     *
+     * @param       aElement
+     */
+    private void addLevel88Element( Level88Element aElement )
+    {
+        assert aElement != null;
+        
+        ((DataElement) lastElement).addLevel88Element( aElement );
+    }
+
+
+    /**
+     * FILLIN
+     *
+     * @param       aPattern
+     *
+     * @return
+     */
+    private boolean isValidDatePattern( String aPattern )
+    {
+        boolean myIsValid = false;
+        int     myBegin   = -1;
+        int     myEnd     = 0;
+
+        if ( aPattern.startsWith( "YYYY" ) )
+        {
+            myBegin = 4;
+            myEnd   = aPattern.length();
+        }
+        else if ( aPattern.startsWith( "YY" ) )
+        {
+            myBegin = 2;
+            myEnd   = aPattern.length();
+        }
+        else if ( aPattern.endsWith( "YYYY" ) )
+        {
+            myBegin = 0;
+            myEnd   = aPattern.length()-4;
+        }
+        else if ( aPattern.endsWith( "YY" ) )
+        {
+            myBegin = 0;
+            myEnd   = aPattern.length()-2;
+        }
+
+        if ( myBegin != -1 && myEnd - myBegin <= 4 )
+        {
+            while ( myBegin < myEnd )
+            {
+                if ( aPattern.charAt( myBegin ) != 'X' )
+                {
+                    break;
+                }
+            }
+
+            if ( myBegin == myEnd )
+            {
+                myIsValid = true;
+            }
+        }
+
+        return myIsValid;
+    }
+}
+
+
+copybook                            [ Environment myEnvironment ]
+                                    returns [ Copybook myCopybook ]
+                                    {
+                                    	assert myEnvironment != null;
+                                    	
+                                    	environment = myEnvironment;
+                                    	
+                                    	myCopybook  = null;
+                                        copybook    = new Copybook();
+                                        lastElement = copybook;
+
+                                        Element myElement = null;
+                                    }
+                                :   (
+                                        myElement=dataItemDescriptionEntry
+                                    )*
+                                    EOF!
+                                    {
+                                    	myCopybook = copybook;
+                                    	
+                                    	CopybookNormalizationVisitor myVisitor = new CopybookNormalizationVisitor( myEnvironment );
+                                    	myVisitor.normalize( myCopybook );
+                                    }
+                                ;
+
+dataItemDescriptionEntry            returns [ Element myElement ]
+                                    {
+                                        myElement = null;
+
+                                        int myLevelNumber = 0;
+                                    }
+                                :   myLevelNumber=levelNumber
+                                    (   
+                                        { myLevelNumber == 66 }? myElement=level66DescriptionEntry
+                                    |   { myLevelNumber == 88 }? myElement=conditionNameEntry
+                                        {
+                                            addLevel88Element( (Level88Element) myElement );
+                                        }
+                                    |   ( { myLevelNumber != 66 && myLevelNumber != 88 }? myElement=dataDescriptionEntry[myLevelNumber] )?
+                                        {
+                                            addElement( myElement );
+                                        }
+                                    )
+                                    DOT!
+                                ;
+
+levelNumber                         returns [int myLevelNumber]
+                                :   i:INTEGER_LITERAL
+                                    {
+                                        String myString = i.getText();
+
+                                        if ( myString.length() > 2 )
+                                        {
+                                            // TODO: implement "too many digits in level number"
+                                        }
+
+                                        myLevelNumber = Integer.parseInt( myString );
+                                        if
+                                        (
+                                            myLevelNumber < 1 ||
+                                            (
+                                                myLevelNumber >  49 &&
+                                                myLevelNumber != 66 &&
+                                                myLevelNumber != 77 &&
+                                                myLevelNumber != 88
+                                            )
+                                        )
+                                        {
+                                            // TODO: implement "illegal level number"
+                                        }
+
+                                        if ( myLevelNumber < 1 )
+                                        {
+                                            myLevelNumber = 1;
+                                        }
+                                    }
+                                ;
+
+dataDescriptionEntry                [ int myLevelNumber ]
+                                    returns [ Element myElement ]
+                                    {
+                                        boolean myFoundBlankWhenZeroClause = false;
+                                        boolean myFoundExternalClause      = false;
+                                        boolean myFoundGlobalClause        = false;
+                                        boolean myFoundGroupUsageClause    = false;
+                                        boolean myFoundJustifiedClause     = false;
+                                        boolean myFoundOccursClause        = false;
+                                        boolean myFoundPictureClause       = false;
+                                        boolean myFoundSignClause          = false;
+                                        boolean myFoundSynchronizedClause  = false;
+                                        boolean myFoundUsageClause         = false;
+                                        boolean myFoundValueClause         = false;
+                                        boolean myFoundDateFormatClause    = false;
+                                        String  myName                     = null;
+
+                                        myElement = null;
+                                    }
+                                :   (   myName=dataName
+                                        {
+                                            myElement = new DataElement( myName, myLevelNumber );
+                                        }
+                                    |   FILLER
+                                        {
+                                            myElement = new FillerElement( myLevelNumber );
+                                        }
+                                    |   /* empty */
+                                        {
+                                            myElement = new NoNameElement( myLevelNumber );
+                                        }
+                                    )
+                                    ( redefinesClause[myElement] )?
+                                    (   { ! myFoundBlankWhenZeroClause }?
+                                        blankWhenZeroClause[myElement]
+                                        {
+                                            myFoundBlankWhenZeroClause = true;
+                                        }
+                                    |   { ! myFoundExternalClause }?
+                                        externalClause[myElement]
+                                        {
+                                            myFoundExternalClause = true;
+                                        }
+                                    |   { ! myFoundGlobalClause }?
+                                        globalClause[myElement]
+                                        {
+                                            myFoundGlobalClause = true;
+                                        }
+                                    |   { ! myFoundGroupUsageClause }?
+                                        groupUsageClause[myElement]
+                                        {
+                                            myFoundGroupUsageClause = true;
+                                        }
+                                    |   { ! myFoundJustifiedClause }?
+                                        justifiedClause[myElement]
+                                        {
+                                            myFoundJustifiedClause = true;
+                                        }
+                                    |   { ! myFoundOccursClause }?
+                                        occursClause[myElement]
+                                        {
+                                            myFoundOccursClause = true;
+                                        }
+                                    |   { ! myFoundPictureClause }?
+                                        pictureClause[myElement]
+                                        {
+                                            myFoundPictureClause = true;
+                                        }
+                                    |   { ! myFoundSignClause }?
+                                        signClause[myElement]
+                                        {
+                                            myFoundSignClause = true;
+                                        }
+                                    |   { ! myFoundSynchronizedClause }?
+                                        synchronizedClause[myElement]
+                                        {
+                                            myFoundSynchronizedClause = true;
+                                        }
+                                    |   { ! myFoundUsageClause }?
+                                        usageClause[myElement]
+                                        {
+                                            myFoundUsageClause = true;
+                                        }
+                                    |   { ! myFoundValueClause }?
+                                        valueClause[myElement]
+                                        {
+                                            myFoundValueClause = true;
+                                        }
+                                    |   { ! myFoundDateFormatClause }?
+                                        dateFormatClause[myElement]
+                                        {
+                                            myFoundDateFormatClause = true;
+                                        }
+                                    )*
+                                ;
+
+/* TODO */
+level66DescriptionEntry             returns [ Element myElement ]
+                                    {
+                                        String myName = null;
+
+                                        myElement = null;
+                                    }
+                                :   myName=dataName renamesClause
+                                    {
+                                        myElement = new Level66Element( myName );
+                                    }
+                                ;
+
+/* TODO */
+conditionNameEntry                  returns [ Element myElement ]
+                                    {
+                                        String myName        = null;
+                                        Value  myValue1      = null;
+                                        Value  myValue2      = null;
+                                        List   myValueRanges = Collections.EMPTY_LIST;
+
+                                        myElement = null;
+                                    }
+                                :   myName=conditionName
+                                    (
+                                        VALUE  ( IS  )? 
+                                    |   VALUES ( ARE )?
+                                    )
+                                    (
+                                        myValue1=literal
+                                        (
+                                            ( THROUGH | THRU )
+                                            myValue2=literal
+                                        )?
+                                        {
+                                            if ( myValueRanges == Collections.EMPTY_LIST )
+                                            {
+                                                myValueRanges = new ArrayList();
+                                            }
+                                            
+                                            myValueRanges.add( new ValueRange( myValue1, myValue2 != null ? myValue2 : myValue1 ) );
+                                        }
+                                    )+
+                                    {
+                                        myElement = new Level88Element( myName, myValueRanges );
+                                    }
+                                ;
+
+redefinesClause                     [ Element myElement ]
+                                    {
+                                        String myName = null;
+                                    }
+                                :   REDEFINES myName=dataName
+                                    {
+                                        myElement.setRedefinedElement( new ElementProxy( myName ) );
+                                    }
+                                ;
+
+blankWhenZeroClause                 [ Element myElement ]
+                                :   BLANK ( WHEN )? ( ZERO | ZEROS | ZEROES )
+                                    {
+                                        myElement.setBlankWhenZero( true );
+                                    }
+                                ;
+
+externalClause                      [ Element myElement ]
+                                :   EXTERNAL
+                                    {
+                                        myElement.setExternal( true );
+                                    }
+                                ;
+
+globalClause                        [ Element myElement ]
+                                :   GLOBAL
+                                    {
+                                        myElement.setGlobal( true );
+                                    }
+                                ;
+
+groupUsageClause                    [ Element myElement ]
+                                :   GROUP_USAGE ( IS )? NATIONAL
+                                    {
+                                        myElement.setNationalGroupUsage( true );
+                                    }
+                                ;
+
+justifiedClause                     [ Element myElement ]
+                                :   ( JUSTIFIED | JUST ) ( RIGHT )?
+                                    {
+                                        myElement.setJustified( true );
+                                    }
+                                ;
+
+/* TODO */
+occursClause                        [ Element myElement ]
+                                    {
+                                        NumericValue myValue1 = null;
+                                        NumericValue myValue2 = null;
+                                        String       myName1  = null;
+                                        String       myName2  = null;
+                                        String       myName3  = null;
+                                    }
+                                :   OCCURS
+                                    ( myValue1=integerLiteral TO )?
+                                    myValue2=integerLiteral
+                                    ( TIMES )?
+                                    (
+                                        DEPENDING ( ON )? myName1=dataName
+                                        {
+                                            myElement.setOccursDependingOnElement( new ElementProxy( myName1 ) );
+                                        }
+                                    )?
+                                    ( ( ASCENDING | DESCENDING ) ( KEY )? ( IS )? ( myName2=dataName )+ )*
+                                    ( INDEXED ( BY )? ( myName3=indexName )+ )?
+                                    {
+                                    	if ( myValue2.getValue().intValue() <= 0 )
+                                    	{
+                                    		// TODO: provide an appropriate error
+                                    	}
+                                    	if ( myValue2.getValue().intValue() > Integer.MAX_VALUE )
+                                    	{
+                                    	    // TODO: provide appropriate error
+                                    	}
+                                    	
+                                        int myMaxValue  = myValue2.getValue().intValue();
+                                        int myMinValue;
+                                    	
+                                        if ( myValue1 == null )
+                                        {
+                                            myMinValue = ( myElement.getOccursDependingOnElement() != null ) ? 1 : myMaxValue;
+                                        }
+                                        else
+                                        {
+                                            if ( myValue1.getValue().intValue() < 0 )
+                                            {
+                                                // TODO: provide appropriate error
+                                            }
+                                            
+                                            if ( myValue1.getValue().intValue() > Integer.MAX_VALUE )
+                                            {
+                                                // TODO: provide appropriate error
+                                            }
+                                            
+                                            myMinValue = myValue1.getValue().intValue();
+                                        }
+                                        
+                                        if ( myMinValue >= myMaxValue )
+                                        {
+                                        	// TOOD: provide an appropriate error
+                                        }
+                                        
+                                        myElement.setOccurs( true );
+                                        myElement.setOccursMinValue( myMinValue );
+                                        myElement.setOccursMaxValue( myMaxValue );
+                                    }
+                                ;
+
+pictureClause                       [ Element myElement ]
+                                :   ( PICTURE | PIC )
+                                    ( IS )?
+                                    pic:PICTURE_STRING
+                                    {
+                                        myElement.setPICSlices( ((PICToken) pic).getSlices() );
+                                    }
+                                ;
+
+signClause                          [ Element myElement ]
+                                :   ( SIGN ( IS )? )?
+                                    (
+                                        LEADING
+                                        {
+                                            myElement.setSignPosition( SignPosition.Leading );
+                                        }
+                                    |   TRAILING
+                                        {
+                                            myElement.setSignPosition( SignPosition.Trailing );
+                                        }
+                                    )
+                                    (
+                                        SEPARATE ( CHARACTER )?
+                                        {
+                                            myElement.setSignType( SignType.Separate );
+                                        }
+                                    )?
+                                ;
+
+synchronizedClause                  [ Element myElement ]
+                                :   ( SYNCHRONIZED | SYNC )
+                                    (   LEFT
+                                        {
+                                            myElement.setSyncPosition( SyncPosition.Left );
+                                        }
+                                    |   RIGHT
+                                        {
+                                            myElement.setSyncPosition( SyncPosition.Right );
+                                        }
+                                    |   /* empty */
+                                        {
+                                            myElement.setSyncPosition( SyncPosition.None );
+                                        }
+                                    )
+                                ;
+
+usageClause                         [ Element myElement ]
+                                    {
+                                        String    myName      = null;
+                                        UsageType myUsageType = null;
+                                    }
+                                :   ( USAGE ( IS )? )?
+                                    (
+                                        (   ( BINARY | COMP | COMPUTATIONAL | COMP_4 | COMPUTATIONAL_4 )
+                                            {
+                                                myUsageType = UsageType.Binary;
+                                            }
+                                        |   ( COMP_1 | COMPUTATIONAL_1 )
+                                            {
+                                                myUsageType = UsageType.Computational1;
+                                            }
+                                        |   ( COMP_2 | COMPUTATIONAL_2 )
+                                            {
+                                                myUsageType = UsageType.Computational2;
+                                            }
+                                        |   ( COMP_3 | COMPUTATIONAL_3 | PACKED_DECIMAL )
+                                            {
+                                                myUsageType = UsageType.Computational3;
+                                            }
+                                        |   ( COMP_5 | COMPUTATIONAL_5 )
+                                            {
+                                                myUsageType = UsageType.Computational5;
+                                            }
+                                        |   DISPLAY
+                                            {
+                                                myUsageType = UsageType.Display;
+                                            }
+                                        |   DISPLAY_1
+                                            {
+                                                myUsageType = UsageType.Display1;
+                                            }
+                                        |   NATIONAL
+                                            {
+                                                myUsageType = UsageType.National;
+                                            }
+                                        )
+                                        ( NATIVE )?
+                                    |   INDEX
+                                        {
+                                            myUsageType = UsageType.Index;
+                                        }
+                                    |   POINTER
+                                        {
+                                            myUsageType = UsageType.Pointer;
+                                        }
+                                    |   PROCEDURE_POINTER
+                                        {
+                                            myUsageType = UsageType.ProcedurePointer;
+                                        }
+                                    |   FUNCTION_POINTER
+                                        {
+                                            myUsageType = UsageType.FunctionPointer;
+                                        }
+                                    |   OBJECT REFERENCE myName=className
+                                        {
+                                            myUsageType = UsageType.ObjectReference;
+
+                                            // TODO: warn that object references are not supported
+                                        }
+                                    )
+                                    {
+                                        myElement.setUsageType( myUsageType );
+                                    }
+                                ;
+
+valueClause                         [ Element myElement ]
+                                    {
+                                        Value myValue = null;
+                                    }
+                                :   VALUE ( IS )? myValue=literal
+                                    {
+                                        myElement.setValue( myValue );
+                                    }
+                                ;
+
+dateFormatClause                    [ Element myElement ]
+                                    {
+                                        String myDatePattern = null;
+                                    }
+                                :   DATE FORMAT ( IS )? myDatePattern=datePattern
+                                    {
+                                        myElement.setDatePattern( myDatePattern );
+                                    }
+                                ;
+
+datePattern                         returns [ String myPattern ]
+                                    {
+                                        myPattern = null;
+                                    }
+                                :   w:WORD
+                                    {
+                                        myPattern = w.getText().toUpperCase();
+
+                                        if ( ! isValidDatePattern( myPattern ) )
+                                        {
+                                            // TODO: complain about the format
+                                        }
+                                    }
+                                ;
+
+/* TODO */
+renamesClause                       {
+                                        String myName1 = null;
+                                        String myName2 = null;
+                                    }
+                                :   RENAMES myName1=dataName ( ( THROUGH | THRU )? myName2=dataName )?
+                                ;
+
+dataName                            returns [ String myName ]
+                                    {
+                                        myName = null;
+                                    }
+                                :   w:WORD
+                                    {
+                                        myName = w.getText();
+                                    }
+                                ;
+
+indexName                           returns [ String myName ]
+                                    {
+                                        myName = null;
+                                    }
+                                :   w:WORD
+                                    {
+                                        myName = w.getText();
+                                    }
+                                ;
+
+conditionName                       returns [ String myName ]
+                                    {
+                                        myName = null;
+                                    }
+                                :   w:WORD
+                                    {
+                                        myName = w.getText();
+                                    }
+                                ;
+
+className                           returns [ String myName ]
+                                    {
+                                        myName = null;
+                                    }
+                                :   w:WORD
+                                    {
+                                        myName = w.getText();
+                                    }
+                                ;
+
+literal                             returns [ Value myValue ]
+                                    {
+                                        myValue = null;
+                                    }
+                                :   myValue=integerLiteral
+                                |   myValue=floatingPointLiteral
+                                |   cl:CHARACTER_LITERAL
+                                    {
+                                        myValue = new StringValue( cl.getText() );
+                                    }
+                                |   (   ZERO
+                                    |   ZEROS
+                                    |   ZEROES
+                                    )
+                                    {
+                                        myValue = new ZeroValue();
+                                    }
+                                |   (   SPACE
+                                    |   SPACES
+                                    )
+                                    {
+                                        myValue = new SpaceValue();
+                                    }
+                                |   (   HIGH_VALUE
+                                    |   HIGH_VALUES
+                                    )
+                                    {
+                                        myValue = new HighValue();
+                                    }
+                                |   (   LOW_VALUE
+                                    |   LOW_VALUES
+                                    )
+                                    {
+                                        myValue = new LowValue();
+                                    }
+                                |   (   QUOTE
+                                    |   QUOTES
+                                    )
+                                    {
+                                        myValue = new QuoteValue();
+                                    }
+                                |   (   NULL
+                                    |   NULLS
+                                    )
+                                    {
+                                        myValue = new NullValue();
+                                    }
+                                ;
+
+integerLiteral                      returns [ NumericValue myValue ]
+                                    {
+                                        myValue = null;
+                                    }
+                                :   i:INTEGER_LITERAL
+                                    {
+                                        myValue = new NumericValue( new BigDecimal( i.getText() ) );
+                                    }
+                                ;
+                                
+floatingPointLiteral                returns [ NumericValue myValue ]
+                                    {
+                                        myValue = null;
+                                    }
+                                :   fp:FLOATING_POINT_LITERAL
+                                    {
+                                        myValue = new NumericValue( new BigDecimal( fp.getText() ) );
+                                    }
+                                ;
+
+
+
+
+class CopybookLexer extends Lexer;
+
+options
+{
+    exportVocab             = Copybook;                 // call the vocabulary "Copybook"
+    testLiterals            = false;                    // don't automatically test for literals
+    caseSensitiveLiterals   = false;                    // Literals are not case sensitive
+    k                       = 2;                        // Two characters of lookahead
+    charVocabulary          = '\u0003'..'\u00FF';       // Allowed characters in lexer
+}
+
+
+{
+    //
+    // Members
+    //
+
+
+    private TokenStreamSelector     selector;
+    private PICLexer                picLexer;
+
+
+
+
+    //
+    // Local code
+    //
+
+
+    /**
+     * FILLIN
+     *
+     * @param       aInputStream
+     * @param       aRightMarginLimit
+     *
+     * @return
+     */
+    public static CopybookLexer create( InputStream   aInputStream,
+                                        int           aRightMarginLimit )
+    {
+        CopybookLexerSharedInputState myInputState = new CopybookLexerSharedInputState( aInputStream, aRightMarginLimit );
+        final CopybookLexer           myLexer      = new CopybookLexer( myInputState );
+        
+        PICLexerListener myPICLexerListener =
+                new PICLexerListener()
+                    {
+                        public void ignorePIC()
+                                throws TokenStreamRetryException
+                        {
+                            myLexer.ignorePIC();
+                        }
+                        
+                        public void picComplete()
+                        {
+                            myLexer.picComplete();
+                        }
+                    };
+                    
+        myLexer.picLexer = new PICLexer( myPICLexerListener, myInputState, CopybookTokenTypes.PICTURE_STRING );
+        
+        if ( myLexer.getInputState() != myInputState )
+        {
+        	LocationManipulator myManipulator =
+        			new LocationManipulator()
+        				{
+						    public int getColumn()
+						    {
+						    	return myLexer.getColumn();
+						    }
+						    
+						    public int incrementColumn()
+						    {
+						    	int myColumn = myLexer.getColumn()+1;
+						    	myLexer.setColumn( myColumn );
+						    	return myColumn;
+						    }
+        				};
+        				
+        	myInputState.setLocationManipulator( myManipulator );
+        }
+
+        return myLexer;
+    }
+    
+
+    /**
+     * FILLIN
+     *
+     * @param       aSelector
+     */
+    void setSelector( TokenStreamSelector aSelector )
+    {
+        assert aSelector != null;
+
+        selector = aSelector;
+    }
+
+
+    /**
+     * FILLIN
+     *
+     * @exception   TokenStreamRetryException
+     */
+    void ignorePIC()
+            throws TokenStreamRetryException
+    {
+        if ( selector.getCurrentStream() == picLexer )
+        {
+            selector.pop();
+            selector.retry();
+        }
+    }
+
+
+    /**
+     * FILLIN
+     */
+    void picComplete()
+    {
+        if ( selector.getCurrentStream() == picLexer )
+        {
+            selector.pop();
+        }
+    }
+    
+    
+    /**
+     * FILLIN
+     *
+     * @param       aCharacterLiteralType
+     * @param       aSource
+     *
+     * @return
+     */
+    String convertCharacterLiteral( CharacterLiteralType   aCharacterLiteralType,
+                                    String                 aSource                )
+    {
+    	return aSource;
+    }
+}
+
+
+protected
+DIGIT                           :   ( '0'..'9' )
+                                ;
+
+protected
+HEX_DIGIT                       :   ( DIGIT | 'A'..'F' | 'a'..'f' )
+                                ;
+
+protected
+ALPHA                           :   ( 'A'..'Z' | 'a'..'z' )
+                                ;
+
+protected
+ALPHANUMERIC                    :   ( ALPHA | DIGIT )
+                                ;
+
+protected
+PICTURE_PART                    :   ( 'P' | 'p' )
+                                    ( 'I' | 'i' )
+                                    ( 'C' | 'c' )
+                                    (
+                                        ( 'T' | 't' )
+                                        ( 'U' | 'u' )
+                                        ( 'R' | 'r' )
+                                        ( 'E' | 'e' )
+                                    )?
+                                ;
+
+protected
+IS_PART                         :   WS
+                                    ( 'I' | 'i' )
+                                    ( 'S' | 's' )
+                                ;
+
+protected
+PICTURE_IS                      :   ( PICTURE_PART IS_PART WS ) => PICTURE_PART IS_PART WS
+                                |   PICTURE_PART WS
+                                ;
+
+DOT                             :   '.'
+                                ;
+
+protected
+QUOTE                           :   '"'
+                                ;
+
+protected
+APOS                            :   '\''
+                                ;
+
+protected
+SINGLE_WS                       :   (   '\n'
+                                        {
+                                            newline();
+                                        }
+                                    |   ' '
+                                    |   '\t'
+                                    )
+                                ;
+
+WS                              :   (
+                                        ( ',' SINGLE_WS ) => ',' SINGLE_WS 
+                                    |   ( ';' SINGLE_WS ) => ';' SINGLE_WS
+                                    |   SINGLE_WS
+                                    )+
+                                    {
+                                        $setType( Token.SKIP );
+                                    }
+                                ;
+
+WORD                                {
+                                        CharacterLiteralType myCharacterLiteralType = null;
+                                    }
+                                :   ( ( DIGIT )+ ( '-' )+ ALPHA ) => ( ( DIGIT )+ ( '-' )+ )* ALPHA ( ALPHANUMERIC )* ( ( '-' )+ ( ALPHANUMERIC )+ )*
+                                |   ( PICTURE_IS ) => PICTURE_IS
+                                    {
+                                        $setType( PICTURE );
+                                        selector.push( picLexer );
+                                    }
+                                |   (
+                                        (   ( 'X' | 'x' )
+                                        |   ( 'Z' | 'z' )
+                                        |   ( 'G' | 'g' )
+                                        |   ( 'N' | 'n' ) ( 'X' | 'x' )?
+                                        |   /* empty */
+                                        )
+                                        QUOTE
+                                    ) =>
+                                    (   ( 'X' | 'x' )
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.HexadecimalAlphanumericLiteral;
+                                        }
+                                    |   ( 'Z' | 'z' )
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.NullTerminatedAlphanumericLiteral;
+                                        }
+                                    |   ( 'G' | 'g' )
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.DbcsLiteral;
+                                        }
+                                    |   ( 'N' | 'n' )
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.NationalLiteral;
+                                        }
+                                        (
+                                            ( 'X' | 'x' )
+                                            {
+                                                myCharacterLiteralType = CharacterLiteralType.HexadecimalNationalLiteral;
+                                            }
+                                        )?
+                                    |   /* empty */
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.AlphanumericLiteral;
+                                        }
+                                    )
+                                    QUOTE!
+                                    (
+                                        ( QUOTE QUOTE ) => ( QUOTE QUOTE! )
+                                    |   ~( '"' | '\n' )
+                                    )*
+                                    QUOTE!
+                                    {
+                                    	String myConvertedLiteral = convertCharacterLiteral( myCharacterLiteralType, $getText );
+                                        $setText( myConvertedLiteral );
+                                        $setType( CHARACTER_LITERAL  );
+                                    }
+                                |   (
+                                        (   ( 'X' | 'x' )
+                                        |   ( 'Z' | 'z' )
+                                        |   ( 'G' | 'g' )
+                                        |   ( 'N' | 'n' ) ( 'X' | 'x' )?
+                                        |   /* empty */
+                                        )
+                                        APOS
+                                    ) =>
+                                    (   ( 'X' | 'x' )
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.HexadecimalAlphanumericLiteral;
+                                        }
+                                    |   ( 'Z' | 'z' )
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.NullTerminatedAlphanumericLiteral;
+                                        }
+                                    |   ( 'G' | 'g' )
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.DbcsLiteral;
+                                        }
+                                    |   ( 'N' | 'n' )
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.NationalLiteral;
+                                        }
+                                        (
+                                            ( 'X' | 'x' )
+                                            {
+                                                myCharacterLiteralType = CharacterLiteralType.HexadecimalNationalLiteral;
+                                            }
+                                        )?
+                                    |   /* empty */
+                                        {
+                                            myCharacterLiteralType = CharacterLiteralType.AlphanumericLiteral;
+                                        }
+                                    )
+                                    APOS!
+                                    (
+                                        ( APOS APOS ) => ( APOS APOS! )
+                                    |   ~( '\'' | '\n' )
+                                    )*
+                                    APOS!
+                                    {
+                                    	String myConvertedLiteral = convertCharacterLiteral( myCharacterLiteralType, $getText );
+                                        $setText( myConvertedLiteral );
+                                        $setType( CHARACTER_LITERAL  );
+                                    }
+                                |   ALPHA ( ALPHANUMERIC )* ( ( '-' )+ ( ALPHANUMERIC )+ )*
+                                    {
+                                        $setType( testLiteralsTable( _ttype ) );
+                                    }
+                                |   (
+                                        ( '+' | '-' )?
+                                        ( DIGIT )+
+                                        '.'
+                                        DIGIT
+                                    ) =>
+                                    ( '+' | '-' )?
+                                    ( DIGIT )+
+                                    '.'
+                                    ( DIGIT )+
+                                    (
+                                        ( 'E' | 'e' )
+                                        ( '+' | '-' )?
+                                        ( DIGIT )+
+                                    )?
+                                    {
+                                        $setType( FLOATING_POINT_LITERAL );
+                                    }
+                                |   ( DIGIT )+
+                                    {
+                                        $setType( INTEGER_LITERAL );
+                                    }
+                                ;

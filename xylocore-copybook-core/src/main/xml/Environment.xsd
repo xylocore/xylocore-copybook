@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns              = "http://www.xylocore.com/integen/environment/2007-10"
+           targetNamespace    = "http://www.xylocore.com/integen/environment/2007-10"
+           xmlns:xs           = "http://www.w3.org/2001/XMLSchema"
+           elementFormDefault = "qualified">
+
+
+  <xs:element name="Environment" type="Environment"/>
+  
+  <xs:complexType name="Environment">
+    <xs:sequence>
+      <xs:element name="PackageName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="ClassName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="GenerationRootDir" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="CopybookFilename" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="ImplicitRecordName" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="MappingMetadata" type="MappingMetadata"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="MappingMetadata">
+    <xs:sequence>
+      <xs:element name="Element" type="Element" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Element" abstract="true">
+    <xs:attribute name="id" type="xs:string" use="required"/>
+  </xs:complexType>
+
+  <xs:complexType name="GroupElement">
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:sequence>
+          <xs:element name="Element" type="Element" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="BasicDataElement" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:sequence>
+          <xs:element name="Accessor" type="Accessor" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="DataElement">
+    <xs:complexContent>
+      <xs:extension base="BasicDataElement">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="DataElementSet">
+    <xs:complexContent>
+      <xs:extension base="BasicDataElement">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <!--
+    ** Accessors
+    -->
+      
+  <xs:complexType name="Accessor" abstract="true">
+    <xs:sequence>
+      <xs:element name="NullEquivalent" type="NullEquivalent" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence >
+  </xs:complexType>
+  
+  <xs:complexType name="DefaultAccessor">
+    <xs:complexContent>
+      <xs:extension base="Accessor">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="DateAccessor">
+    <xs:complexContent>
+      <xs:extension base="Accessor">
+        <xs:attribute name="pattern" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  
+  <!--
+    ** Null equivalents 
+    -->
+    
+  <xs:complexType name="NullEquivalent" abstract="true"/>
+  
+  <xs:complexType name="ConstantNullEquivalent">
+    <xs:complexContent>
+      <xs:extension base="NullEquivalent">
+        <xs:attribute name="value" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="BlankNullEquivalent">
+    <xs:complexContent>
+      <xs:extension base="NullEquivalent"/>
+    </xs:complexContent>
+  </xs:complexType>
+   
+</xs:schema>
