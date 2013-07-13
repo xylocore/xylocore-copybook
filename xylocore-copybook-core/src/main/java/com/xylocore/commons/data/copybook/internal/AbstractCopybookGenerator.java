@@ -182,6 +182,24 @@ public class AbstractCopybookGenerator
     
     private static void generateHeader( PrintStream aOutputStream )
     {
+        
+        aOutputStream.println( "//" );
+        aOutputStream.println( "//   Copyright 2013 The Palantir Corporation" );
+        aOutputStream.println( "//" );
+        aOutputStream.println( "//   Licensed under the Apache License, Version 2.0 (the \"License\");" );
+        aOutputStream.println( "//   you may not use this file except in compliance with the License." );
+        aOutputStream.println( "//   You may obtain a copy of the License at" );
+        aOutputStream.println( "//" );
+        aOutputStream.println( "//       http://www.apache.org/licenses/LICENSE-2.0" );
+        aOutputStream.println( "//" );
+        aOutputStream.println( "//   Unless required by applicable law or agreed to in writing, software" );
+        aOutputStream.println( "//   distributed under the License is distributed on an \"AS IS\" BASIS," );
+        aOutputStream.println( "//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied." );
+        aOutputStream.println( "//   See the License for the specific language governing permissions and" );
+        aOutputStream.println( "//   limitations under the License." );
+        aOutputStream.println( "//" );
+        aOutputStream.println();
+        aOutputStream.println();
         aOutputStream.println( "package com.xylocore.commons.data.copybook.runtime;" );
         aOutputStream.println();
         aOutputStream.println( "import java.math.BigDecimal;" );
