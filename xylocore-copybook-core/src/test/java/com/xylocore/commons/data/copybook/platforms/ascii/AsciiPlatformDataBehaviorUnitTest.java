@@ -43,7 +43,8 @@ public class AsciiPlatformDataBehaviorUnitTest
     //
     
     
-    private static final byte[]         filler          = { 0x01, 0x23, 0x45, 0x67, (byte) 0x89, (byte) 0xAB, (byte) 0xCD, (byte) 0xEF };
+    private static final byte[]         filler              = { 0x01, 0x23, 0x45, 0x67, (byte) 0x89, (byte) 0xAB, (byte) 0xCD, (byte) 0xEF };
+    private static final boolean        dumpBufferEnabled   = false;
     
     private CopybookContext             context;
     private AsciiPlatformDataBehavior   dataBehavior;
@@ -160,21 +161,24 @@ public class AsciiPlatformDataBehaviorUnitTest
     protected void dumpBuffer( String       aTitle,
                                ByteBuffer   aBuffer )
     {
-        assert aBuffer != null;
-
-        if ( aTitle != null && aTitle.length() != 0 )
+        if ( dumpBufferEnabled )
         {
-            System.out.println( aTitle );
+            assert aBuffer != null;
+    
+            if ( aTitle != null && aTitle.length() != 0 )
+            {
+                System.out.println( aTitle );
+            }
+            
+            byte[] myData = new byte[aBuffer.limit()];
+            for ( int i = 0, ci = aBuffer.limit() ; i < ci ; i++ )
+            {
+                myData[i] = aBuffer.get( i );
+            }
+            
+            InputStreamDumper myDumper = new InputStreamDumper();
+            System.out.println( myDumper.dumpAsString( myData ) );
         }
-        
-        byte[] myData = new byte[aBuffer.limit()];
-        for ( int i = 0, ci = aBuffer.limit() ; i < ci ; i++ )
-        {
-            myData[i] = aBuffer.get( i );
-        }
-        
-        InputStreamDumper myDumper = new InputStreamDumper();
-        System.out.println( myDumper.dumpAsString( myData ) );
     }
     
     
