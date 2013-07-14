@@ -61,11 +61,6 @@ class NullEquivalentResolver
     public NullEquivalentStrategy resolve( DataElement            aDataElement,
                                            NullEquivalentConfig   aNullEquivalentConfig )
     {
-// TODO: remove
-if ( "IPPFX7-MASTER-CO-NUMBER".equals( aDataElement.getName() ) )
-{
-    System.out.println();
-}
         dataElement = aDataElement;
         
         aNullEquivalentConfig.accept( this );
@@ -93,6 +88,7 @@ if ( "IPPFX7-MASTER-CO-NUMBER".equals( aDataElement.getName() ) )
     {
         if ( nullEquivalentStrategy == null )
         {
+            // TODO: implement better error notification
             throw new RuntimeException( "null equivalent strategy not found for null equivalent " + aNullEquivalent.getClass().getName() );
         }
     }
