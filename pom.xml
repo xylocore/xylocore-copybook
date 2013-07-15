@@ -81,7 +81,8 @@
   </build>
 
   <modules>
-    <module>xylocore-copybook-core</module>
+    <module>xylocore-copybook-runtime</module>
+    <module>xylocore-copybook-generate</module>
     <!--module>xylocore-copybook-maven-plugin</module-->
   </modules>
 

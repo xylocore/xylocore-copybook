@@ -8,7 +8,8 @@
 /log/*.log
 /tmp
 
-/xylocore-copybook-core/target/
+/xylocore-copybook-runtime/target/
+/xylocore-copybook-generate/target/
 /xylocore-copybook-maven-plugin/target/
 
 .DS_Store
