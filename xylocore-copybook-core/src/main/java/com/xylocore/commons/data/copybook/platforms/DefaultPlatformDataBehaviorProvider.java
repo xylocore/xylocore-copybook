@@ -43,7 +43,8 @@ public class DefaultPlatformDataBehaviorProvider
     
     
     private static final DefaultPlatformDataBehaviorProvider    instance            = new DefaultPlatformDataBehaviorProvider();
-    private final List<PlatformDataBehavior>                     defaultBehaviors;
+    
+    private final List<PlatformDataBehavior>                    defaultBehaviors;
     
     
     
@@ -61,6 +62,7 @@ public class DefaultPlatformDataBehaviorProvider
         List<PlatformDataBehavior> myList = new ArrayList<PlatformDataBehavior>();
         myList.add( new IBMMainframePlatformDataBehavior() );
         myList.add( new AsciiPlatformDataBehavior()        );
+        
         defaultBehaviors = Collections.unmodifiableList( myList );
     }
     
