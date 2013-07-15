@@ -20,7 +20,7 @@ Copybook Testing
 ----------------
 
 If you have a copybook that the generator does not parse or process correctly, feel
-free to send an email to xylocore-copybook-help@xylocore.com. Describe the problem(s)
+free to send an email to <xylocore-copybook-help@xylocore.com>. Describe the problem(s)
 encountered and please attach a copybook that reproduces the problem. Please do not
 include any proprietary copybooks or code.
 
