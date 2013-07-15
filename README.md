@@ -7,6 +7,8 @@ manipulate buffers according to the copybook layout.
 Things To Do
 ------------
 
+* Get the current set of unit tests to run successfully.
+* Move NullEquivalent emitters from runtime library into the generate library.
 * Lots of documentation on how to use the generator and how to use the generated
 class in Java code.
 * Improve error handling in the copybook parser.
@@ -14,6 +16,13 @@ class in Java code.
 * Add support for IBM COMP-1 and COMP-2 usage types (native IBM 370 floating point
 representations).
 
+Copybook Testing
+----------------
+
+If you have a copybook that the generator does not parse or process correctly, feel
+free to send an email to xylocore-copybook-help@xylocore.com. Describe the problem(s)
+encountered and please attach a copybook that reproduces the problem. Please do not
+include any proprietary copybooks or code.
 
 License
 -------
