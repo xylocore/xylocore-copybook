@@ -15,7 +15,7 @@
 //
 
 
-package com.xylocore.commons.data.copybook.internal;
+package com.xylocore.commons.data.copybook.runtime.internal;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;

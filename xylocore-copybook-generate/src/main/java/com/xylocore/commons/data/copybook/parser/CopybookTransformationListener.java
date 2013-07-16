@@ -33,7 +33,6 @@ import com.xylocore.commons.data.copybook.domain.Element;
 import com.xylocore.commons.data.copybook.domain.ElementProxy;
 import com.xylocore.commons.data.copybook.domain.FillerElement;
 import com.xylocore.commons.data.copybook.domain.HighValue;
-import com.xylocore.commons.data.copybook.domain.Level66Element;
 import com.xylocore.commons.data.copybook.domain.Level88Element;
 import com.xylocore.commons.data.copybook.domain.LowValue;
 import com.xylocore.commons.data.copybook.domain.NoNameElement;

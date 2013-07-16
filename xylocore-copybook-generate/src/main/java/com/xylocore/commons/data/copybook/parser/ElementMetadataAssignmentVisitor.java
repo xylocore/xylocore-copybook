@@ -85,7 +85,6 @@ class ElementMetadataAssignmentVisitor
      */
     public void visitGroupElement( GroupElementConfig aGroupElement )
     {
-        
     }
     
     
@@ -95,7 +94,6 @@ class ElementMetadataAssignmentVisitor
      */
     public void leaveGroupElement( GroupElementConfig aGroupElement )
     {
-        
     }
     
     
@@ -124,6 +122,5 @@ class ElementMetadataAssignmentVisitor
      */
     public void leaveDataElement( DataElementConfig aDataElement )
     {
-        
     }
 }

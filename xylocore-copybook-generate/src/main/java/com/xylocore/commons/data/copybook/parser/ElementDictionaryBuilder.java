@@ -80,16 +80,6 @@ class ElementDictionaryBuilder
         {
             return element;
         }
-        
-        /**
-         * FILLIN
-         * 
-         * @return
-         */
-//        public String getElementPath()
-//        {
-//            return elementPath;
-//        }
     }
     
     
