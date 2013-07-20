@@ -675,7 +675,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     {
         encodeAsLong( aContext,
                       aOffset,
-                      ((long) aValue) & 0xffff,
+                      aValue,
                       aDigits,
                       aSignType,
                       aSignPosition,
@@ -750,7 +750,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     {
         encodeAsLong( aContext,
                       aOffset,
-                      ((long) aValue) & 0xffffffff,
+                      aValue,
                       aDigits,
                       aSignType,
                       aSignPosition,

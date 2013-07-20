@@ -4,6 +4,10 @@ Xylocore Copybook Library
 Libraries for parsing copybooks and generating java classes that
 manipulate buffers according to the copybook layout.
 
+License
+-------
+* [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
 Things To Do
 ------------
 
@@ -13,9 +17,4 @@ class in Java code.
 * Document the copybook features that are supported and not supported.
 * Add support for IBM COMP-1 and COMP-2 usage types (native IBM 370 floating point
 representations).
-
-
-License
--------
-* [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
