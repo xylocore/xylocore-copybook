@@ -72,7 +72,10 @@ public class EnvironmentMetadataMarshallingStrategy
                 throw new FileNotFoundException( MAP_RESOURCE_NAME );
             }
     
-            loadMappings();
+            InputSource myInputSource = new InputSource( myInputStream );
+            myInputSource.setSystemId( MAP_RESOURCE_NAME );
+            
+            loadMappings( myInputSource );
         }
         catch ( Exception myException )
         {
@@ -103,26 +106,22 @@ public class EnvironmentMetadataMarshallingStrategy
     /**
      * FILLIN
      * 
+     * @param       aInputSource
+     * 
      * @exception   MappingException
      * @exception   IOException
      */
-    private void loadMappings()
+    private void loadMappings( InputSource aInputSource )
             throws MappingException,
                    IOException
     {
-        try ( InputStream myInputStream = getClass().getResourceAsStream( MAP_RESOURCE_NAME ) )
-        {
-            assert myInputStream != null;
-            
-            InputSource myInputSource = new InputSource( myInputStream );
-            myInputSource.setSystemId( MAP_RESOURCE_NAME );
-            
-            Mapping myMapping = new Mapping( getClass().getClassLoader() );
-            myMapping.loadMapping( myInputSource );
-            
-            unmarshaller = new Unmarshaller( myMapping );
-            unmarshaller.setIgnoreExtraAttributes( false );
-        }
+        assert aInputSource != null;
+        
+        Mapping myMapping = new Mapping( getClass().getClassLoader() );
+        myMapping.loadMapping( aInputSource );
+        
+        unmarshaller = new Unmarshaller( myMapping );
+        unmarshaller.setIgnoreExtraAttributes( false );
     }
 
     

@@ -4,6 +4,10 @@ Xylocore Copybook Library
 Libraries for parsing copybooks and generating java classes that
 manipulate buffers according to the copybook layout.
 
+License
+-------
+* [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
 Things To Do
 ------------
 
@@ -23,8 +27,3 @@ If you have a copybook that the generator does not parse or process correctly, f
 free to send an email to <xylocore-copybook-help@xylocore.com>. Describe the problem(s)
 encountered and please attach a copybook that reproduces the problem. Please do not
 include any proprietary copybooks or code.
-
-License
--------
-* [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
-
