@@ -17,7 +17,6 @@
 
 package com.xylocore.commons.data.copybook.domain;
 
-import com.xylocore.commons.data.copybook.parser.ElementDictionary;
 
 
 

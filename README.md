@@ -12,7 +12,6 @@ Things To Do
 ------------
 
 * Get the current set of unit tests to run successfully.
-* Move NullEquivalent emitters from runtime library into the generate library.
 * Lots of documentation on how to use the generator and how to use the generated
 class in Java code.
 * Improve error handling in the copybook parser.

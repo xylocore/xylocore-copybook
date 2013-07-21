@@ -78,6 +78,7 @@ import com.xylocore.commons.data.copybook.parser.CopybookParser.ValueClauseConte
 import com.xylocore.commons.data.copybook.parser.CopybookParser.ZeroLiteralContext;
 import com.xylocore.commons.data.copybook.parser.pic.PICException;
 import com.xylocore.commons.data.copybook.parser.pic.PICLexer;
+import com.xylocore.commons.data.copybook.parser.visitor.CopybookNormalizationVisitor;
 import com.xylocore.commons.data.copybook.runtime.SignPosition;
 import com.xylocore.commons.data.copybook.runtime.SignType;
 import com.xylocore.commons.data.copybook.runtime.SyncPosition;

@@ -45,6 +45,13 @@ public class CopybookProcessor
     //
     
     
+    /**
+     * FILLIN
+     * 
+     * @param       aEnvironment
+     * 
+     * @return
+     */
     public Copybook process( Environment aEnvironment )
     {
         try ( InputStream myInputStream = openCopybookSource( aEnvironment ) )

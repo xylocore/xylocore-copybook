@@ -69,7 +69,7 @@ public class DataElement
         
         accessorMethodInfos      = Collections.<DataType,AccessorMethodInfo>emptyMap();
         level88Elements          = Collections.<Level88Element>emptyList();
-        nullEquivalentStrategies = Collections.<NullEquivalentStrategy>emptyList();
+        nullEquivalentStrategies = null;
     }
     
     
@@ -160,7 +160,9 @@ public class DataElement
      */
     public List<NullEquivalentStrategy> getNullEquivalentStrategies()
     {
-        return nullEquivalentStrategies;
+        return nullEquivalentStrategies != null
+                ? nullEquivalentStrategies
+                : Collections.<NullEquivalentStrategy>emptyList();
     }
     
     
@@ -173,11 +175,11 @@ public class DataElement
     {
         if ( aNullEquivalentStrategies != null && ! aNullEquivalentStrategies.isEmpty() )
         {
-            nullEquivalentStrategies = new ArrayList<NullEquivalentStrategy>( aNullEquivalentStrategies );
+            nullEquivalentStrategies = new ArrayList<>( aNullEquivalentStrategies );
         }
         else
         {
-            nullEquivalentStrategies = Collections.<NullEquivalentStrategy>emptyList();
+            nullEquivalentStrategies = null;
         }
     }
     
@@ -191,14 +193,9 @@ public class DataElement
     {
         assert aNullEquivalentStrategy != null;
         
-// TODO: remove
-//if ( "IPPFX7-MASTER-CO-NUMBER".equals( getName() ) )
-{
-    System.out.println();
-}
-        if ( nullEquivalentStrategies == Collections.EMPTY_LIST )
+        if ( nullEquivalentStrategies == null )
         {
-            nullEquivalentStrategies = new ArrayList<NullEquivalentStrategy>();
+            nullEquivalentStrategies = new ArrayList<>();
         }
         
         nullEquivalentStrategies.add( aNullEquivalentStrategy );

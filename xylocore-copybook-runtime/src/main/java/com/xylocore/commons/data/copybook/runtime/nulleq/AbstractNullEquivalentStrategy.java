@@ -674,7 +674,7 @@ public abstract class AbstractNullEquivalentStrategy
     
     /*
      * (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(T)
+     * @see java.lang.Comparable#compareTo(NullEquivalentStrategy)
      */
     public int compareTo( NullEquivalentStrategy aRhs )
     {

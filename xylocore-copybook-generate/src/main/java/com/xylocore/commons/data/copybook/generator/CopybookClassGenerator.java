@@ -42,6 +42,19 @@ import com.xylocore.commons.data.copybook.domain.Level88Element;
 import com.xylocore.commons.data.copybook.domain.ValueRange;
 import com.xylocore.commons.data.copybook.domain.config.Environment;
 import com.xylocore.commons.data.copybook.domain.config.EnvironmentConfigurationException;
+import com.xylocore.commons.data.copybook.generator.emit.nulleq.NullEquivalentStrategyEmitterFactory;
+import com.xylocore.commons.data.copybook.generator.emit.pic.AlphanumericPICMarshallerEmitter;
+import com.xylocore.commons.data.copybook.generator.emit.pic.BinaryPICMarshallerEmitter;
+import com.xylocore.commons.data.copybook.generator.emit.pic.Computational1PICMarshallerEmitter;
+import com.xylocore.commons.data.copybook.generator.emit.pic.Computational2PICMarshallerEmitter;
+import com.xylocore.commons.data.copybook.generator.emit.pic.Computational3PICMarshallerEmitter;
+import com.xylocore.commons.data.copybook.generator.emit.pic.Computational5PICMarshallerEmitter;
+import com.xylocore.commons.data.copybook.generator.emit.pic.NumericDisplayPICMarshallerEmitter;
+import com.xylocore.commons.data.copybook.generator.emit.pic.NumericNationalPICMarshallerEmitter;
+import com.xylocore.commons.data.copybook.generator.emit.pic.PICMarshallerEmitter;
+import com.xylocore.commons.data.copybook.generator.visitor.ConditionNameValueMapVariableCollectionVisitor;
+import com.xylocore.commons.data.copybook.generator.visitor.ConverterCollectionVisitor;
+import com.xylocore.commons.data.copybook.generator.visitor.PICMarshallerCollectionVisitor;
 import com.xylocore.commons.data.copybook.parser.CopybookProcessor;
 import com.xylocore.commons.data.copybook.runtime.AbstractCopybook;
 import com.xylocore.commons.data.copybook.runtime.ConstantValue;
@@ -74,17 +87,14 @@ public class CopybookClassGenerator
     
     private Environment                                                 environment;
     private Copybook                                                    copybook;
-    private PICMarshallerCollectionVisitor                              picMarshallerCollectionVisitor                  = new PICMarshallerCollectionVisitor();
-    private ConditionNameValueMapVariableCollectionVisitor              conditionNameValueMapVariableCollectionVisitor  = new ConditionNameValueMapVariableCollectionVisitor();
-    private ConverterCollectionVisitor                                  converterCollectionVisitor                      = new ConverterCollectionVisitor();
-    private List<Element>                                               elementsOfInterest                              = new ArrayList<Element>();
-    private Set<Element>                                                excludedElements                                = new HashSet<Element>();
-    private StringBuilder                                               buffer                                          = new StringBuilder();
-    private int                                                         indentLevel                                     = 0;
-    private int                                                         indentWidth                                     = DEFAULT_INDENT_WIDTH;
+    private List<Element>                                               elementsOfInterest;
+    private Set<Element>                                                excludedElements;
+    private StringBuilder                                               buffer;
+    private int                                                         indentLevel;
+    private int                                                         indentWidth;
     private Map<DataElement,PICMarshaller>                              elementMarshallerMap;
-    private Map<Converter,String>                                       converterInstanceNameMappings                   = new TreeMap<Converter,String>();
-    private Map<List<NullEquivalentStrategy>,String>                    nullEquivalentStrategySetInstanceNameMappings   = new HashMap<List<NullEquivalentStrategy>,String>();
+    private Map<Converter,String>                                       converterInstanceNameMappings;
+    private Map<List<NullEquivalentStrategy>,String>                    nullEquivalentStrategySetInstanceNameMappings;
     private List<ConditionNameValueRanges>                              conditionNameValueRangesList;
 
     
@@ -130,6 +140,24 @@ public class CopybookClassGenerator
         importedClasses.add( com.xylocore.commons.data.copybook.runtime.AlphanumericPICFlags.class.getName()          );
 //        importedClasses.add( com.xylocore.commons.data.copybook.runtime.CopybookContext.class.getName()               );
 //        importedClasses.add( com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy.class.getName() );
+    }
+    
+    
+    
+
+    //
+    // Instance initialization
+    //
+    
+    
+    {
+        elementsOfInterest                              = new ArrayList<>();
+        excludedElements                                = new HashSet<>();
+        buffer                                          = new StringBuilder();
+        indentLevel                                     = 0;
+        indentWidth                                     = DEFAULT_INDENT_WIDTH;
+        converterInstanceNameMappings                   = new TreeMap<>();
+        nullEquivalentStrategySetInstanceNameMappings   = new HashMap<>();
     }
     
     
@@ -375,7 +403,8 @@ public class CopybookClassGenerator
     {
         assert aWriter != null;
         
-        elementMarshallerMap = picMarshallerCollectionVisitor.collect( elementsOfInterest );
+        PICMarshallerCollectionVisitor myPicMarshallerCollectionVisitor = new PICMarshallerCollectionVisitor();
+        elementMarshallerMap = myPicMarshallerCollectionVisitor.collect( elementsOfInterest );
         
         if ( ! elementMarshallerMap.isEmpty() )
         {
@@ -447,7 +476,9 @@ public class CopybookClassGenerator
     {
         assert aWriter != null;
         
-        conditionNameValueRangesList = conditionNameValueMapVariableCollectionVisitor.collect( elementsOfInterest );
+        ConditionNameValueMapVariableCollectionVisitor myConditionNameValueMapVariableCollectionVisitor =
+                new ConditionNameValueMapVariableCollectionVisitor();
+        conditionNameValueRangesList = myConditionNameValueMapVariableCollectionVisitor.collect( elementsOfInterest );
         
         if ( ! conditionNameValueRangesList.isEmpty() )
         {
@@ -596,9 +627,11 @@ public class CopybookClassGenerator
     {
         assert aWriter != null;
         
-        converterCollectionVisitor.collect( elementsOfInterest );
-        Set<Converter>                    myConverters                 = converterCollectionVisitor.getConverters();
-        Set<List<NullEquivalentStrategy>> myNullEquivalentStrategySets = converterCollectionVisitor.getNullEquivalentStrategySets();
+        ConverterCollectionVisitor myConverterCollectionVisitor = new ConverterCollectionVisitor();
+        myConverterCollectionVisitor.collect( elementsOfInterest );
+        
+        Set<Converter>                    myConverters                 = myConverterCollectionVisitor.getConverters();
+        Set<List<NullEquivalentStrategy>> myNullEquivalentStrategySets = myConverterCollectionVisitor.getNullEquivalentStrategySets();
         
         if ( ! myConverters.isEmpty() )
         {
@@ -705,7 +738,9 @@ public class CopybookClassGenerator
                         FormatHelper.stringOfCharacters( buffer, ' ', myExtraLineIndent );
                     }
                     
-                    myNullEquivalentStrategy.emitDeclaration( buffer );
+                    NullEquivalentStrategyEmitterFactory.getInstance()
+                                                        .getEmitter( myNullEquivalentStrategy )
+                                                        .emitDeclaration( buffer, myNullEquivalentStrategy );
                 }
                 
                 buffer.append( " };\n" );

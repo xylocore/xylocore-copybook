@@ -141,6 +141,28 @@ public class ConstantNullEquivalentStrategy
     }
     
     
+    /**
+     * FILLIN
+     * 
+     * @return
+     */
+    public DataUsageCategory getDataUsageCategory()
+    {
+        return dataUsageCategory;
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @return
+     */
+    public Comparable<?> getValue()
+    {
+        return value;
+    }
+    
+    
     /*
      * (non-Javadoc)
      * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#getSupportedDataUsageCategories()
@@ -267,32 +289,6 @@ public class ConstantNullEquivalentStrategy
     }
     
     
-
-    
-    //
-    // NullEquivalentStrategy interface implementation
-    //
-    
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.NullEquivalentStrategy#emitDeclaration(com.xylocore.commons.util.XyStringBuffer)
-     */
-    public void emitDeclaration( StringBuilder aBuffer )
-    {
-        aBuffer.append( "new "                                 )
-               .append( getClass().getName()                   )
-               .append( "( "                                   )
-               .append( dataUsageCategory.getClass().getName() )
-               .append( "."                                    )
-               .append( dataUsageCategory.toString()           )
-               .append( ", \""                                 )
-               .append( value.toString()                       )
-               .append( "\" )"                                 )
-               ;
-    }
-    
-    
     
     
     //
@@ -314,7 +310,7 @@ public class ConstantNullEquivalentStrategy
             myCmp = dataUsageCategory.compareTo( myRhs.dataUsageCategory );
             if ( myCmp == 0 )
             {
-                myCmp = ((Comparable<Object>) value).compareTo( ((Comparable<Object>) myRhs.value) );
+                myCmp = ((Comparable<Object>) value).compareTo( myRhs.value );
             }
         }
         

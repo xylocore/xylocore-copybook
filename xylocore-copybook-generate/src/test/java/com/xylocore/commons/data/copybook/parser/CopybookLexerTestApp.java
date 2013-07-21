@@ -35,21 +35,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 public class CopybookLexerTestApp
 {
     //
-    // Nested interfaces
-    //
-    
-    
-    public static interface TestLocationManipulator
-        extends
-            LocationManipulator
-    {
-        public void newline();
-    }
-
-    
-    
-    
-    //
     // Class implementation
     //
     

@@ -181,16 +181,4 @@ public class BlankNullEquivalentStrategy
     {
         return true;
     }
-
-
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.NullEquivalentStrategy#emitDeclaration(com.xylocore.commons.util.XyStringBuffer)
-     */
-    public void emitDeclaration( StringBuilder aBuffer )
-    {
-        aBuffer.append( getClass().getName() )
-               .append( ".getInstance()"     )
-               ;
-    }
 }

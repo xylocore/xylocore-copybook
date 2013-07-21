@@ -52,15 +52,6 @@ public interface NullEquivalentStrategy
     /**
      * FILLIN
      * 
-     * @param       aBuffer
-     * @param       aNullEquivalentStrategy
-     */
-    public void emitDeclaration( StringBuilder aBuffer );
-
-    
-    /**
-     * FILLIN
-     * 
      * @param       aDataUsageCategory
      */
     public boolean isDataUsageCategorySupported( DataUsageCategory aDataUsageCategory );
