@@ -18,10 +18,16 @@
 package com.xylocore.commons.data.copybook.generator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import com.xylocore.commons.data.copybook.domain.config.Environment;
 import com.xylocore.commons.data.copybook.domain.config.EnvironmentConfigurator;
+import com.xylocore.commons.util.AbstractApplication;
 
 
 /**
@@ -31,7 +37,19 @@ import com.xylocore.commons.data.copybook.domain.config.EnvironmentConfigurator;
  */
 
 public class CopybookClassGeneratorApplication
+    extends
+        AbstractApplication
 {
+    //
+    // Members
+    //
+    
+    
+    private Map<String,String> cliProperties;
+
+    
+    
+    
     //
     // Class implementation
     //
@@ -44,90 +62,78 @@ public class CopybookClassGeneratorApplication
      */
     public static void main( String[] args )
     {
-        try
-        {
-            Map<String,String> myProperties = parseArguments( args );
-            
-            EnvironmentConfigurator myConfigurator = new EnvironmentConfigurator();
-            myConfigurator.setOverrideProperties( myProperties );
-            
-            Environment            myEnvironment = myConfigurator.configure();
-            CopybookClassGenerator myGenerator   = new CopybookClassGenerator( myEnvironment );
-            
-            myGenerator.generate();
-        }
-        catch ( Exception myException )
-        {
-            // TODO: better error handling
-            myException.printStackTrace();
-        }
+        CopybookClassGeneratorApplication myApplication = new CopybookClassGeneratorApplication();
+        myApplication.run( args );
     }
     
+
+    @Override
+    protected void buildOptions( Options aOptions )
+    {
+        aOptions.addOption( "p", "package"    , true, "the package for the generated copybook class" );
+        aOptions.addOption( "c", "class"      , true, "the name of the copybook class"               );
+        aOptions.addOption( "g", "genrootdir" , true, "the generation root directory"                );
+        aOptions.addOption( "m", "metafile"   , true, "the environment metafile filename"            );
+        aOptions.addOption( "i", "implrecname", true, "the implicit record name"                     );
+    }
+                              
+    
+    @Override
+    protected void processArguments( CommandLine aCommandLine )
+            throws ParseException
+    {
+        cliProperties = new HashMap<>();
+
+        checkOption( aCommandLine, "package"    , EnvironmentConfigurator.PACKAGE_NAME_KEY                  );
+        checkOption( aCommandLine, "class"      , EnvironmentConfigurator.CLASS_NAME_KEY                    );
+        checkOption( aCommandLine, "genrootdir" , EnvironmentConfigurator.GENERATION_ROOT_DIR_KEY           );
+        checkOption( aCommandLine, "metafile"   , EnvironmentConfigurator.ENVIRONMENT_METADATA_FILENAME_KEY );
+        checkOption( aCommandLine, "implrecname", EnvironmentConfigurator.IMPLICIT_RECORD_NAME_KEY          );
+        
+        @SuppressWarnings( "unchecked" )
+        List<String> myArgList = aCommandLine.getArgList();
+        
+        if (  myArgList.size() == 0 )
+        {
+            throw new ParseException( "missing arguments" );
+        }
+        else if ( myArgList.size() > 1 )
+        {
+            throw new ParseException( "too many arguments" );
+        }
+        
+        cliProperties.put( EnvironmentConfigurator.COPYBOOK_FILENAME_KEY, myArgList.get( 0 ) );
+    }
+
 
     /**
      * FILLIN
      * 
-     * @param       args
-     * 
-     * @return
+     * @param       aCommandLine
+     * @param       aOptionName
+     * @param       aKey
      */
-    private static Map<String,String> parseArguments( String[] args )
+    private void checkOption( CommandLine   aCommandLine,
+                              String        aOptionName,
+                              String        aKey          )
     {
-        int                myArgCount   = args.length;
-        Map<String,String> myProperties = new HashMap<String,String>();
-        int                myIndex      = 0;
-        
-        while ( myIndex < myArgCount )
+        if ( aCommandLine.hasOption( aOptionName ) )
         {
-            String myArg = args[myIndex];
-            
-            if ( ! myArg.startsWith( "-" ) )
-            {
-                break;
-            }
-            
-            if ( myArg.equals( "-package" ) )
-            {
-                myProperties.put( EnvironmentConfigurator.PACKAGE_NAME_KEY, args[myIndex+1] );
-                myIndex += 2;
-            }
-            else if ( myArg.equals( "-class" ) )
-            {
-                myProperties.put( EnvironmentConfigurator.CLASS_NAME_KEY, args[myIndex+1] );
-                myIndex += 2;
-            }
-            else if ( myArg.equals( "-genrootdir" ) )
-            {
-                myProperties.put( EnvironmentConfigurator.GENERATION_ROOT_DIR_KEY, args[myIndex+1] );
-                myIndex += 2;
-            }
-            else if ( myArg.equals( "-metafile" ) )
-            {
-                myProperties.put( EnvironmentConfigurator.ENVIRONMENT_METADATA_FILENAME_KEY, args[myIndex+1] );
-                myIndex += 2;
-            }
-            else if ( myArg.equals( "-implrecname" ) )
-            {
-                myProperties.put( EnvironmentConfigurator.IMPLICIT_RECORD_NAME_KEY, args[myIndex+1] );
-                myIndex += 2;
-            }
-            else
-            {
-                throw new RuntimeException( "bad argument: " + myArg );
-            }
+            cliProperties.put( aKey, aCommandLine.getOptionValue( aOptionName ) );
         }
+    }
+    
 
-        if ( myIndex < myArgCount )
-        {
-            myProperties.put( EnvironmentConfigurator.COPYBOOK_FILENAME_KEY, args[myIndex] );
-            myIndex++;
-        }
+    @Override
+    protected void runImpl()
+            throws Exception
+    {
+        EnvironmentConfigurator myConfigurator = new EnvironmentConfigurator();
+        myConfigurator.setOverrideProperties( cliProperties );
         
-        if ( myIndex < myArgCount )
-        {
-            // TODO: too many arguments
-        }
+        Environment            myEnvironment = myConfigurator.configure();
+        CopybookClassGenerator myGenerator   = new CopybookClassGenerator( myEnvironment );
         
-        return myProperties;
+        myGenerator.generate();
     }
 }
