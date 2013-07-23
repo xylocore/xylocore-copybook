@@ -70,9 +70,7 @@ public class CopybookProcessor
             
             myWalker.walk( myListener, myParseTree );
             
-            Copybook myCopybook = myListener.getCopybook();
-            
-            return myCopybook;
+            return myListener.getCopybook();
         }
         catch ( IOException myIOException )
         {

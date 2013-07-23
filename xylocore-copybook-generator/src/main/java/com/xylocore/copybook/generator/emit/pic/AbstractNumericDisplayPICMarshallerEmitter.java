@@ -25,6 +25,7 @@ import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.NumericValue;
 import com.xylocore.copybook.generator.domain.Value;
 import com.xylocore.copybook.generator.domain.ZeroValue;
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.DataType;
 import com.xylocore.copybook.runtime.SignPosition;
 import com.xylocore.copybook.runtime.SignType;
@@ -54,25 +55,21 @@ public abstract class AbstractNumericDisplayPICMarshallerEmitter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableMethodParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
-    protected void emitVariableMethodParts( StringBuilder        aBuffer,
+    protected void emitVariableMethodParts( BufferEmitter        aEmitter,
                                             Element              aElement,
                                             AccessorMethodInfo   aAccessorMethodInfo )
     {
-        assert aBuffer             != null;
+        assert aEmitter            != null;
         assert aElement            != null;
         assert aAccessorMethodInfo != null;
         
         DataType myDataType = aAccessorMethodInfo.getDataType();
         
-        emitVariableCommonWithPrecisionInfoMethodParts( aBuffer, aElement );
+        emitVariableCommonWithPrecisionInfoMethodParts( aEmitter, aElement );
         
         if ( myDataType == DataType.Date )
         {
-            emitVariableConverterParts( aBuffer, aElement, aAccessorMethodInfo );
+            emitVariableConverterParts( aEmitter, aElement, aAccessorMethodInfo );
         }
         
         if
@@ -83,79 +80,67 @@ public abstract class AbstractNumericDisplayPICMarshallerEmitter
             myDataType == DataType.Date
         )
         {
-            emitVariableNullEquivalentStrategiesParts( aBuffer, (DataElement) aElement );
+            emitVariableNullEquivalentStrategiesParts( aEmitter, (DataElement) aElement );
         }
     }
     
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableIsBlankMethodParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element)
-     */
-    protected void emitVariableIsBlankMethodParts( StringBuilder   aBuffer,
-                                                   Element         aElement )
+
+    protected void emitVariableIsBlankMethodParts( BufferEmitter   aEmitter,
+                                                   Element         aElement  )
     {
-        assert aBuffer             != null;
-        assert aElement            != null;
+        assert aEmitter != null;
+        assert aElement != null;
         
-        emitVariableCommonMethodParts( aBuffer, aElement );
+        emitVariableCommonMethodParts( aEmitter, aElement );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableIsValidMethodParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
-    protected void emitVariableIsValidMethodParts( StringBuilder        aBuffer,
+    protected void emitVariableIsValidMethodParts( BufferEmitter        aEmitter,
                                                    Element              aElement,
                                                    AccessorMethodInfo   aAccessorMethodInfo )
     {
-        emitVariableMethodParts( aBuffer, aElement, aAccessorMethodInfo );
+        emitVariableMethodParts( aEmitter, aElement, aAccessorMethodInfo );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableConditionNameMethodParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element)
-     */
-    protected void emitVariableConditionNameMethodParts( StringBuilder   aBuffer,
+    protected void emitVariableConditionNameMethodParts( BufferEmitter   aEmitter,
                                                          Element         aConditionalVariableElement )
     {
-        emitVariableCommonWithPrecisionInfoMethodParts( aBuffer, aConditionalVariableElement );
+        emitVariableCommonWithPrecisionInfoMethodParts( aEmitter, aConditionalVariableElement );
     }
     
     
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      */
-    protected void emitVariableCommonMethodParts( StringBuilder   aBuffer,
-                                                  Element         aElement )
+    protected void emitVariableCommonMethodParts( BufferEmitter   aEmitter,
+                                                  Element         aElement  )
     {
-        assert aBuffer  != null;
+        assert aEmitter != null;
         assert aElement != null;
         
-        aBuffer.append( ", "                              )
-               .append( aElement.getDigits()              )
-               .append( ", "                              )
-               .append( SignType.class.getName()          )
-               .append( "."                               )
-               .append( aElement.getSignType().toString() )
-               .append( ", "                              )
-               ;
+        aEmitter.append( ", "                              )
+                .append( aElement.getDigits()              )
+                .append( ", "                              )
+                .append( SignType.class.getName()          )
+                .append( "."                               )
+                .append( aElement.getSignType().toString() )
+                .append( ", "                              )
+                ;
  
         if ( aElement.getSignType() != SignType.None )
         {
-            aBuffer.append( SignPosition.class.getName()          )
-                   .append( "."                                   )
-                   .append( aElement.getSignPosition().toString() )
-                   ;
+            aEmitter.append( SignPosition.class.getName()          )
+                    .append( "."                                   )
+                    .append( aElement.getSignPosition().toString() )
+                    ;
         }
         else
         {
-            aBuffer.append( "null" );
+            aEmitter.append( "null" );
         }
     }
     
@@ -163,57 +148,45 @@ public abstract class AbstractNumericDisplayPICMarshallerEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      */
-    protected void emitVariableCommonWithPrecisionInfoMethodParts( StringBuilder   aBuffer,
+    protected void emitVariableCommonWithPrecisionInfoMethodParts( BufferEmitter   aEmitter,
                                                                    Element         aElement )
     {
-        emitVariableCommonMethodParts( aBuffer, aElement );
+        emitVariableCommonMethodParts( aEmitter, aElement );
         
-        aBuffer.append( ", "                          )
-               .append( aElement.getPrecision()       )
-               .append( ", "                          )
-               .append( aElement.getScalingPosition() )
-               ;
+        aEmitter.append( ", "                          )
+                .append( aElement.getPrecision()       )
+                .append( ", "                          )
+                .append( aElement.getScalingPosition() )
+                ;
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableConverterParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
-    protected void emitVariableConverterParts( StringBuilder        aBuffer,
+    protected void emitVariableConverterParts( BufferEmitter        aEmitter,
                                                Element              aElement,
                                                AccessorMethodInfo   aAccessorMethodInfo )
     {
         String myConverterVariableName = aAccessorMethodInfo.getConverterInstanceVariableName();
         
-        aBuffer.append( ", "                                                               )
-               .append( myConverterVariableName != null ? myConverterVariableName : "null" )
-               ;
+        aEmitter.append( ", "                                                               )
+                .append( myConverterVariableName != null ? myConverterVariableName : "null" )
+                ;
     }
     
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableNullEquivalentStrategiesParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
-    protected void emitVariableNullEquivalentStrategiesParts( StringBuilder   aBuffer,
-                                                              DataElement     aElement )
+
+    protected void emitVariableNullEquivalentStrategiesParts( BufferEmitter   aEmitter,
+                                                              DataElement     aElement  )
     {
         String myNullEquivalentStrategySetVariableName = aElement.getNullEquivalentStrategySetInstanceVariableName();
         
-        aBuffer.append( ", "                                                                                               )
-               .append( myNullEquivalentStrategySetVariableName != null ? myNullEquivalentStrategySetVariableName : "null" )
-               ;
+        aEmitter.append( ", "                                                                                               )
+                .append( myNullEquivalentStrategySetVariableName != null ? myNullEquivalentStrategySetVariableName : "null" )
+                ;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#convertValue(com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.Value)
-     */
     protected Comparable<?> convertValue( Element   aElement,
                                           Value     aValue    )
     {
@@ -242,11 +215,8 @@ public abstract class AbstractNumericDisplayPICMarshallerEmitter
     // PICMarshallerEmitter interface implementation
     //
     
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#isBlankMethodNeeded(com.xylocore.commons.data.copybook.domain.Element)
-     */
+
+    @Override
     public boolean isBlankMethodNeeded( Element aElement )
     {
         return true;

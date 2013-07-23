@@ -17,6 +17,7 @@
 
 package com.xylocore.copybook.generator.emit.nulleq;
 
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.nulleq.NullEquivalentStrategy;
 
 
@@ -31,9 +32,9 @@ public interface NullEquivalentStrategyEmitter<T extends NullEquivalentStrategy>
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aNullEquivalentStrategy
      */
-    public void emitDeclaration( StringBuilder   aBuffer,
+    public void emitDeclaration( BufferEmitter   aEmitter,
                                  T               aNullEquivalentStrategy );
 }

@@ -17,6 +17,7 @@
 
 package com.xylocore.copybook.generator.emit.nulleq;
 
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.nulleq.ConstantNullEquivalentStrategy;
 
 
@@ -35,18 +36,19 @@ public class ConstantNullEquivalentStrategyEmitter
     //
     
     
-    public void emitDeclaration( StringBuilder                    aBuffer,
+    @Override
+    public void emitDeclaration( BufferEmitter                    aEmitter,
                                  ConstantNullEquivalentStrategy   aNullEquivalentStrategy )
     {
-        aBuffer.append( "new "                                                              )
-               .append( getClass().getName()                                                )
-               .append( "( "                                                                )
-               .append( aNullEquivalentStrategy.getDataUsageCategory().getClass().getName() )
-               .append( "."                                                                 )
-               .append( aNullEquivalentStrategy.getDataUsageCategory().toString()           )
-               .append( ", \""                                                              )
-               .append( aNullEquivalentStrategy.getValue().toString()                       )
-               .append( "\" )"                                                              )
-               ;
+        aEmitter.append( "new "                                                              )
+                .append( getClass().getName()                                                )
+                .append( "( "                                                                )
+                .append( aNullEquivalentStrategy.getDataUsageCategory().getClass().getName() )
+                .append( "."                                                                 )
+                .append( aNullEquivalentStrategy.getDataUsageCategory().toString()           )
+                .append( ", \""                                                              )
+                .append( aNullEquivalentStrategy.getValue().toString()                       )
+                .append( "\" )"                                                              )
+                ;
     }
 }

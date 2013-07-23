@@ -87,6 +87,17 @@ public class BigDecimalConverter
     }
     
     
+    /**
+     * FILLIN
+     * 
+     * @return
+     */
+    public int getScale()
+    {
+        return scale;
+    }
+    
+    
     /*
      * (non-Javadoc)
      * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#getSupportedDataUsageCategories()
@@ -296,28 +307,6 @@ public class BigDecimalConverter
     {
         // TODO: implement
         super.encodeExternalAlphanumeric( aPICMarshaller, aContext, aOffset, aValue, aSize, aFlags );
-    }
-    
-
-    
-    
-    //
-    // Converter interface implementation
-    //
-    
-
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.Converter#emitDeclaration(com.xylocore.commons.util.XyStringBuffer)
-     */
-    public void emitDeclaration( StringBuilder aBuffer )
-    {
-        aBuffer.append( "new "               )
-               .append( getClass().getName() )
-               .append( "( "                 )
-               .append( scale                )
-               .append( " )"                 )
-               ;
     }
     
     

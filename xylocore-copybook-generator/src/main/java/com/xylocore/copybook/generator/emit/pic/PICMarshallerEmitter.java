@@ -22,6 +22,7 @@ import com.xylocore.copybook.generator.domain.DataElement;
 import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.Level88Element;
 import com.xylocore.copybook.generator.domain.ValueRange;
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.marshallers.PICMarshaller;
 
 
@@ -36,11 +37,11 @@ public interface PICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aMarshaller
      * @param       aInstanceName
      */
-    public void emitMarshaller( StringBuilder   aBuffer,
+    public void emitMarshaller( BufferEmitter   aEmitter,
                                 PICMarshaller   aMarshaller,
                                 String          aInstanceName );
     
@@ -48,11 +49,11 @@ public interface PICMarshallerEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      * @param       aValueRange
      */
-    public void emitValueRange( StringBuilder   aBuffer,
+    public void emitValueRange( BufferEmitter   aEmitter,
                                 Element         aElement,
                                 ValueRange      aValueRange );
     
@@ -60,12 +61,12 @@ public interface PICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aMarshaller
      * @param       aElement
      * @param       aAccessorMethodInfo
      */
-    public void emitReader( StringBuilder        aBuffer,
+    public void emitReader( BufferEmitter        aEmitter,
                             PICMarshaller        aMarshaller,
                             Element              aElement,
                             AccessorMethodInfo   aAccessorMethodInfo );
@@ -74,12 +75,12 @@ public interface PICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aMarshaller
      * @param       aElement
      * @param       aAccessorMethodInfo
      */
-    public void emitWriter( StringBuilder        aBuffer,
+    public void emitWriter( BufferEmitter        aEmitter,
                             PICMarshaller        aMarshaller,
                             Element              aElement,
                             AccessorMethodInfo   aAccessorMethodInfo );
@@ -98,11 +99,11 @@ public interface PICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aMarshaller
      * @param       aElement
      */
-    public void emitBlankMethodCall( StringBuilder   aBuffer,
+    public void emitBlankMethodCall( BufferEmitter   aEmitter,
                                      PICMarshaller   aMarshaller,
                                      Element         aElement     );
     
@@ -120,11 +121,11 @@ public interface PICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aMarshaller
      * @param       aElement
      */
-    public void emitNullMethodCall( StringBuilder   aBuffer,
+    public void emitNullMethodCall( BufferEmitter   aEmitter,
                                     PICMarshaller   aMarshaller,
                                     DataElement     aElement     );
 
@@ -144,12 +145,12 @@ public interface PICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aMarshaller
      * @param       aElement
      * @param       aAccessorMethodInfo
      */
-    public void emitValidMethodCall( StringBuilder        aBuffer,
+    public void emitValidMethodCall( BufferEmitter        aEmitter,
                                      PICMarshaller        aMarshaller,
                                      Element              aElement,
                                      AccessorMethodInfo   aAccessorMethodInfo );
@@ -159,12 +160,12 @@ public interface PICMarshallerEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aConditionalVariableElement
      * @param       aConditionNameElement
      * @param       aConditionNameValueMapName
      */
-    public void emitConditionNameMethodCall( StringBuilder    aBuffer,
+    public void emitConditionNameMethodCall( BufferEmitter    aEmitter,
                                              Element          aConditionalVariableElement,
                                              Level88Element   aConditionNameElement,
                                              String           aConditionNameValueMapName   );

@@ -55,7 +55,7 @@ public enum DataUsageCategory
     //
     
     
-    private static final Map<DataCategory,ConstantMap<UsageType,DataUsageCategory>> categoryUsageMap = new HashMap<DataCategory,ConstantMap<UsageType,DataUsageCategory>>();
+    private static final Map<DataCategory,ConstantMap<UsageType,DataUsageCategory>> categoryUsageMap = new HashMap<>();
     
     
     
@@ -67,14 +67,14 @@ public enum DataUsageCategory
     
     static
     {
-        ConstantMap<UsageType,DataUsageCategory> myAlphanumericSingleConstantMap = new SingleConstantMap<UsageType,DataUsageCategory>( Alphanumeric );
+        ConstantMap<UsageType,DataUsageCategory> myAlphanumericSingleConstantMap = new SingleConstantMap<>( Alphanumeric );
         
         categoryUsageMap.put( DataCategory.Alphabetic  , myAlphanumericSingleConstantMap );
         categoryUsageMap.put( DataCategory.Alphanumeric, myAlphanumericSingleConstantMap );
         categoryUsageMap.put( DataCategory.DBCS        , myAlphanumericSingleConstantMap );
         categoryUsageMap.put( DataCategory.National    , myAlphanumericSingleConstantMap );
         
-        HashMap<UsageType,DataUsageCategory> myMap = new HashMap<UsageType,DataUsageCategory>();
+        HashMap<UsageType,DataUsageCategory> myMap = new HashMap<>();
         myMap.put( UsageType.Binary        , Binary          );
         myMap.put( UsageType.Computational1, Computational1  );
         myMap.put( UsageType.Computational2, Computational2  );
@@ -82,7 +82,7 @@ public enum DataUsageCategory
         myMap.put( UsageType.Computational5, Computational5  );
         myMap.put( UsageType.Display       , NumericDisplay  );
         myMap.put( UsageType.National      , NumericNational );
-        categoryUsageMap.put( DataCategory.Numeric, new MultiConstantMap<UsageType,DataUsageCategory>( myMap ) );
+        categoryUsageMap.put( DataCategory.Numeric, new MultiConstantMap<>( myMap ) );
     }
     
     

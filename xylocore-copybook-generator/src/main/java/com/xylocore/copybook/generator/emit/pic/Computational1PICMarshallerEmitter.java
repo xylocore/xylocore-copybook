@@ -21,6 +21,7 @@ import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.NumericValue;
 import com.xylocore.copybook.generator.domain.Value;
 import com.xylocore.copybook.generator.domain.ZeroValue;
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.DataType;
 
 
@@ -70,34 +71,19 @@ public class Computational1PICMarshallerEmitter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#getDelegateIsValidMethodName(com.xylocore.commons.data.copybook.runtime.DataType)
-     */
     protected String getDelegateIsValidMethodName( DataType aDataType )
     {
         return "isValid";
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableConditionNameMethodParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element)
-     */
-    protected void emitVariableConditionNameMethodParts( StringBuilder   aBuffer,
+    protected void emitVariableConditionNameMethodParts( BufferEmitter   aEmitter,
                                                          Element         aConditionalVariableElement )
     {
     }
     
     
-    /**
-     * FILLIN
-     *
-     * @param       aElement
-     * @param       aValue
-     * 
-     * @return
-     */
+    @Override
     protected Comparable<?> convertValue( Element   aElement,
                                           Value     aValue    )
     {

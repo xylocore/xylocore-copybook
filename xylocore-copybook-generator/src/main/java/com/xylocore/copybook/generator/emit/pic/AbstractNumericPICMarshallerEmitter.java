@@ -24,6 +24,7 @@ import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.NumericValue;
 import com.xylocore.copybook.generator.domain.Value;
 import com.xylocore.copybook.generator.domain.ZeroValue;
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 
 
 /**
@@ -53,70 +54,55 @@ public abstract class AbstractNumericPICMarshallerEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      */
-    protected void emitVariableCommonMethodParts( StringBuilder   aBuffer,
-                                                  Element         aElement )
+    protected void emitVariableCommonMethodParts( BufferEmitter   aEmitter,
+                                                  Element         aElement  )
     {
-        assert aBuffer  != null;
+        assert aEmitter != null;
         assert aElement != null;
         
-        aBuffer.append( ", "                              )
-               .append( aElement.getDigits()              )
-               .append( ", SignType."                     )
-               .append( aElement.getSignType().toString() )
-               .append( ", "                              )
-               .append( aElement.getPrecision()           )
-               .append( ", "                              )
-               .append( aElement.getScalingPosition()     )
-               ;
-    }
-    
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableMethodParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
-    protected void emitVariableMethodParts( StringBuilder        aBuffer,
-                                            Element              aElement,
-                                            AccessorMethodInfo   aAccessorMethodInfo )
-    {
-        assert aBuffer             != null;
-        assert aElement            != null;
-        assert aAccessorMethodInfo != null;
-        
-        emitVariableCommonMethodParts( aBuffer, aElement );
+        aEmitter.append( ", "                              )
+                .append( aElement.getDigits()              )
+                .append( ", SignType."                     )
+                .append( aElement.getSignType().toString() )
+                .append( ", "                              )
+                .append( aElement.getPrecision()           )
+                .append( ", "                              )
+                .append( aElement.getScalingPosition()     )
+                ;
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableIsValidMethodParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
-    protected void emitVariableIsValidMethodParts( StringBuilder        aBuffer,
+    @Override
+    protected void emitVariableMethodParts( BufferEmitter        aEmitter,
+                                            Element              aElement,
+                                            AccessorMethodInfo   aAccessorMethodInfo )
+    {
+        assert aEmitter            != null;
+        assert aElement            != null;
+        assert aAccessorMethodInfo != null;
+        
+        emitVariableCommonMethodParts( aEmitter, aElement );
+    }
+    
+
+    protected void emitVariableIsValidMethodParts( BufferEmitter        aEmitter,
                                                    Element              aElement,
                                                    AccessorMethodInfo   aAccessorMethodInfo )
     {
-        emitVariableMethodParts( aBuffer, aElement, aAccessorMethodInfo );
+        emitVariableMethodParts( aEmitter, aElement, aAccessorMethodInfo );
     }
     
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#emitVariableConditionNameMethodParts(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element)
-     */
-    protected void emitVariableConditionNameMethodParts( StringBuilder   aBuffer,
+
+    protected void emitVariableConditionNameMethodParts( BufferEmitter   aEmitter,
                                                          Element         aConditionalVariableElement )
     {
-        emitVariableCommonMethodParts( aBuffer, aConditionalVariableElement );
+        emitVariableCommonMethodParts( aEmitter, aConditionalVariableElement );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractPICMarshallerEmitter#convertValue(com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.Value)
-     */
     protected Comparable<?> convertValue( Element   aElement,
                                           Value     aValue    )
     {

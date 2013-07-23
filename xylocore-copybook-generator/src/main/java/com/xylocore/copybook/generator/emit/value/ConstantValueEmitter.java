@@ -17,6 +17,7 @@
 
 package com.xylocore.copybook.generator.emit.value;
 
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.ConstantValue;
 
 
@@ -31,9 +32,9 @@ public interface ConstantValueEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aValue
      */
-    public void emit( StringBuilder   aBuffer,
-                      ConstantValue   aValue   );
+    public void emit( BufferEmitter   aEmitter,
+                      ConstantValue   aValue    );
 }

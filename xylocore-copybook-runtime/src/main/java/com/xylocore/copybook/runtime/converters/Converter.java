@@ -44,15 +44,6 @@ public interface Converter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
-     * @param       aConverter
-     */
-    public void emitDeclaration( StringBuilder aBuffer );
-
-    
-    /**
-     * FILLIN
-     * 
      * @param       aDataUsageCategory
      */
     public boolean isDataUsageCategorySupported( DataUsageCategory aDataUsageCategory );

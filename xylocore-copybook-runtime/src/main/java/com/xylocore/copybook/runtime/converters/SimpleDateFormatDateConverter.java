@@ -94,6 +94,17 @@ public class SimpleDateFormatDateConverter
     }
     
     
+    /**
+     * FILLIN
+     * 
+     * @return
+     */
+    public String getPattern()
+    {
+        return pattern;
+    }
+    
+    
     /*
      * (non-Javadoc)
      * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#getSupportedDataUsageCategories()
@@ -299,28 +310,6 @@ public class SimpleDateFormatDateConverter
         {
             aContext.setError( CopybookError.NullNotAllowed, null );
         }
-    }
-    
-
-    
-    
-    //
-    // Converter interface implementation
-    //
-    
-
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.Converter#emitDeclaration(com.xylocore.commons.util.XyStringBuffer)
-     */
-    public void emitDeclaration( StringBuilder aBuffer )
-    {
-        aBuffer.append( "new "               )
-               .append( getClass().getName() )
-               .append( "( \""               )
-               .append( pattern              )
-               .append( "\" )"               )
-               ;
     }
     
     

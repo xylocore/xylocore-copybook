@@ -26,7 +26,6 @@ import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.xylocore.copybook.generator.parser.ElementFilter;
 
 
 /**

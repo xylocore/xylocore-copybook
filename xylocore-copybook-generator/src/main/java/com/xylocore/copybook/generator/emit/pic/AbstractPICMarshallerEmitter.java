@@ -17,13 +17,14 @@
 
 package com.xylocore.copybook.generator.emit.pic;
 
-import com.xylocore.copybook.generator.IndexOffsets;
 import com.xylocore.copybook.generator.domain.AccessorMethodInfo;
 import com.xylocore.copybook.generator.domain.DataElement;
 import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.Level88Element;
 import com.xylocore.copybook.generator.domain.Value;
 import com.xylocore.copybook.generator.domain.ValueRange;
+import com.xylocore.copybook.generator.emit.BufferEmitter;
+import com.xylocore.copybook.generator.emit.IndexOffsets;
 import com.xylocore.copybook.generator.emit.value.ConstantValueEmitter;
 import com.xylocore.copybook.generator.emit.value.ConstantValueEmitterFactory;
 import com.xylocore.copybook.runtime.ConstantValue;
@@ -175,63 +176,63 @@ public abstract class AbstractPICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      */
-    protected void emitIndexOffsets( StringBuilder   aBuffer,
-                                     Element         aElement )
+    protected void emitIndexOffsets( BufferEmitter   aEmitter,
+                                     Element         aElement  )
     {
         IndexOffsets myIndexOffset = new IndexOffsets();
-        myIndexOffset.emit( aBuffer, aElement );
+        myIndexOffset.emit( aEmitter, aElement );
     }
 
     
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      * @param       aAccessorMethodInfo
      */
-    protected void emitVariableReaderMethodParts( StringBuilder        aBuffer,
+    protected void emitVariableReaderMethodParts( BufferEmitter        aEmitter,
                                                   Element              aElement,
                                                   AccessorMethodInfo   aAccessorMethodInfo )
     {
-        assert aBuffer             != null;
+        assert aEmitter            != null;
         assert aElement            != null;
         assert aAccessorMethodInfo != null;
         
-        emitVariableMethodParts( aBuffer, aElement, aAccessorMethodInfo );
+        emitVariableMethodParts( aEmitter, aElement, aAccessorMethodInfo );
     }
     
     
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      * @param       aAccessorMethodInfo
      */
-    protected void emitVariableWriterMethodParts( StringBuilder        aBuffer,
+    protected void emitVariableWriterMethodParts( BufferEmitter        aEmitter,
                                                   Element              aElement,
                                                   AccessorMethodInfo   aAccessorMethodInfo )
     {
-        assert aBuffer             != null;
+        assert aEmitter            != null;
         assert aElement            != null;
         assert aAccessorMethodInfo != null;
         
-        emitVariableMethodParts( aBuffer, aElement, aAccessorMethodInfo );
+        emitVariableMethodParts( aEmitter, aElement, aAccessorMethodInfo );
     }
     
     
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      * @param       aAccessorMethodInfo
      */
-    protected void emitVariableMethodParts( StringBuilder        aBuffer,
+    protected void emitVariableMethodParts( BufferEmitter        aEmitter,
                                             Element              aElement,
                                             AccessorMethodInfo   aAccessorMethodInfo )
     {
@@ -242,11 +243,11 @@ public abstract class AbstractPICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      */
-    protected void emitVariableIsBlankMethodParts( StringBuilder   aBuffer,
-                                                   Element         aElement )
+    protected void emitVariableIsBlankMethodParts( BufferEmitter   aEmitter,
+                                                   Element         aElement  )
     {
         //  By default assume that no additional parts are needed
     }
@@ -255,11 +256,11 @@ public abstract class AbstractPICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      */
-    protected void emitVariableIsNullMethodParts( StringBuilder   aBuffer,
-                                                  Element         aElement )
+    protected void emitVariableIsNullMethodParts( BufferEmitter   aEmitter,
+                                                  Element         aElement  )
     {
         //  By default assume that no additional parts are needed
     }
@@ -268,11 +269,11 @@ public abstract class AbstractPICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      * @param       aAccessorMethodInfo
      */
-    protected void emitVariableIsValidMethodParts( StringBuilder        aBuffer,
+    protected void emitVariableIsValidMethodParts( BufferEmitter        aEmitter,
                                                    Element              aElement,
                                                    AccessorMethodInfo   aAccessorMethodInfo )
     {
@@ -283,11 +284,11 @@ public abstract class AbstractPICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      * @param       aAccessorMethodInfo
      */
-    protected void emitVariableConverterParts( StringBuilder        aBuffer,
+    protected void emitVariableConverterParts( BufferEmitter        aEmitter,
                                                Element              aElement,
                                                AccessorMethodInfo   aAccessorMethodInfo )
     {
@@ -297,11 +298,11 @@ public abstract class AbstractPICMarshallerEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aElement
      */
-    protected void emitVariableNullEquivalentStrategiesParts( StringBuilder   aBuffer,
-                                                              DataElement     aElement )
+    protected void emitVariableNullEquivalentStrategiesParts( BufferEmitter   aEmitter,
+                                                              DataElement     aElement  )
     {
     }
     
@@ -309,10 +310,10 @@ public abstract class AbstractPICMarshallerEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aConditionalVariableElement
      */
-    protected abstract void emitVariableConditionNameMethodParts( StringBuilder   aBuffer,
+    protected abstract void emitVariableConditionNameMethodParts( BufferEmitter   aEmitter,
                                                                   Element         aConditionalVariableElement );
     
     
@@ -379,11 +380,7 @@ public abstract class AbstractPICMarshallerEmitter
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.PICMarshallerEmitter#emitMarshaller(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.runtime.PICMarshaller, java.lang.String)
-     */
-    public void emitMarshaller( StringBuilder   aBuffer,
+    public void emitMarshaller( BufferEmitter   aEmitter,
                                 PICMarshaller   aMarshaller,
                                 String          aInstanceName )
     {
@@ -393,31 +390,23 @@ public abstract class AbstractPICMarshallerEmitter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.PICMarshallerEmitter#emitValueRange(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.ValueRange)
-     */
-    public void emitValueRange( StringBuilder   aBuffer,
+    public void emitValueRange( BufferEmitter   aEmitter,
                                 Element         aElement,
                                 ValueRange      aValueRange )
     {
         ConstantValue        myConstantValue = convertValueRange( aElement, aValueRange );
-        ConstantValueEmitter myEmitter       = ConstantValueEmitterFactory.getInstance().newInstance( myConstantValue );
+        ConstantValueEmitter myValueEmitter  = ConstantValueEmitterFactory.getInstance().newInstance( myConstantValue );
 
-        myEmitter.emit( aBuffer, myConstantValue );
+        myValueEmitter.emit( aEmitter, myConstantValue );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.PICMarshallerEmitter#emitReader(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.runtime.PICMarshaller, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
-    public void emitReader( StringBuilder        aBuffer,
+    public void emitReader( BufferEmitter        aEmitter,
                             PICMarshaller        aMarshaller,
                             Element              aElement,
                             AccessorMethodInfo   aAccessorMethodInfo )
     {
-        assert aBuffer             != null;
+        assert aEmitter            != null;
         assert aMarshaller         == null;
         assert aElement            != null;
         assert aAccessorMethodInfo != null;
@@ -425,29 +414,25 @@ public abstract class AbstractPICMarshallerEmitter
         DataType myDataType   = aAccessorMethodInfo.getDataType();
         String   myMethodName = getDelegateDecodeMethodName( myDataType );
         
-        aBuffer.append( "return "      )
-               .append( myMethodName   )
-               .append( "( aContext, " )
-               ;
+        aEmitter.append( "return "      )
+                .append( myMethodName   )
+                .append( "( aContext, " )
+                ;
         
-        emitIndexOffsets( aBuffer, aElement );
+        emitIndexOffsets( aEmitter, aElement );
         
-        emitVariableReaderMethodParts( aBuffer, aElement, aAccessorMethodInfo );
+        emitVariableReaderMethodParts( aEmitter, aElement, aAccessorMethodInfo );
         
-        aBuffer.append( " );" );
+        aEmitter.append( " );" );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.PICMarshallerEmitter#emitWriter(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.runtime.PICMarshaller, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
-    public void emitWriter( StringBuilder        aBuffer,
+    public void emitWriter( BufferEmitter        aEmitter,
                             PICMarshaller        aMarshaller,
                             Element              aElement,
                             AccessorMethodInfo   aAccessorMethodInfo )
     {
-        assert aBuffer             != null;
+        assert aEmitter            != null;
         assert aMarshaller         == null;
         assert aElement            != null;
         assert aAccessorMethodInfo != null;
@@ -455,54 +440,46 @@ public abstract class AbstractPICMarshallerEmitter
         DataType myDataType   = aAccessorMethodInfo.getDataType();
         String   myMethodName = getDelegateEncodeMethodName( myDataType );
         
-        aBuffer.append( myMethodName   )
-               .append( "( aContext, " )
-               ;
+        aEmitter.append( myMethodName   )
+                .append( "( aContext, " )
+                ;
 
-        emitIndexOffsets( aBuffer, aElement );
+        emitIndexOffsets( aEmitter, aElement );
         
-        aBuffer.append( ", aValue" );
+        aEmitter.append( ", aValue" );
         
-        emitVariableWriterMethodParts( aBuffer, aElement, aAccessorMethodInfo );
+        emitVariableWriterMethodParts( aEmitter, aElement, aAccessorMethodInfo );
         
-        aBuffer.append( " );" );
+        aEmitter.append( " );" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.PICMarshallerEmitter#isBlankMethodNeeded(com.xylocore.commons.data.copybook.domain.Element)
-     */
     public boolean isBlankMethodNeeded( Element aElement )
     {
         return false;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.PICMarshallerEmitter#emitBlankMethodCall(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.runtime.marshallers.PICMarshaller, com.xylocore.commons.data.copybook.domain.Element)
-     */
-    public void emitBlankMethodCall( StringBuilder   aBuffer,
+    public void emitBlankMethodCall( BufferEmitter   aEmitter,
                                      PICMarshaller   aMarshaller,
                                      Element         aElement     )
     {
-        assert aBuffer             != null;
+        assert aEmitter            != null;
         assert aMarshaller         == null;
         assert aElement            != null;
         assert isBlankMethodNeeded( aElement );
         
         String myMethodName = getDelegateIsBlankMethodName();
         
-        aBuffer.append( "return "      )
-               .append( myMethodName   )
-               .append( "( aContext, " )
-               ;
+        aEmitter.append( "return "      )
+                .append( myMethodName   )
+                .append( "( aContext, " )
+                ;
 
-        emitIndexOffsets              ( aBuffer, aElement );
-        emitVariableIsBlankMethodParts( aBuffer, aElement );
+        emitIndexOffsets              ( aEmitter, aElement );
+        emitVariableIsBlankMethodParts( aEmitter, aElement );
         
-        aBuffer.append( " );" );
+        aEmitter.append( " );" );
     }
     
     
@@ -522,37 +499,33 @@ public abstract class AbstractPICMarshallerEmitter
     /**
      * FILLIN
      * 
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aMarshaller
      * @param       aElement
      */
-    public void emitNullMethodCall( StringBuilder   aBuffer,
+    public void emitNullMethodCall( BufferEmitter   aEmitter,
                                     PICMarshaller   aMarshaller,
                                     DataElement     aElement     )
     {
-        assert aBuffer     != null;
+        assert aEmitter    != null;
         assert aMarshaller == null;
         assert aElement    != null;
         assert isNullMethodNeeded( aElement );
         
         String myMethodName = getDelegateIsNullMethodName();
         
-        aBuffer.append( "return "      )
-               .append( myMethodName   )
-               .append( "( aContext, " )
-               ;
+        aEmitter.append( "return "      )
+                .append( myMethodName   )
+                .append( "( aContext, " )
+                ;
 
-        emitIndexOffsets             ( aBuffer, aElement );
-        emitVariableIsNullMethodParts( aBuffer, aElement );
+        emitIndexOffsets             ( aEmitter, aElement );
+        emitVariableIsNullMethodParts( aEmitter, aElement );
         
-        aBuffer.append( " );" );
+        aEmitter.append( " );" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.PICMarshallerEmitter#isValidMethodNeeded(com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
     public boolean isValidMethodNeeded( Element              aElement,
                                         AccessorMethodInfo   aAccessorMethodInfo )
     {
@@ -560,16 +533,12 @@ public abstract class AbstractPICMarshallerEmitter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.PICMarshallerEmitter#emitValidMethodCall(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.runtime.PICMarshaller, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
-    public void emitValidMethodCall( StringBuilder        aBuffer,
+    public void emitValidMethodCall( BufferEmitter        aEmitter,
                                      PICMarshaller        aMarshaller,
                                      Element              aElement,
                                      AccessorMethodInfo   aAccessorMethodInfo )
     {
-        assert aBuffer             != null;
+        assert aEmitter            != null;
         assert aMarshaller         == null;
         assert aElement            != null;
         assert aAccessorMethodInfo != null;
@@ -578,49 +547,45 @@ public abstract class AbstractPICMarshallerEmitter
         DataType myDataType   = aAccessorMethodInfo.getDataType();
         String   myMethodName = getDelegateIsValidMethodName( myDataType );
         
-        aBuffer.append( "return "      )
-               .append( myMethodName   )
-               .append( "( aContext, " )
-               ;
+        aEmitter.append( "return "      )
+                .append( myMethodName   )
+                .append( "( aContext, " )
+                ;
 
-        emitIndexOffsets              ( aBuffer, aElement                      );
-        emitVariableIsValidMethodParts( aBuffer, aElement, aAccessorMethodInfo );
+        emitIndexOffsets              ( aEmitter, aElement                      );
+        emitVariableIsValidMethodParts( aEmitter, aElement, aAccessorMethodInfo );
 
-        aBuffer.append( " );" );
+        aEmitter.append( " );" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.PICMarshallerEmitter#emitConditionNameMethodCall(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.domain.Element, com.xylocore.commons.data.copybook.domain.Level88Element, java.lang.String)
-     */
-    public void emitConditionNameMethodCall( StringBuilder    aBuffer,
+    public void emitConditionNameMethodCall( BufferEmitter    aEmitter,
                                              Element          aConditionalVariableElement,
                                              Level88Element   aConditionNameElement,
                                              String           aConditionNameValueMapName   )
     
     {
-        assert aBuffer                     != null;
+        assert aEmitter                    != null;
         assert aConditionalVariableElement != null;
         assert aConditionNameElement       != null;
         
         String myMethodName = getDelegateConditionNameMethodName();
         
-        aBuffer.append( "return "      )
-               .append( myMethodName   )
-               .append( "( aContext, " )
-               ;
+        aEmitter.append( "return "      )
+                .append( myMethodName   )
+                .append( "( aContext, " )
+                ;
         
-        emitIndexOffsets( aBuffer, aConditionalVariableElement );
+        emitIndexOffsets( aEmitter, aConditionalVariableElement );
         
-        aBuffer.append( ", \""                          )
-               .append( aConditionNameElement.getName() )
-               .append( "\", "                          )
-               .append( aConditionNameValueMapName      )
-               ;
+        aEmitter.append( ", \""                          )
+                .append( aConditionNameElement.getName() )
+                .append( "\", "                          )
+                .append( aConditionNameValueMapName      )
+                ;
         
-        emitVariableConditionNameMethodParts( aBuffer, aConditionalVariableElement );
+        emitVariableConditionNameMethodParts( aEmitter, aConditionalVariableElement );
         
-        aBuffer.append( " );" );
+        aEmitter.append( " );" );
     }
 }

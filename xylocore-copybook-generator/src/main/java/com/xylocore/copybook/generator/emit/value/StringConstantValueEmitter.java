@@ -17,6 +17,7 @@
 
 package com.xylocore.copybook.generator.emit.value;
 
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.ConstantCharacterString;
 import com.xylocore.copybook.runtime.ConstantValue;
 
@@ -36,29 +37,26 @@ public class StringConstantValueEmitter
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.AbstractConstantValueEmitter#emitInstantiationParameters(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.runtime.ConstantValue)
-     */
-    protected void emitInstantiationParameters( StringBuilder   aBuffer,
-                                                ConstantValue   aValue   )
+    @Override
+    protected void emitInstantiationParameters( BufferEmitter   aEmitter,
+                                                ConstantValue   aValue    )
     {
         if ( aValue.getValue1() instanceof ConstantCharacterString )
         {
             ConstantCharacterString myConstantCharacterString = (ConstantCharacterString) aValue.getValue1();
             
-            aBuffer.append( " '" );
+            aEmitter.append( " '" );
             
-            appendEscapedChar( aBuffer, myConstantCharacterString.getConstantChar() );
+            appendEscapedChar( aEmitter, myConstantCharacterString.getConstantChar() );
 
-            aBuffer.append( "', "                              )
-                   .append( myConstantCharacterString.length() )
-                   .append( " "                                )
-                   ;
+            aEmitter.append( "', "                              )
+                    .append( myConstantCharacterString.length() )
+                    .append( " "                                )
+                    ;
         }
         else
         {
-            super.emitInstantiationParameters( aBuffer, aValue );
+            super.emitInstantiationParameters( aEmitter, aValue );
         }
     }
 }

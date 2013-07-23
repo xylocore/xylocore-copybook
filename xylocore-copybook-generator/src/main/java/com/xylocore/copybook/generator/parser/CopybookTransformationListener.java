@@ -76,9 +76,8 @@ import com.xylocore.copybook.generator.parser.CopybookParser.SynchronizedClauseC
 import com.xylocore.copybook.generator.parser.CopybookParser.UsageClauseContext;
 import com.xylocore.copybook.generator.parser.CopybookParser.ValueClauseContext;
 import com.xylocore.copybook.generator.parser.CopybookParser.ZeroLiteralContext;
-import com.xylocore.copybook.generator.parser.pic.PICException;
-import com.xylocore.copybook.generator.parser.pic.PICLexer;
-import com.xylocore.copybook.generator.parser.visitor.CopybookNormalizationVisitor;
+import com.xylocore.copybook.generator.pic.parser.PICException;
+import com.xylocore.copybook.generator.pic.parser.PICParser;
 import com.xylocore.copybook.runtime.SignPosition;
 import com.xylocore.copybook.runtime.SignType;
 import com.xylocore.copybook.runtime.SyncPosition;
@@ -124,7 +123,7 @@ public class CopybookTransformationListener
     //
     
 
-    private PICLexer                    picLexer;
+    private PICParser                   picParser;
     private ParseTreeProperty<Value>    values;
     private int                         currentLevelNumber;
     private Environment                 environment;
@@ -142,7 +141,7 @@ public class CopybookTransformationListener
     
     
     {
-        picLexer               = new PICLexer();
+        picParser              = new PICParser();
         values                 = new ParseTreeProperty<>();
         existingElementClauses = new HashSet<>();
     }
@@ -344,14 +343,6 @@ public class CopybookTransformationListener
         copybook    = new Copybook();
         lastElement = copybook;
     }
-    
-    
-    @Override
-    public void exitCopybook( @NotNull CopybookContext aContext )
-    {
-        CopybookNormalizationVisitor myVisitor = new CopybookNormalizationVisitor( environment );
-        myVisitor.normalize( copybook );
-    }
 
     
     @Override
@@ -538,7 +529,7 @@ public class CopybookTransformationListener
         
         try
         {
-            List<PICSlice> myPICSlices = picLexer.parse( aContext.PICTURE_STRING().getText() );
+            List<PICSlice> myPICSlices = picParser.parse( aContext.PICTURE_STRING().getText() );
             
             currentElement.setPICSlices( myPICSlices );
         }

@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import com.xylocore.copybook.generator.ConditionNameValueRanges;
+import com.xylocore.copybook.generator.domain.ConditionNameValueRanges;
 import com.xylocore.copybook.generator.domain.DataElement;
 import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.Level88Element;

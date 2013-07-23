@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.xylocore.commons.util.FormatHelper;
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.ConstantValue;
 
 
@@ -85,67 +86,67 @@ public abstract class AbstractConstantValueEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aValue
      */
-    protected void emitInstantiationParameters( StringBuilder   aBuffer,
-                                                ConstantValue   aValue   )
+    protected void emitInstantiationParameters( BufferEmitter   aEmitter,
+                                                ConstantValue   aValue    )
     {
-        assert aBuffer != null;
-        assert aValue  != null;
+        assert aEmitter != null;
+        assert aValue   != null;
         
-        aBuffer.append( ' ' );
+        aEmitter.append( ' ' );
         
         if ( aValue.getValue2() == null )
         {
-            emitValue( aBuffer, aValue.getValue1() );
+            emitValue( aEmitter, aValue.getValue1() );
         }
         else
         {
-            emitValue( aBuffer, aValue.getValue1() );
-            aBuffer.append( ", " );
-            emitValue( aBuffer, aValue.getValue2() );
+            emitValue( aEmitter, aValue.getValue1() );
+            aEmitter.append( ", " );
+            emitValue( aEmitter, aValue.getValue2() );
         }
         
-        aBuffer.append( ' ' );
+        aEmitter.append( ' ' );
     }
     
     
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aValue
      */
-    protected void emitValue( StringBuilder   aBuffer,
-                              Comparable<?>   aValue   )
+    protected void emitValue( BufferEmitter   aEmitter,
+                              Comparable<?>   aValue    )
     {
-        assert aBuffer != null;
-        assert aValue  != null;
+        assert aEmitter != null;
+        assert aValue   != null;
         
         if ( aValue instanceof String )
         {
-            aBuffer.append( "\"" );
+            aEmitter.append( "\"" );
             
-            appendEscapedString( aBuffer, aValue.toString() );
+            appendEscapedString( aEmitter, aValue.toString() );
             
-            aBuffer.append( "\"" );
+            aEmitter.append( "\"" );
         }
         else
         {
             String myQuoteString = ( isQuoteNeeded( aValue ) ) ? "\"" : "";
             
-            aBuffer.append( "new "                      )
-                   .append( aValue.getClass().getName() )
-                   .append( "( "                        )
-                   .append( myQuoteString               )
-                   ;
+            aEmitter.append( "new "                      )
+                    .append( aValue.getClass().getName() )
+                    .append( "( "                        )
+                    .append( myQuoteString               )
+                    ;
             
-            appendEscapedString( aBuffer, aValue.toString() );
+            appendEscapedString( aEmitter, aValue.toString() );
             
-            aBuffer.append( myQuoteString )
-                   .append( " )"          )
-                   ;
+            aEmitter.append( myQuoteString )
+                    .append( " )"          )
+                    ;
         }
     }
     
@@ -168,18 +169,18 @@ public abstract class AbstractConstantValueEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aString
      */
-    protected void appendEscapedString( StringBuilder   aBuffer,
-                                        String          aString  )
+    protected void appendEscapedString( BufferEmitter   aEmitter,
+                                        String          aString   )
     {
-        assert aBuffer != null;
-        assert aString != null;
+        assert aEmitter != null;
+        assert aString  != null;
         
         for ( int i = 0, ci = aString.length() ; i < ci ; i++ )
         {
-            appendEscapedChar( aBuffer, aString.charAt( i ) );
+            appendEscapedChar( aEmitter, aString.charAt( i ) );
         }
     }
     
@@ -187,66 +188,66 @@ public abstract class AbstractConstantValueEmitter
     /**
      * FILLIN
      *
-     * @param       aBuffer
+     * @param       aEmitter
      * @param       aChar
      */
-    protected void appendEscapedChar( StringBuilder   aBuffer,
-                                      char            aChar    )
+    protected void appendEscapedChar( BufferEmitter   aEmitter,
+                                      char            aChar     )
     {
-        assert aBuffer != null;
+        assert aEmitter != null;
 
         switch ( aChar )
         {
             case '\b':
                 
-                aBuffer.append( "\\b" );
+                aEmitter.append( "\\b" );
                 break;
                 
             case '\t':
                 
-                aBuffer.append( "\\t" );
+                aEmitter.append( "\\t" );
                 break;
                 
             case '\n':
                 
-                aBuffer.append( "\\n" );
+                aEmitter.append( "\\n" );
                 break;
                 
             case '\f':
                 
-                aBuffer.append( "\\f" );
+                aEmitter.append( "\\f" );
                 break;
                 
             case '\r':
                 
-                aBuffer.append( "\\r" );
+                aEmitter.append( "\\r" );
                 break;
                 
             case '"':
                 
-                aBuffer.append( "\\\"" );
+                aEmitter.append( "\\\"" );
                 break;
                 
             case '\'':
                 
-                aBuffer.append( "\\'" );
+                aEmitter.append( "\\'" );
                 break;
                 
             case '\\':
                 
-                aBuffer.append( "\\\\" );
+                aEmitter.append( "\\\\" );
                 break;
                 
             default:
                         
                 if ( aChar >= ' ' && aChar <= 0x7e )
                 {
-                    aBuffer.append( aChar );
+                    aEmitter.append( aChar );
                 }
                 else
                 {
-                    aBuffer.append( "\\u" );
-                    FormatHelper.formatNumber( aBuffer,
+                    aEmitter.append( "\\u" );
+                    FormatHelper.formatNumber( aEmitter.getBuffer(),
                                                aChar & 0x0000ffff,
                                                4,
                                                true,
@@ -265,23 +266,19 @@ public abstract class AbstractConstantValueEmitter
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.generator.ConstantValueEmitter#emit(com.xylocore.commons.util.XyStringBuffer, com.xylocore.commons.data.copybook.runtime.ConstantValue)
-     */
-    public void emit( StringBuilder   aBuffer,
-                      ConstantValue   aValue   )
+    public void emit( BufferEmitter   aEmitter,
+                      ConstantValue   aValue    )
     {
-        assert aBuffer != null;
-        assert aValue  != null;
+        assert aEmitter != null;
+        assert aValue   != null;
         
-        aBuffer.append( "new "                      )
-               .append( getConstantValueClassName() )
-               .append( "("                         )
-               ;
+        aEmitter.append( "new "                      )
+                .append( getConstantValueClassName() )
+                .append( "("                         )
+                ;
 
-        emitInstantiationParameters( aBuffer, aValue );
+        emitInstantiationParameters( aEmitter, aValue );
         
-        aBuffer.append( ")" );
+        aEmitter.append( ")" );
     }
 }

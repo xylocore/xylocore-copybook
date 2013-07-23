@@ -17,6 +17,7 @@
 
 package com.xylocore.copybook.generator.emit.nulleq;
 
+import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.nulleq.BlankNullEquivalentStrategy;
 
 
@@ -35,11 +36,12 @@ public class BlankNullEquivalentStrategyEmitter
     //
     
     
-    public void emitDeclaration( StringBuilder                 aBuffer,
+    @Override
+    public void emitDeclaration( BufferEmitter                 aEmitter,
                                  BlankNullEquivalentStrategy   aNullEquivalentStrategy )
     {
-        aBuffer.append( getClass().getName() )
-               .append( ".getInstance()"     )
-               ;
+        aEmitter.append( getClass().getName() )
+                .append( ".getInstance()"     )
+                ;
     }
 }
