@@ -22,7 +22,9 @@ import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -219,9 +221,9 @@ public class FormatHelper
         //
         // Members
         //
-        
-        private StringBuffer            tempStringBuffer        = new StringBuffer( 32 );
-        private StringBuilder           tempStringBuilder       = new StringBuilder( 32 );
+
+        private List<StringBuffer>      tempStringBufferCache   = new ArrayList<>();
+        private List<StringBuilder>     tempStringBuilderCache  = new ArrayList<>();
         private NumberFormat            numberFormatter         = NumberFormat.getNumberInstance();
         private SimpleDateFormat        dateFormatter           = new SimpleDateFormat();
         private FieldPosition           unusedFieldPosition     = new FieldPosition( 0 );
@@ -235,14 +237,50 @@ public class FormatHelper
         
         public StringBuffer getTemporaryStringBuffer()
         {
-            tempStringBuffer.setLength( 0 );
-            return tempStringBuffer;
-        }
+            StringBuffer myBuffer;
+            
+            if ( tempStringBufferCache.isEmpty() )
+            {
+                myBuffer = new StringBuffer( 32 );
+            }
+            else
+            {
+                myBuffer = tempStringBufferCache.remove( tempStringBufferCache.size()-1 );
+                myBuffer.setLength( 0 );
+            }
 
+            return myBuffer;
+        }
+        
+        public void returnTemporaryStringBuffer( StringBuffer aBuffer )
+        {
+            assert aBuffer != null;
+            
+            tempStringBufferCache.add( aBuffer );
+        }
+        
         public StringBuilder getTemporaryStringBuilder()
         {
-            tempStringBuilder.setLength( 0 );
-            return tempStringBuilder;
+            StringBuilder myBuffer;
+            
+            if ( tempStringBuilderCache.isEmpty() )
+            {
+                myBuffer = new StringBuilder( 32 );
+            }
+            else
+            {
+                myBuffer = tempStringBuilderCache.remove( tempStringBuilderCache.size()-1 );
+                myBuffer.setLength( 0 );
+            }
+
+            return myBuffer;
+        }
+        
+        public void returnTemporaryStringBuilder( StringBuilder aBuffer )
+        {
+            assert aBuffer != null;
+            
+            tempStringBuilderCache.add( aBuffer );
         }
 
         public NumberFormat getNumberFormatter()
@@ -386,11 +424,20 @@ public class FormatHelper
 
         if ( aEmbedCharSequence.length() != 0 )
         {
-            StringBuilder myBuffer = getThreadInfo().getTemporaryStringBuilder();
+            ThreadInfo           myThreadInfo    = getThreadInfo();
+            StringBuilder        myBuffer        = myThreadInfo.getTemporaryStringBuilder();
+            StringBuilderAdapter myBufferAdapter = myThreadInfo.getStringBuilderAdapter( myBuffer );
             
-            myBuffer.append( aCharSequence );
-            embedString( myBuffer, 0, aEmbedCharSequence.length(), aEmbedCharSequence, aJustification );
-            myString = myBuffer.toString();
+            try
+            {
+                myBuffer.append( aCharSequence );
+                embedString( myBufferAdapter, 0, aEmbedCharSequence.length(), aEmbedCharSequence, aJustification );
+                myString = myBuffer.toString();
+            }
+            finally
+            {
+                myThreadInfo.returnTemporaryStringBuilder( myBuffer );
+            }
         }
         else
         {
@@ -586,11 +633,20 @@ public class FormatHelper
      */
     public static String escapeQuotes( CharSequence aCharSequence )
     {
-        StringBuilder myBuffer = getThreadInfo().getTemporaryStringBuilder();
+        ThreadInfo    myThreadInfo    = getThreadInfo();
+        StringBuilder myBuffer        = myThreadInfo.getTemporaryStringBuilder();
+        BufferAdapter myBufferAdapter = myThreadInfo.getStringBuilderAdapter( myBuffer );
 
-        escapeQuotes( myBuffer, aCharSequence );
-        
-        return myBuffer.toString();
+        try
+        {
+            escapeQuotes( myBufferAdapter, aCharSequence );
+            
+            return myBuffer.toString();
+        }
+        finally
+        {
+            myThreadInfo.returnTemporaryStringBuilder( myBuffer );
+        }
     }
 
 
@@ -768,6 +824,45 @@ public class FormatHelper
 
 
     /**
+     * This method formats a character sequence into a
+     * string of specified length and specified justification.
+     *  
+     * @param       aCharSequence
+     *                  The character sequence to be formatted.
+     * @param       aSize
+     *                  The length of the formatted string.
+     * @param       aJustification
+     *                  The justification style to be used (i.e. left,
+     *                  right, or center justified).
+     *
+     * @return      The formatted and justified string.
+     *
+     * @exception   IllegalArgumentException
+     *                  A negative value was passed as the size of the
+     *                  string to be formatted.
+     */
+    public static String formatString( CharSequence  aCharSequence,
+                                       int           aSize,
+                                       Justify       aJustification )
+    {
+        ThreadInfo    myThreadInfo    = getThreadInfo();
+        StringBuilder myBuffer        = myThreadInfo.getTemporaryStringBuilder();
+        BufferAdapter myBufferAdapter = myThreadInfo.getStringBuilderAdapter( myBuffer );
+
+        try
+        {
+            formatString( myBufferAdapter, aCharSequence, aSize, aJustification );
+            
+            return myBuffer.toString();
+        }
+        finally
+        {
+            myThreadInfo.returnTemporaryStringBuilder( myBuffer );
+        }
+    }
+
+
+    /**
      * This method formats a character sequence into a new
      * string of specified length, with a default of left
      * justification, appending the resulting string to the specified
@@ -791,63 +886,6 @@ public class FormatHelper
             throws NegativeArraySizeException
     {
         formatString( aBuffer, aCharSequence, aSize, Justify.Left );
-    }
-
-
-    /**
-     * This method formats a character sequence into a new
-     * string of specified length, with a default of left
-     * justification, appending the resulting string to the specified
-     * buffer.
-     *  
-     * @param       aBuffer
-     *                  The buffer that the formatted string will be
-     *                  appended to.
-     * @param       aCharSequence
-     *                  The character sequence to be formatted.
-     * @param       aSize
-     *                  The length of the formatted string.
-     *
-     * @exception   NegativeArraySizeException
-     *                  A negative value was passed as the size of the
-     *                  string to be formatted.
-     */
-    public static void formatString( StringBuilder   aBuffer,
-                                     CharSequence    aCharSequence,
-                                     int             aSize          )
-            throws NegativeArraySizeException
-    {
-        formatString( aBuffer, aCharSequence, aSize, Justify.Left );
-    }
-
-
-    /**
-     * This method formats a character sequence into a
-     * string of specified length and specified justification.
-     *  
-     * @param       aCharSequence
-     *                  The character sequence to be formatted.
-     * @param       aSize
-     *                  The length of the formatted string.
-     * @param       aJustification
-     *                  The justification style to be used (i.e. left,
-     *                  right, or center justified).
-     *
-     * @return      The formatted and justified string.
-     *
-     * @exception   IllegalArgumentException
-     *                  A negative value was passed as the size of the
-     *                  string to be formatted.
-     */
-    public static String formatString( CharSequence  aCharSequence,
-                                       int           aSize,
-                                       Justify       aJustification )
-    {
-        StringBuilder myBuffer = getThreadInfo().getTemporaryStringBuilder();
-
-        formatString( myBuffer, aCharSequence, aSize, aJustification );
-        
-        return myBuffer.toString();
     }
 
 
@@ -879,6 +917,33 @@ public class FormatHelper
         StringBufferAdapter myBufferAdapter = getThreadInfo().getStringBufferAdapter( aBuffer );
         
         formatString( myBufferAdapter, aCharSequence, aSize, aJustification );
+    }
+
+
+    /**
+     * This method formats a character sequence into a new
+     * string of specified length, with a default of left
+     * justification, appending the resulting string to the specified
+     * buffer.
+     *  
+     * @param       aBuffer
+     *                  The buffer that the formatted string will be
+     *                  appended to.
+     * @param       aCharSequence
+     *                  The character sequence to be formatted.
+     * @param       aSize
+     *                  The length of the formatted string.
+     *
+     * @exception   NegativeArraySizeException
+     *                  A negative value was passed as the size of the
+     *                  string to be formatted.
+     */
+    public static void formatString( StringBuilder   aBuffer,
+                                     CharSequence    aCharSequence,
+                                     int             aSize          )
+            throws NegativeArraySizeException
+    {
+        formatString( aBuffer, aCharSequence, aSize, Justify.Left );
     }
 
 
@@ -970,11 +1035,19 @@ public class FormatHelper
     public static String formatDate( Date     aDate,
                                      String   aPattern )
     {
-        StringBuilder myBuffer = getThreadInfo().getTemporaryStringBuilder();
+        ThreadInfo   myThreadInfo = getThreadInfo();
+        StringBuffer myBuffer     = myThreadInfo.getTemporaryStringBuffer();
 
-        formatDate( myBuffer, aDate, aPattern );
-        
-        return myBuffer.toString();
+        try
+        {
+            formatDate( myBuffer, aDate, aPattern );
+            
+            return myBuffer.toString();
+        }
+        finally
+        {
+            myThreadInfo.returnTemporaryStringBuffer( myBuffer );
+        }
     }
 
 
@@ -1024,9 +1097,16 @@ public class FormatHelper
         SimpleDateFormat myDateFormatter = myThreadInfo.getDateFormatter();
         FieldPosition    myFieldPosition = myThreadInfo.getUnusedFieldPosition();
 
-        myDateFormatter.applyPattern( aPattern );
-        myDateFormatter.format( aDate, myTempBuffer, myFieldPosition );
-        aBuffer.append( myTempBuffer );
+        try
+        {
+            myDateFormatter.applyPattern( aPattern );
+            myDateFormatter.format( aDate, myTempBuffer, myFieldPosition );
+            aBuffer.append( myTempBuffer );
+        }
+        finally
+        {
+            myThreadInfo.returnTemporaryStringBuffer( myTempBuffer );
+        }
     }    
     
 
@@ -1044,11 +1124,19 @@ public class FormatHelper
     public static String formatDate( Date         aDate,
                                      DateFormat   aFormatter )
     {
-        StringBuffer myBuffer = getThreadInfo().getTemporaryStringBuffer();
+        ThreadInfo   myThreadInfo = getThreadInfo();
+        StringBuffer myBuffer     = myThreadInfo.getTemporaryStringBuffer();
 
-        formatDate( myBuffer, aDate, aFormatter );
-        
-        return myBuffer.toString();
+        try
+        {
+            formatDate( myBuffer, aDate, aFormatter );
+            
+            return myBuffer.toString();
+        }
+        finally
+        {
+            myThreadInfo.returnTemporaryStringBuffer( myBuffer );
+        }
     }
 
 
@@ -1093,231 +1181,14 @@ public class FormatHelper
         StringBuffer     myTempBuffer    = myThreadInfo.getTemporaryStringBuffer();
         FieldPosition    myFieldPosition = myThreadInfo.getUnusedFieldPosition();
 
-        aFormatter.format( aDate, myTempBuffer, myFieldPosition );
-        aBuffer.append( myTempBuffer );
-    }
-
-
-    /**
-     * This method formats an integer value into a new
-     * string of specified length and specified justification.
-     *  
-     * @param       aNumber
-     *                  The number to be formatted.
-     * @param       aSize
-     *                  The length of the formatted string.
-     * @param       aZeroPadded
-     *                  Whether the number should have leading zeroes
-     *                  or not.
-     * @param       aJustification
-     *                  The justification style to be used (i.e. left,
-     *                  right, or center justified).
-     *
-     * @return      The formatted and justified string.
-     *
-     * @exception   IllegalArgumentException
-     *                  A negative value was passed as the size of the
-     *                  string to be formatted.
-     */
-    public static String formatNumber( int       aNumber,
-                                       int       aSize,
-                                       boolean   aZeroPadded,
-                                       Justify   aJustification )
-    {
-        StringBuilder myBuffer = getThreadInfo().getTemporaryStringBuilder();
-
-        formatNumber( myBuffer, aNumber, aSize, aZeroPadded, aJustification );
-        
-        return myBuffer.toString();
-    }
-
-
-    /**
-     * This method formats an integer value into a new
-     * string of specified length and specified justification, appending
-     * that string to the specified buffer.
-     *  
-     * @param       aBuffer
-     *                  The buffer that the formatted string will be
-     *                  appended to.
-     * @param       aNumber
-     *                  The number to be formatted.
-     * @param       aSize
-     *                  The length of the formatted string.
-     * @param       aZeroPadded
-     *                  Whether the number should have leading zeroes
-     *                  or not.
-     * @param       aJustification
-     *                  The justification style to be used (i.e. left,
-     *                  right, or center justified).
-     *
-     * @exception   IllegalArgumentException
-     *                  A negative value was passed as the size of the
-     *                  string to be formatted.
-     */
-    public static void formatNumber( StringBuffer   aBuffer,
-                                     int            aNumber,
-                                     int            aSize,
-                                     boolean        aZeroPadded,
-                                     Justify        aJustification )
-    {
-        formatNumber( aBuffer, aNumber, aSize, aZeroPadded, aJustification, 10 );
-    }
-
-
-    /**
-     * This method formats an integer value into a new
-     * string of specified length and specified justification, appending
-     * that string to the specified buffer.
-     *  
-     * @param       aBuffer
-     *                  The buffer that the formatted string will be
-     *                  appended to.
-     * @param       aNumber
-     *                  The number to be formatted.
-     * @param       aSize
-     *                  The length of the formatted string.
-     * @param       aZeroPadded
-     *                  Whether the number should have leading zeroes
-     *                  or not.
-     * @param       aJustification
-     *                  The justification style to be used (i.e. left,
-     *                  right, or center justified).
-     *
-     * @exception   IllegalArgumentException
-     *                  A negative value was passed as the size of the
-     *                  string to be formatted.
-     */
-    public static void formatNumber( StringBuilder   aBuffer,
-                                     int             aNumber,
-                                     int             aSize,
-                                     boolean         aZeroPadded,
-                                     Justify         aJustification )
-    {
-        formatNumber( aBuffer, aNumber, aSize, aZeroPadded, aJustification, 10 );
-    }
-
-
-    /**
-     * This method formats an integer value into a new
-     * string of specified length and specified justification, appending
-     * that string to the specified buffer.
-     *  
-     * @param       aBuffer
-     *                  The buffer that the formatted string will be
-     *                  appended to.
-     * @param       aNumber
-     *                  The number to be formatted.
-     * @param       aSize
-     *                  The length of the formatted string.
-     * @param       aZeroPadded
-     *                  Whether the number should have leading zeroes
-     *                  or not.
-     * @param       aJustification
-     *                  The justification style to be used (i.e. left,
-     *                  right, or center justified).
-     * @param       aRadix
-     *                  The radix to use when converting the integer.
-     *
-     * @exception   IllegalArgumentException
-     *                  A negative value was passed as the size of the
-     *                  string to be formatted.
-     */
-    public static void formatNumber( StringBuffer   aBuffer,
-                                     int            aNumber,
-                                     int            aSize,
-                                     boolean        aZeroPadded,
-                                     Justify        aJustification,
-                                     int            aRadix          )
-    {
-        StringBufferAdapter myBufferAdapter = getThreadInfo().getStringBufferAdapter( aBuffer );
-        
-        formatNumber( myBufferAdapter, aNumber, aSize, aZeroPadded, aJustification, aRadix );
-    }
-
-
-    /**
-     * This method formats an integer value into a new
-     * string of specified length and specified justification, appending
-     * that string to the specified buffer.
-     *  
-     * @param       aBuffer
-     *                  The buffer that the formatted string will be
-     *                  appended to.
-     * @param       aNumber
-     *                  The number to be formatted.
-     * @param       aSize
-     *                  The length of the formatted string.
-     * @param       aZeroPadded
-     *                  Whether the number should have leading zeroes
-     *                  or not.
-     * @param       aJustification
-     *                  The justification style to be used (i.e. left,
-     *                  right, or center justified).
-     * @param       aRadix
-     *                  The radix to use when converting the integer.
-     *
-     * @exception   IllegalArgumentException
-     *                  A negative value was passed as the size of the
-     *                  string to be formatted.
-     */
-    public static void formatNumber( StringBuilder   aBuffer,
-                                     int             aNumber,
-                                     int             aSize,
-                                     boolean         aZeroPadded,
-                                     Justify         aJustification,
-                                     int             aRadix          )
-    {
-        StringBuilderAdapter myBufferAdapter = getThreadInfo().getStringBuilderAdapter( aBuffer );
-        
-        formatNumber( myBufferAdapter, aNumber, aSize, aZeroPadded, aJustification, aRadix );
-    }
-    
-
-    /**
-     * This method formats an integer value into a new
-     * string of specified length and specified justification, appending
-     * that string to the specified buffer.
-     *  
-     * @param       aBuffer
-     *                  The buffer that the formatted string will be
-     *                  appended to.
-     * @param       aNumber
-     *                  The number to be formatted.
-     * @param       aSize
-     *                  The length of the formatted string.
-     * @param       aZeroPadded
-     *                  Whether the number should have leading zeroes
-     *                  or not.
-     * @param       aJustification
-     *                  The justification style to be used (i.e. left,
-     *                  right, or center justified).
-     * @param       aRadix
-     *                  The radix to use when converting the integer.
-     *
-     * @exception   IllegalArgumentException
-     *                  A negative value was passed as the size of the
-     *                  string to be formatted.
-     */
-    private static void formatNumber( BufferAdapter   aBuffer,
-                                      int             aNumber,
-                                      int             aSize,
-                                      boolean         aZeroPadded,
-                                      Justify         aJustification,
-                                      int             aRadix          )
-    {
-        if ( aSize < 0 )
+        try
         {
-            throw new IllegalArgumentException( "Invalid output string size (" + aSize + ") specified" );
+            aFormatter.format( aDate, myTempBuffer, myFieldPosition );
+            aBuffer.append( myTempBuffer );
         }
-
-        if ( aSize != 0 )
+        finally
         {
-            StringBuilder myFormatBuffer = getFormattedNumber( aNumber, aSize, aZeroPadded, '0', aRadix );
-
-            int myBufferOffset = aBuffer.length();
-            stringOfCharacters( aBuffer, ' ', aSize );
-            embedString( aBuffer, myBufferOffset, aSize, myFormatBuffer, aJustification );
+            myThreadInfo.returnTemporaryStringBuffer( myTempBuffer );
         }
     }
 
@@ -1348,11 +1219,52 @@ public class FormatHelper
                                        boolean   aZeroPadded,
                                        Justify   aJustification )
     {
-        StringBuilder myBuffer = getThreadInfo().getTemporaryStringBuilder();
+        return formatNumber( aNumber, aSize, aZeroPadded, aJustification, 10 );
+    }
 
-        formatNumber( myBuffer, aNumber, aSize, aZeroPadded, aJustification );
 
-        return myBuffer.toString();
+    /**
+     * This method formats an integer value into a new
+     * string of specified length and specified justification.
+     *  
+     * @param       aNumber
+     *                  The number to be formatted.
+     * @param       aSize
+     *                  The length of the formatted string.
+     * @param       aZeroPadded
+     *                  Whether the number should have leading zeroes
+     *                  or not.
+     * @param       aJustification
+     *                  The justification style to be used (i.e. left,
+     *                  right, or center justified).
+     * @param       aRadix
+     *                  The radix to use when converting the integer.
+     *
+     * @return      The formatted and justified string.
+     *
+     * @exception   IllegalArgumentException
+     *                  A negative value was passed as the size of the
+     *                  string to be formatted.
+     */
+    public static String formatNumber( long      aNumber,
+                                       int       aSize,
+                                       boolean   aZeroPadded,
+                                       Justify   aJustification,
+                                       int       aRadix          )
+    {
+        ThreadInfo    myThreadInfo = getThreadInfo();
+        StringBuilder myBuffer     = myThreadInfo.getTemporaryStringBuilder();
+
+        try
+        {
+            formatNumber( myBuffer, aNumber, aSize, aZeroPadded, aJustification );
+    
+            return myBuffer.toString();
+        }
+        finally
+        {
+            myThreadInfo.returnTemporaryStringBuilder( myBuffer );
+        }
     }
 
 
@@ -1386,6 +1298,44 @@ public class FormatHelper
                                      Justify        aJustification )
     {
         formatNumber( aBuffer, aNumber, aSize, aZeroPadded, aJustification, 10 );
+    }
+
+
+    /**
+     * This method formats an integer value into a new
+     * string of specified length and specified justification, appending
+     * that string to the specified buffer.
+     *  
+     * @param       aBuffer
+     *                  The buffer that the formatted string will be
+     *                  appended to.
+     * @param       aNumber
+     *                  The number to be formatted.
+     * @param       aSize
+     *                  The length of the formatted string.
+     * @param       aZeroPadded
+     *                  Whether the number should have leading zeroes
+     *                  or not.
+     * @param       aJustification
+     *                  The justification style to be used (i.e. left,
+     *                  right, or center justified).
+     * @param       aRadix
+     *                  The radix to use when converting the integer.
+     *
+     * @exception   IllegalArgumentException
+     *                  A negative value was passed as the size of the
+     *                  string to be formatted.
+     */
+    public static void formatNumber( StringBuffer   aBuffer,
+                                     long           aNumber,
+                                     int            aSize,
+                                     boolean        aZeroPadded,
+                                     Justify        aJustification,
+                                     int            aRadix          )
+    {
+        StringBufferAdapter myBufferAdapter = getThreadInfo().getStringBufferAdapter( aBuffer );
+        
+        formatNumber( myBufferAdapter, aNumber, aSize, aZeroPadded, aJustification, aRadix );
     }
 
 
@@ -1419,44 +1369,6 @@ public class FormatHelper
                                      Justify         aJustification )
     {
         formatNumber( aBuffer, aNumber, aSize, aZeroPadded, aJustification, 10 );
-    }
-
-
-    /**
-     * This method formats an integer value into a new
-     * string of specified length and specified justification, appending
-     * that string to the specified buffer.
-     *  
-     * @param       aBuffer
-     *                  The buffer that the formatted string will be
-     *                  appended to.
-     * @param       aNumber
-     *                  The number to be formatted.
-     * @param       aSize
-     *                  The length of the formatted string.
-     * @param       aZeroPadded
-     *                  Whether the number should have leading zeroes
-     *                  or not.
-     * @param       aJustification
-     *                  The justification style to be used (i.e. left,
-     *                  right, or center justified).
-     * @param       aRadix
-     *                  The radix to use when converting the integer.
-     *
-     * @exception   IllegalArgumentException
-     *                  A negative value was passed as the size of the
-     *                  string to be formatted.
-     */
-    public static void formatNumber( StringBuffer   aBuffer,
-                                     long           aNumber,
-                                     int            aSize,
-                                     boolean        aZeroPadded,
-                                     Justify        aJustification,
-                                     int            aRadix          )
-    {
-        StringBufferAdapter myBufferAdapter = getThreadInfo().getStringBufferAdapter( aBuffer );
-        
-        formatNumber( myBufferAdapter, aNumber, aSize, aZeroPadded, aJustification, aRadix );
     }
 
 
@@ -1539,9 +1451,16 @@ public class FormatHelper
         {
             StringBuilder myFormatBuffer = getFormattedNumber( aNumber, aSize, aZeroPadded, '0', aRadix );
 
-            int myBufferOffset = aBuffer.length();
-            stringOfCharacters( aBuffer, ' ', aSize );
-            embedString( aBuffer, myBufferOffset, aSize, myFormatBuffer, aJustification );
+            try
+            {
+                int myBufferOffset = aBuffer.length();
+                stringOfCharacters( aBuffer, ' ', aSize );
+                embedString( aBuffer, myBufferOffset, aSize, myFormatBuffer, aJustification );
+            }
+            finally
+            {
+                getThreadInfo().returnTemporaryStringBuilder( myFormatBuffer );
+            }
         }
     }
 
@@ -1584,17 +1503,25 @@ public class FormatHelper
                                        boolean   aShowDecimalSeparator,
                                        Justify   aJustification         )
     {
-        StringBuilder myBuffer = getThreadInfo().getTemporaryStringBuilder();
+        ThreadInfo    myThreadInfo = getThreadInfo();
+        StringBuilder myBuffer     = myThreadInfo.getTemporaryStringBuilder();
 
-        formatNumber( myBuffer,
-                      aNumber,
-                      aSize,
-                      aTotalIntegerDigits,
-                      aTotalFractionDigits,
-                      aShowDecimalSeparator,
-                      aJustification         );
-        
-        return myBuffer.toString();
+        try
+        {
+            formatNumber( myBuffer,
+                          aNumber,
+                          aSize,
+                          aTotalIntegerDigits,
+                          aTotalFractionDigits,
+                          aShowDecimalSeparator,
+                          aJustification         );
+            
+            return myBuffer.toString();
+        }
+        finally
+        {
+            myThreadInfo.returnTemporaryStringBuilder( myBuffer );
+        }
     }
 
 
@@ -1770,19 +1697,26 @@ public class FormatHelper
             myFormatter.setMaximumFractionDigits( myActualFractionDigits );
             myFormatter.setGroupingUsed         ( false                  );
 
-            myFormatter.format( aNumber, myTempBuffer, myFieldPosition );
-            if ( ! aShowDecimalSeparator )
+            try
             {
-                if ( aNumber < 0.0 )
+                myFormatter.format( aNumber, myTempBuffer, myFieldPosition );
+                if ( ! aShowDecimalSeparator )
                 {
-                    myTempBuffer.deleteCharAt( myActualIntegerDigits + 1 );
+                    if ( aNumber < 0.0 )
+                    {
+                        myTempBuffer.deleteCharAt( myActualIntegerDigits + 1 );
+                    }
+                    else
+                    {
+                        myTempBuffer.deleteCharAt( myActualIntegerDigits );
+                    }
                 }
-                else
-                {
-                    myTempBuffer.deleteCharAt( myActualIntegerDigits );
-                }
+                formatString( aBuffer, myTempBuffer, aSize, aJustification );
             }
-            formatString( aBuffer, myTempBuffer, aSize, aJustification );
+            finally
+            {
+                myThreadInfo.returnTemporaryStringBuffer( myTempBuffer );
+            }
         }
     }
 
@@ -1906,8 +1840,15 @@ public class FormatHelper
             StringBuffer  myTempBuffer    = myThreadInfo.getTemporaryStringBuffer();
             FieldPosition myFieldPosition = myThreadInfo.getUnusedFieldPosition();
 
-            aFormatter.format( aNumber, myTempBuffer, myFieldPosition );
-            formatString( aBuffer, myTempBuffer, aSize, aJustification );
+            try
+            {
+                aFormatter.format( aNumber, myTempBuffer, myFieldPosition );
+                formatString( aBuffer, myTempBuffer, aSize, aJustification );
+            }
+            finally
+            {
+                myThreadInfo.returnTemporaryStringBuffer( myTempBuffer );
+            }
         }
     }
 
@@ -1935,11 +1876,19 @@ public class FormatHelper
         }
         else
         {
-            StringBuilder myBuffer = getThreadInfo().getTemporaryStringBuilder();
+            ThreadInfo    myThreadInfo = getThreadInfo();
+            StringBuilder myBuffer     = myThreadInfo.getTemporaryStringBuilder();
 
-            stringOfCharacters( myBuffer, aCharacter, aSize );
-            
-            myString = myBuffer.toString();
+            try
+            {
+                stringOfCharacters( myBuffer, aCharacter, aSize );
+                
+                myString = myBuffer.toString();
+            }
+            finally
+            {
+                myThreadInfo.returnTemporaryStringBuilder( myBuffer );
+            }
         }
 
         return myString;
@@ -2006,17 +1955,17 @@ public class FormatHelper
                                             char            aCharacter,
                                             int             aSize       )
     {
-        aBuffer.ensureCapacity( aBuffer.length() + aSize );
-        for ( int i = 0 ; i < aSize ; i++ )
+        try
         {
-            try
+            aBuffer.ensureCapacity( aBuffer.length() + aSize );
+            for ( int i = 0 ; i < aSize ; i++ )
             {
                 aBuffer.append( aCharacter );
             }
-            catch ( IOException myIOException )
-            {
-                // Ignore - the Appendable is either a StringBuilder or a StringBuffer
-            }
+        }
+        catch ( IOException myIOException )
+        {
+            // Ignore - the Appendable is either a StringBuilder or a StringBuffer
         }
     }
 
@@ -2069,7 +2018,11 @@ public class FormatHelper
                 myZeroStringLength--;
             }
 
-            stringOfCharacters( myBuffer, aPadChar, myZeroStringLength );
+            while ( myZeroStringLength > 0 )
+            {
+                myBuffer.append( aPadChar );
+                myZeroStringLength--;
+            }
         }
 
         if ( myIsNegative )

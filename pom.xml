@@ -195,7 +195,7 @@
 
   <modules>
     <module>xylocore-copybook-runtime</module>
-    <module>xylocore-copybook-generate</module>
+    <module>xylocore-copybook-generator</module>
     <!--module>xylocore-copybook-maven-plugin</module-->
   </modules>
 

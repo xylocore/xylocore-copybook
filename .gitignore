@@ -9,7 +9,7 @@
 /tmp
 
 /xylocore-copybook-runtime/target/
-/xylocore-copybook-generate/target/
+/xylocore-copybook-generator/target/
 /xylocore-copybook-maven-plugin/target/
 
 .DS_Store
