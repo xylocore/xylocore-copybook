@@ -78,16 +78,13 @@ public class CopybookNormalizationVisitor
     private static final PICProcessingStrategy                      nationalProcessingStrategy                  = new NationalPICProcessingStrategy();
     private static final PICProcessingStrategy                      nationalEditedProcessingStrategy            = new NationalEditedPICProcessingStrategy();
     private static final Map<UsageType,PICProcessingStrategy>       usageTypeProcessingStrategyMap              = new HashMap<UsageType,PICProcessingStrategy>();
-    private static final Map<DataCategory,PICProcessingStrategy>    dataCategoryProcessingStrategyMap           = new HashMap<DataCategory,PICProcessingStrategy>();
-    private static final Map<PICSymbolType,Set<DataCategory>>       symbolTypeToDataCategoryMap                 = new HashMap<PICSymbolType,Set<DataCategory>>();
-    private static final Set<DataCategory>                          dataCategoryWorkingSet                      = new HashSet<DataCategory>();
-    private static final Set<DataCategory>                          stringBasedDataCategories                   = new HashSet<DataCategory>();
+    private static final Map<DataCategory,PICProcessingStrategy>    dataCategoryProcessingStrategyMap           = new HashMap<>();
+    private static final Map<PICSymbolType,Set<DataCategory>>       symbolTypeToDataCategoryMap                 = new HashMap<>();
+    private static final Set<DataCategory>                          dataCategoryWorkingSet                      = new HashSet<>();
+    private static final Set<DataCategory>                          stringBasedDataCategories                   = new HashSet<>();
     
     private Environment                                             environment;
-    private ValidateElementMetadataVisitor                          validateElementMetadataVisitor;
     private ApplyMetadataToElementVisitor                           applyMetadataVisitor;
-    private Visitor                                                 determineElementTypeVisitor;
-    private AssignConvertersVisitor                                 assignConvertersVisitor;
     
     
     
@@ -118,59 +115,59 @@ public class CopybookNormalizationVisitor
 
         Set<DataCategory> mySet;
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.Alphabetic         );
         mySet.add( DataCategory.Alphanumeric       );
         mySet.add( DataCategory.AlphanumericEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Alphabetic, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.Alphanumeric       );
         mySet.add( DataCategory.AlphanumericEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Alphanumeric, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited      );
         mySet.add( DataCategory.AlphanumericEdited );
         mySet.add( DataCategory.DBCS               );
         mySet.add( DataCategory.NationalEdited     );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Blank, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.ExternalFloatingPoint );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Exponent, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.DBCS ); // valid
         symbolTypeToDataCategoryMap.put( PICSymbolType.DbcsCharacter, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         // TODO: add check for NSYMBOL(DBCS) compiler option
 //        mySet.add( DataCategory.DBCS           );
         mySet.add( DataCategory.National       );
         mySet.add( DataCategory.NationalEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.NationalCharacter, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.Numeric       );
         mySet.add( DataCategory.NumericEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.DecimalScalingPosition, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.Numeric );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Sign, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.Numeric               );
         mySet.add( DataCategory.NumericEdited         );
         mySet.add( DataCategory.ExternalFloatingPoint );
         symbolTypeToDataCategoryMap.put( PICSymbolType.AssumedDecimalPoint, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.LeadingBlankZero, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.Numeric               );
         mySet.add( DataCategory.NumericEdited         );
         mySet.add( DataCategory.Alphanumeric          );
@@ -178,50 +175,50 @@ public class CopybookNormalizationVisitor
         mySet.add( DataCategory.ExternalFloatingPoint );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Numeric, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited  );
         mySet.add( DataCategory.Alphanumeric   );
         mySet.add( DataCategory.NationalEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Zero, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited      );
         mySet.add( DataCategory.AlphanumericEdited );
         mySet.add( DataCategory.NationalEdited     );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Slash, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Comma, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited         );
         mySet.add( DataCategory.ExternalFloatingPoint );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Period, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited         );
         mySet.add( DataCategory.ExternalFloatingPoint );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Plus, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited         );
         mySet.add( DataCategory.ExternalFloatingPoint );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Minus, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Credit, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Debit, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Asterisk, mySet );
         
-        mySet = new HashSet<DataCategory>();
+        mySet = new HashSet<>();
         mySet.add( DataCategory.NumericEdited );
         symbolTypeToDataCategoryMap.put( PICSymbolType.Currency, mySet );
         
@@ -257,65 +254,42 @@ public class CopybookNormalizationVisitor
     /**
      * FILLIN
      * 
+     * @param       aCopybook
      * @param       aEnvironment
      */
-    public CopybookNormalizationVisitor( Environment aEnvironment )
+    public void normalize( Copybook      aCopybook,
+                           Environment   aEnvironment )
     {
+        assert aCopybook    != null;
         assert aEnvironment != null;
         
-        environment                    = aEnvironment;
-        validateElementMetadataVisitor = new ValidateElementMetadataVisitor();
-        applyMetadataVisitor           = new ApplyMetadataToElementVisitor( aEnvironment );
-        assignConvertersVisitor        = new AssignConvertersVisitor();
-        
-        determineElementTypeVisitor =
-                new Visitor()
-                    {
-                        public boolean shouldVisitChildren( Element aParent )
-                        {
-                            return true;
-                        }
-                        
-                        public void visitElement( Element aElement )
-                        {
-                            determineElementType( aElement );
-                        }
-                    };
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aCopybook
-     */
-    public void normalize( Copybook aCopybook )
-    {
-        assert aCopybook != null;
+        environment          = aEnvironment;
+        applyMetadataVisitor = new ApplyMetadataToElementVisitor( aEnvironment );
         
         aCopybook.accept( this );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitCopybook(com.xylocore.commons.data.copybook.domain.Copybook)
-     */
+    @Override
     public void visitCopybook( Copybook aCopybook )
     {
         assert aCopybook != null;
 
-        aCopybook.accept( determineElementTypeVisitor );
+        DetermineElementTypeVisitor myDetermineElementTypeVisitor = new DetermineElementTypeVisitor();
+        aCopybook.accept( myDetermineElementTypeVisitor );
         
-        assignElementMetadata( aCopybook );
-        validateElementMetadataVisitor.validate( aCopybook );
+        ElementDictionaryBuilderVisitor myBuilder = new ElementDictionaryBuilderVisitor();
+        myBuilder.build( aCopybook );
+        
+        ElementMetadataAssignmentVisitor myAssignmentVisitor = new ElementMetadataAssignmentVisitor();
+        myAssignmentVisitor.assign( environment, aCopybook );
+        
+        ValidateElementMetadataVisitor myValidateElementMetadataVisitor = new ValidateElementMetadataVisitor();
+        myValidateElementMetadataVisitor.validate( aCopybook );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveCopybook(com.xylocore.commons.data.copybook.domain.Copybook)
-     */
+    @Override
     public void leaveCopybook( Copybook aCopybook )
     {
         assert aCopybook != null;
@@ -334,43 +308,33 @@ public class CopybookNormalizationVisitor
         aCopybook.setSize          ( myMaximumRecordLength );
         aCopybook.setNonIndexedSize( myMaximumRecordLength );
     
-        aCopybook.accept( assignConvertersVisitor );
-        
-//        aCopybook.accept( new DebugVisitor() );
+        AssignConvertersVisitor myAssignConvertersVisitor = new AssignConvertersVisitor();
+        aCopybook.accept( myAssignConvertersVisitor );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#shouldVisitChildren(com.xylocore.commons.data.copybook.domain.Element)
-     */
+    @Override
     public boolean shouldVisitChildren( Element aParent )
     {
         return true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitElement(com.xylocore.commons.data.copybook.domain.Element)
-     */
+    @Override
     public void visitElement( Element aElement )
     {
         assert aElement != null;
 
-        preprocessPIC               ( aElement );
-        determineElementUsage       ( aElement );
-        determineDataCategory       ( aElement );
-        resolveElementProxies       ( aElement );
-        processPIC                  ( aElement );
-        assignedOuterIndexedElement ( aElement );
+        preprocessPIC              ( aElement );
+        determineElementUsage      ( aElement );
+        determineDataCategory      ( aElement );
+        resolveElementProxies      ( aElement );
+        processPIC                 ( aElement );
+        assignedOuterIndexedElement( aElement );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void leaveDataElement( DataElement aElement )
     {
         applyMetadataVisitor.apply( aElement );
@@ -384,79 +348,13 @@ public class CopybookNormalizationVisitor
      * FILLIN
      * 
      * @param       aElement
-     * 
-     * @return
-     */
-    private Element getParentElement( Element aElement )
-    {
-        assert aElement != null;
-        
-        return aElement.getParent();
-    }
-
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aCopybook
-     */
-    private void assignElementMetadata( Copybook aCopybook )
-    {
-        ElementDictionaryBuilderVisitor myBuilder = new ElementDictionaryBuilderVisitor();
-        myBuilder.build( aCopybook );
-        
-        ElementMetadataAssignmentVisitor myAssignmentVisitor = new ElementMetadataAssignmentVisitor( aCopybook );
-        myAssignmentVisitor.assign( environment );
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aElement
-     */
-    private void determineElementType( Element aElement )
-    {
-        assert aElement != null;
-        
-        Element     myParentElement = getParentElement( aElement );
-        ElementType myElementType;
-        
-        if ( aElement.getFirstChild() == null )
-        {
-            myElementType = ElementType.ElementaryItem;
-        }
-        else if
-        (
-            aElement.isNationalGroupUsage() ||
-            (
-                myParentElement                  != null                          &&
-                myParentElement.getElementType() == ElementType.NationalGroupItem
-            )
-        )
-        {
-            myElementType = ElementType.NationalGroupItem;
-        }
-        else
-        {
-            myElementType = ElementType.AlphanumericGroupItem;
-        }
-        
-        aElement.setElementType( myElementType );
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aElement
      */
     private void determineElementUsage( Element aElement )
     {
         assert aElement != null;
         
         ElementType myElementType               = aElement.getElementType();
-        Element     myParentElement             = getParentElement( aElement );
+        Element     myParentElement             = aElement.getParent();
         UsageType   myUsageType                 = aElement.getUsageType();
         boolean     myGroupUsageNationalImplied = false;
         UsageType   myEffectiveUsageType;
@@ -545,6 +443,7 @@ public class CopybookNormalizationVisitor
         }
 
         myEffectiveUsageType = aElement.getEffectiveUsageType();
+        
         if
         (
             aElement.getDatePattern() != null                     &&
@@ -614,8 +513,8 @@ public class CopybookNormalizationVisitor
         List<PICSlice> mySlices = aElement.getPICSlices();
         if ( mySlices != null )
         {
-            Set<PICSymbolType> mySymbolTypes            = new HashSet<PICSymbolType>();
-            Set<DataCategory>  myPossibleDataCategories = new HashSet<DataCategory>( dataCategoryWorkingSet );
+            Set<PICSymbolType> mySymbolTypes            = new HashSet<>();
+            Set<DataCategory>  myPossibleDataCategories = new HashSet<>( dataCategoryWorkingSet );
             boolean            myIsAlphabeticOnly       = true;
             boolean            myIsNumericOnly          = true;
             int                myPlusMinusCount         = 0;

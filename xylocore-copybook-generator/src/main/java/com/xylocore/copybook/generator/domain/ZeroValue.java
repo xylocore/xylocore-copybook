@@ -18,6 +18,7 @@
 package com.xylocore.copybook.generator.domain;
 
 
+
 /**
  * FILLIN
  *
@@ -33,10 +34,7 @@ public class ZeroValue
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString()
     {
         return "<<< zero >>>";

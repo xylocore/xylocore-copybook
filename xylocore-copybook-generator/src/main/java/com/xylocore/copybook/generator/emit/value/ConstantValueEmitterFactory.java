@@ -37,10 +37,26 @@ public class ConstantValueEmitterFactory
     //
     
     
-    private static final ConstantValueEmitterFactory    instance            = new ConstantValueEmitterFactory();
+    private static final ConstantValueEmitterFactory            instance            = new ConstantValueEmitterFactory();
     
-    private Map<String,StringConstantValueEmitter>      emitterMappings;
-    private ConstantValueEmitter                        defaultEmitter;
+    private static final Map<String,StringConstantValueEmitter> emitterMappings;
+    private static final ConstantValueEmitter                   defaultEmitter;
+    
+    
+    
+
+    //
+    // Static initialization
+    //
+    
+    
+    static
+    {
+        emitterMappings = new HashMap<>();
+        defaultEmitter  = new DefaultConstantValueEmitter();
+        
+        emitterMappings.put( StringConstantValue.class.getName(), new StringConstantValueEmitter() );
+    }
     
     
     
@@ -55,10 +71,6 @@ public class ConstantValueEmitterFactory
      */
     private ConstantValueEmitterFactory()
     {
-        emitterMappings = new HashMap<String,StringConstantValueEmitter>();
-        defaultEmitter  = new DefaultConstantValueEmitter();
-        
-        emitterMappings.put( StringConstantValue.class.getName(), new StringConstantValueEmitter() );
     }
     
     

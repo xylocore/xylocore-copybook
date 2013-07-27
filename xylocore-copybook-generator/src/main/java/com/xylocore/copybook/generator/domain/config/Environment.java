@@ -244,9 +244,11 @@ public class Environment
      */
     public void setMinimumIntegerDataType( DataType aDataType )
     {
-        assert aDataType == DataType.Integer ||
-               aDataType == DataType.Long;
-        
+        if ( aDataType != DataType.Integer && aDataType != DataType.Long )
+        {
+            throw new IllegalArgumentException( "data type cannot be used for the minimum integer data type: " + aDataType );
+        }
+
         minimumIntegerDataType = aDataType;
     }
     
@@ -269,9 +271,11 @@ public class Environment
      */
     public void setMinimumFloatingPointDataType( DataType aDataType )
     {
-        assert aDataType == DataType.Float   ||
-               aDataType == DataType.Double;
-        
+        if ( aDataType != DataType.Float && aDataType != DataType.Double )
+        {
+            throw new IllegalArgumentException( "data type cannot be used for the minimum floating point data type: " + aDataType );
+        }
+
         minimumFloatingPointDataType = aDataType;
     }
     
@@ -364,10 +368,7 @@ public class Environment
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString()
     {
         return ConfigEntityDescriber.simpleDescribe( this );
@@ -381,10 +382,7 @@ public class Environment
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableLabelValuePairs(java.util.Map)
-     */
+    @Override
     public void buildDescribableLabelValuePairs( Map<String,String> aLabelValueMap )
     {
         aLabelValueMap.put( "MetadataFilename"        , metadataFilename         );
@@ -397,10 +395,7 @@ public class Environment
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableCollections(java.util.Map)
-     */
+    @Override
     public void buildDescribableCollections( Map<String, Object> aCollectionsMap )
     {
         aCollectionsMap.put( "MappingMetadata", mappingMetadata );
@@ -414,10 +409,7 @@ public class Environment
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitable#accept(com.xylocore.commons.data.copybook.domain.config.ConfigVisitor)
-     */
+    @Override
     public void accept( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;

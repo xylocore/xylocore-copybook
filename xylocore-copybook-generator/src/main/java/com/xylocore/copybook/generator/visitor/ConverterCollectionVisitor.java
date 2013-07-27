@@ -145,10 +145,7 @@ public class ConverterCollectionVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void visitDataElement( DataElement aDataElement )
     {
         assert aDataElement != null;
@@ -164,10 +161,7 @@ public class ConverterCollectionVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitAccessorMethodInfo(com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
+    @Override
     public void visitAccessorMethodInfo( AccessorMethodInfo aMethodInfo )
     {
         assert aMethodInfo != null;

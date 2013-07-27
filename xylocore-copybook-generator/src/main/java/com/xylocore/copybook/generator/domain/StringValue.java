@@ -71,10 +71,7 @@ public class StringValue
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString()
     {
         return value;
@@ -88,16 +85,14 @@ public class StringValue
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Value#compareTo(java.lang.Object)
-     */
-    public int compareTo( StringValue aRhs )
+    @Override
+    public int compareTo( Value aOpaqueRhs )
     {
-        int myCmp = super.compareTo( aRhs );
+        int myCmp = super.compareTo( aOpaqueRhs );
         if ( myCmp == 0 )
         {
-            myCmp = value.compareTo( aRhs.value );
+            StringValue myRhs = (StringValue) aOpaqueRhs;
+            myCmp = value.compareTo( myRhs.value );
         }
         
         return myCmp;

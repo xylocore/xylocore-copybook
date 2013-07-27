@@ -57,7 +57,7 @@ public class BlankNullEquivalentStrategy
     
     static
     {
-        Set<DataUsageCategory> mySet = new HashSet<DataUsageCategory>();
+        Set<DataUsageCategory> mySet = new HashSet<>();
         mySet.add( DataUsageCategory.Alphanumeric    );
         mySet.add( DataUsageCategory.NumericDisplay  );
         mySet.add( DataUsageCategory.NumericNational );
@@ -92,20 +92,14 @@ public class BlankNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#getSupportedDataUsageCategories()
-     */
+    @Override
     protected Set<DataUsageCategory> getSupportedDataUsageCategories()
     {
         return supportedDataUsageCategories;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#isExternalNumericNull(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     protected boolean isExternalNumericNull( DataUsageCategory              aDataUsageCategory,
                                              ExternalNumericPICMarshaller   aPICMarshaller,
                                              CopybookContext                aContext,
@@ -120,10 +114,7 @@ public class BlankNullEquivalentStrategy
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#setExternalNumericNull(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     protected void setExternalNumericNull( DataUsageCategory              aDataUsageCategory,
                                            ExternalNumericPICMarshaller   aPICMarshaller,
                                            CopybookContext                aContext,
@@ -138,10 +129,7 @@ public class BlankNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#isExternalAlphanumericNull(com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     protected boolean isExternalAlphanumericNull( AlphanumericPICMarshaller   aPICMarshaller,
                                                   CopybookContext             aContext,
                                                   int                         aOffset,
@@ -152,10 +140,7 @@ public class BlankNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#setExternalAlphanumericNull(com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     protected void setExternalAlphanumericNull( AlphanumericPICMarshaller   aPICMarshaller,
                                                 CopybookContext             aContext,
                                                 int                         aOffset,
@@ -173,10 +158,7 @@ public class BlankNullEquivalentStrategy
     //
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#isDirect()
-     */
+    @Override
     public boolean isDirect()
     {
         return true;

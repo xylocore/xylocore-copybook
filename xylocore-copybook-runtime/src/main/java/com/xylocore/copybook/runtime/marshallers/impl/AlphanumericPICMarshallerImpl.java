@@ -79,16 +79,7 @@ public class AlphanumericPICMarshallerImpl
     }
 
     
-    /**
-     * FILLIN
-     * 
-     * @param       aContext
-     * @param       aOffset
-     * @param       aSize
-     * @param       aFlags
-     * 
-     * @return
-     */
+    @Override
     public void decodeStringIntoWorkBuffer( CopybookContext   aContext,
                                             int               aOffset,
                                             int               aSize,
@@ -400,10 +391,7 @@ public class AlphanumericPICMarshallerImpl
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isBlank(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public boolean isBlank( CopybookContext   aContext,
                             int               aOffset,
                             int               aSize,
@@ -429,51 +417,57 @@ public class AlphanumericPICMarshallerImpl
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsByte(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public boolean isValidAsByte( CopybookContext   aContext,
                                   int               aOffset,
                                   int               aSize,
                                   int               aFlags    )
     {
-        return isValidLong( aContext, aOffset, aSize, aFlags, ((long) Byte.MIN_VALUE) & 0xff, ((long) Byte.MAX_VALUE) & 0xff );
+        return isValidLong( aContext,
+                            aOffset,
+                            aSize,
+                            aFlags,
+                            Byte.MIN_VALUE,
+                            Byte.MAX_VALUE  );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsByte(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public byte decodeAsByte( CopybookContext   aContext,
                               int               aOffset,
                               int               aSize,
                               int               aFlags    )
     {
-        long myValue = getLongValue( aContext, aOffset, aSize, aFlags, ((long) Byte.MIN_VALUE) & 0xff, ((long) Byte.MAX_VALUE) & 0xff );
-        return ( (byte) myValue );
+        long myValue =
+                getLongValue( aContext,
+                              aOffset,
+                              aSize,
+                              aFlags,
+                              Byte.MIN_VALUE,
+                              Byte.MAX_VALUE  );
+        
+        return (byte) myValue;
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsByte(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, byte, int, int)
-     */
+    @Override
     public void encodeAsByte( CopybookContext   aContext,
                               int               aOffset,
                               byte              aValue,
                               int               aSize,
                               int               aFlags    )
     {
-        setLongValue( aContext, aOffset, ((long) aValue) & 0xff, aSize, aFlags, ((long) Byte.MIN_VALUE) & 0xff, ((long) Byte.MAX_VALUE) & 0xff );
+        setLongValue( aContext,
+                      aOffset,
+                      aValue,
+                      aSize,
+                      aFlags,
+                      Byte.MIN_VALUE,
+                      Byte.MAX_VALUE  );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsChar(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public boolean isValidAsChar( CopybookContext   aContext,
                                   int               aOffset,
                                   int               aSize,
@@ -494,25 +488,24 @@ public class AlphanumericPICMarshallerImpl
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsChar(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public char decodeAsChar( CopybookContext   aContext,
                               int               aOffset,
                               int               aSize,
                               int               aFlags    )
     {
-        String myValue = decodeAsString( aContext, aOffset, aSize, aFlags, null );
+        String myValue =
+                decodeAsString( aContext,
+                                aOffset,
+                                aSize,
+                                aFlags,
+                                null      );
 
         return myValue.charAt( 0 );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsChar(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, char, int, int)
-     */
+    @Override
     public void encodeAsChar( CopybookContext   aContext,
                               int               aOffset,
                               char              aValue,
@@ -521,136 +514,163 @@ public class AlphanumericPICMarshallerImpl
     {
         String myString = Character.toString( aValue );
         
-        encodeAsString( aContext, aOffset, myString, aSize, aFlags, null );
+        encodeAsString( aContext,
+                        aOffset,
+                        myString,
+                        aSize,
+                        aFlags,
+                        null      );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsShort(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public boolean isValidAsShort( CopybookContext   aContext,
                                    int               aOffset,
                                    int               aSize,
                                    int               aFlags    )
     {
-        return isValidLong( aContext, aOffset, aSize, aFlags, Short.MIN_VALUE, Short.MAX_VALUE );
+        return isValidLong( aContext,
+                            aOffset,
+                            aSize,
+                            aFlags,
+                            Short.MIN_VALUE,
+                            Short.MAX_VALUE  );
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsShort(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public short decodeAsShort( CopybookContext   aContext,
                                 int               aOffset,
                                 int               aSize,
                                 int               aFlags    )
     {
-        long myValue = getLongValue( aContext, aOffset, aSize, aFlags, Short.MIN_VALUE, Short.MAX_VALUE );
-        return ( (short) myValue );
+        long myValue =
+                getLongValue( aContext,
+                              aOffset,
+                              aSize,
+                              aFlags,
+                              Short.MIN_VALUE,
+                              Short.MAX_VALUE  );
+        
+        return (short) myValue;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsShort(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, short, int, int)
-     */
+    @Override
     public void encodeAsShort( CopybookContext   aContext,
                                int               aOffset,
                                short             aValue,
                                int               aSize,
                                int               aFlags    )
     {
-        setLongValue( aContext, aOffset, aValue, aSize, aFlags, Short.MIN_VALUE, Short.MAX_VALUE );
+        setLongValue( aContext,
+                      aOffset,
+                      aValue,
+                      aSize,
+                      aFlags,
+                      Short.MIN_VALUE,
+                      Short.MAX_VALUE  );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public boolean isValidAsInteger( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aSize,
                                      int               aFlags    )
     {
-        return isValidLong( aContext, aOffset, aSize, aFlags, Integer.MIN_VALUE, Integer.MAX_VALUE );
+        return isValidLong( aContext,
+                            aOffset,
+                            aSize,
+                            aFlags,
+                            Integer.MIN_VALUE,
+                            Integer.MAX_VALUE  );
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public int decodeAsInteger( CopybookContext   aContext,
                                 int               aOffset,
                                 int               aSize,
                                 int               aFlags    )
     {
-        long myValue = getLongValue( aContext, aOffset, aSize, aFlags, Integer.MIN_VALUE, Integer.MAX_VALUE );
-        return ( (int) myValue );
+        long myValue =
+                getLongValue( aContext,
+                              aOffset,
+                              aSize,
+                              aFlags,
+                              Integer.MIN_VALUE,
+                              Integer.MAX_VALUE  );
+        
+        return (int) myValue;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, int)
-     */
+    @Override
     public void encodeAsInteger( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aValue,
                                  int               aSize,
                                  int               aFlags    )
     {
-        setLongValue( aContext, aOffset, aValue, aSize, aFlags, Integer.MIN_VALUE, Integer.MAX_VALUE );
+        setLongValue( aContext,
+                      aOffset,
+                      aValue,
+                      aSize,
+                      aFlags,
+                      Integer.MIN_VALUE,
+                      Integer.MAX_VALUE  );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsLong(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public boolean isValidAsLong( CopybookContext   aContext,
                                   int               aOffset,
                                   int               aSize,
                                   int               aFlags    )
     {
-        return isValidLong( aContext, aOffset, aSize, aFlags, Long.MIN_VALUE, Long.MAX_VALUE );
+        return isValidLong( aContext,
+                            aOffset,
+                            aSize,
+                            aFlags,
+                            Long.MIN_VALUE,
+                            Long.MAX_VALUE  );
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsLong(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public long decodeAsLong( CopybookContext   aContext,
                               int               aOffset,
                               int               aSize,
                               int               aFlags    )
     {
-        return getLongValue( aContext, aOffset, aSize, aFlags, Long.MIN_VALUE, Long.MAX_VALUE );
+        return getLongValue( aContext,
+                             aOffset,
+                             aSize,
+                             aFlags,
+                             Long.MIN_VALUE,
+                             Long.MAX_VALUE  );
     }
     
  
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsLong(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, long, int, int)
-     */
+    @Override
     public void encodeAsLong( CopybookContext   aContext,
                               int               aOffset,
                               long              aValue,
                               int               aSize,
                               int               aFlags    )
     {
-        setLongValue( aContext, aOffset, aValue, aSize, aFlags, Long.MIN_VALUE, Long.MAX_VALUE );
+        setLongValue( aContext,
+                      aOffset,
+                      aValue,
+                      aSize,
+                      aFlags,
+                      Long.MIN_VALUE,
+                      Long.MAX_VALUE  );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsFloat(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public boolean isValidAsFloat( CopybookContext   aContext,
                                    int               aOffset,
                                    int               aSize,
@@ -661,25 +681,24 @@ public class AlphanumericPICMarshallerImpl
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsFloat(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public float decodeAsFloat( CopybookContext   aContext,
                                 int               aOffset,
                                 int               aSize,
                                 int               aFlags    )
     {
-        String myValue = decodeAsString( aContext, aOffset, aSize, aFlags, null );
+        String myValue =
+                decodeAsString( aContext,
+                                aOffset,
+                                aSize,
+                                aFlags,
+                                null      );
 
         return Float.parseFloat( myValue );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsFloat(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, float, int, int)
-     */
+    @Override
     public void encodeAsFloat( CopybookContext   aContext,
                                int               aOffset,
                                float             aValue,
@@ -690,10 +709,7 @@ public class AlphanumericPICMarshallerImpl
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsDouble(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public boolean isValidAsDouble( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aSize,
@@ -704,25 +720,24 @@ public class AlphanumericPICMarshallerImpl
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsDouble(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public double decodeAsDouble( CopybookContext   aContext,
                                   int               aOffset,
                                   int               aSize,
                                   int               aFlags    )
     {
-        String myValue = decodeAsString( aContext, aOffset, aSize, aFlags, null );
+        String myValue =
+                decodeAsString( aContext,
+                                aOffset,
+                                aSize,
+                                aFlags,
+                                null      );
 
         return Double.parseDouble( myValue );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsDouble(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, double, int, int)
-     */
+    @Override
     public void encodeAsDouble( CopybookContext   aContext,
                                 int               aOffset,
                                 double            aValue,
@@ -731,14 +746,16 @@ public class AlphanumericPICMarshallerImpl
     {
         String myString = Double.toString( aValue );
         
-        encodeAsString( aContext, aOffset, myString, aSize, aFlags, null );
+        encodeAsString( aContext,
+                        aOffset,
+                        myString,
+                        aSize,
+                        aFlags,
+                        null      );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsBigInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public boolean isValidAsBigInteger( CopybookContext            aContext,
                                         int                        aOffset,
                                         int                        aSize,
@@ -750,10 +767,7 @@ public class AlphanumericPICMarshallerImpl
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsBigInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public BigInteger decodeAsBigInteger( CopybookContext            aContext,
                                           int                        aOffset,
                                           int                        aSize,
@@ -765,10 +779,7 @@ public class AlphanumericPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsBigInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.math.BigInteger, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public void encodeAsBigInteger( CopybookContext            aContext,
                                     int                        aOffset,
                                     BigInteger                 aValue,
@@ -781,10 +792,7 @@ public class AlphanumericPICMarshallerImpl
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsBigDecimal(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public boolean isValidAsBigDecimal( CopybookContext            aContext,
                                         int                        aOffset,
                                         int                        aSize,
@@ -796,10 +804,7 @@ public class AlphanumericPICMarshallerImpl
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsBigDecimal(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public BigDecimal decodeAsBigDecimal( CopybookContext            aContext,
                                           int                        aOffset,
                                           int                        aSize,
@@ -811,10 +816,7 @@ public class AlphanumericPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsBigDecimal(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.math.BigDecimal, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public void encodeAsBigDecimal( CopybookContext            aContext,
                                     int                        aOffset,
                                     BigDecimal                 aValue,
@@ -827,10 +829,7 @@ public class AlphanumericPICMarshallerImpl
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsString(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public boolean isValidAsString( CopybookContext            aContext,
                                     int                        aOffset,
                                     int                        aSize,
@@ -885,10 +884,7 @@ public class AlphanumericPICMarshallerImpl
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsString(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public String decodeAsString( CopybookContext            aContext,
                                   int                        aOffset,
                                   int                        aSize,
@@ -935,10 +931,7 @@ public class AlphanumericPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsString(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.lang.String, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public void encodeAsString( CopybookContext            aContext,
                                 int                        aOffset,
                                 String                     aValue,
@@ -1046,10 +1039,7 @@ public class AlphanumericPICMarshallerImpl
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isValidAsDate(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, com.xylocore.commons.data.copybook.runtime.converters.Converter, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public boolean isValidAsDate( CopybookContext            aContext,
                                   int                        aOffset,
                                   int                        aSize,
@@ -1082,10 +1072,7 @@ public class AlphanumericPICMarshallerImpl
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#decodeAsDate(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, com.xylocore.commons.data.copybook.runtime.converters.Converter, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public Date decodeAsDate( CopybookContext            aContext,
                               int                        aOffset,
                               int                        aSize,
@@ -1110,10 +1097,7 @@ public class AlphanumericPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#encodeAsDate(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.util.Date, int, int, com.xylocore.commons.data.copybook.runtime.converters.Converter, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public void encodeAsDate( CopybookContext            aContext,
                               int                        aOffset,
                               Date                       aValue,
@@ -1136,10 +1120,7 @@ public class AlphanumericPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller#isConditionNameValid(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.lang.String, java.util.Map, int, int)
-     */
+    @Override
     public boolean isConditionNameValid( CopybookContext               aContext,                   
                                          int                           aOffset,                    
                                          String                        aConditionName,             

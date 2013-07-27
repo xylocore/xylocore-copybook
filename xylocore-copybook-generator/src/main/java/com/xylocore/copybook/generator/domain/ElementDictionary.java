@@ -29,9 +29,11 @@ import org.apache.commons.lang3.StringUtils;
 
 
 /**
- * FILLIN
+ * A collection of elements that form a dictionary for a copybook.
  * 
  * @author      Eric R. Medley
+ * 
+ * @see         Copybook
  */
 
 public class ElementDictionary
@@ -53,11 +55,14 @@ public class ElementDictionary
     
 
     /**
-     * FILLIN
+     * Returns <tt>true</tt> if the dictionary contains an element with the
+     * specified element name.
      * 
      * @param       aElementName
+     *                  The element name of interest.
      * 
-     * @return
+     * @return      <tt>true</tt> if the dictionary contains an element with
+     *              the specified element name.
      */
     public boolean isElementNameAvailable( String aElementName )
     {
@@ -68,11 +73,14 @@ public class ElementDictionary
     
     
     /**
-     * FILLIN
+     * Returns <tt>true</tt> if the dictionary contains one and only one element with
+     * the specified element name.
      * 
      * @param       aElementName
+     *                  The element name of interest.
      * 
-     * @return
+     * @return      <tt>true</tt> if the dictionary contains one and only one element with
+     *              the specified element name.
      */
     public boolean isUniqueElementName( String aElementName )
     {
@@ -90,7 +98,7 @@ public class ElementDictionary
      * 
      * @return
      */
-    public List<Element> getMatchingElements( ElementFilter[] aFilters )
+    public List<Element> getMatchingElements( List<ElementFilter> aFilters )
     {
         Set<String> myNames = new HashSet<>();
         if ( aFilters != null )
@@ -112,10 +120,12 @@ public class ElementDictionary
     
     
     /**
-     * FILLIN
+     * Adds an element to the dictionary.
      * 
      * @param       aElementPath
+     *                  The fully qualified element path within the copybook.
      * @param       aElement
+     *                  The element.
      */
     public void addElementPathMapping( String    aElementPath,
                                        Element   aElement      )

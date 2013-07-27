@@ -91,138 +91,91 @@ public class AccessorMethodInfoCreationVisitor
     }
     
  
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitDefaultAccessor(com.xylocore.commons.data.copybook.domain.config.DefaultAccessorConfig)
-     */
+    @Override
     public void visitDefaultAccessor( DefaultAccessorConfig aAccessor )
     {
         skipAccessor = true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#leaveDefaultAccessor(com.xylocore.commons.data.copybook.domain.config.DefaultAccessorConfig)
-     */
+    @Override
     public void leaveDefaultAccessor( DefaultAccessorConfig aAccessor )
     {
         skipAccessor = false;
     }
     
  
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitNoDefaultAccessor(com.xylocore.commons.data.copybook.domain.config.NoDefaultAccessorConfig)
-     */
+    @Override
     public void visitNoDefaultAccessor( NoDefaultAccessorConfig aAccessor )
     {
         skipAccessor = true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#leaveNoDefaultAccessor(com.xylocore.commons.data.copybook.domain.config.NoDefaultAccessorConfig)
-     */
+    @Override
     public void leaveNoDefaultAccessor( NoDefaultAccessorConfig aAccessor )
     {
         skipAccessor = false;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitByteAccessor(com.xylocore.commons.data.copybook.domain.config.ByteAccessorConfig)
-     */
+    @Override
     public void visitByteAccessor( ByteAccessorConfig aAccessor )
     {
-        ByteAccessorMethodInfo myAccessorMethodInfo = new ByteAccessorMethodInfo();
-        accessorMethodInfo = myAccessorMethodInfo;        
+        accessorMethodInfo = new ByteAccessorMethodInfo();
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitCharAccessor(com.xylocore.commons.data.copybook.domain.config.CharAccessorConfig)
-     */
+    @Override
     public void visitCharAccessor( CharAccessorConfig aAccessor )
     {
-        CharAccessorMethodInfo myAccessorMethodInfo = new CharAccessorMethodInfo();
-        accessorMethodInfo = myAccessorMethodInfo;        
+        accessorMethodInfo = new CharAccessorMethodInfo();
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitShortAccessor(com.xylocore.commons.data.copybook.domain.config.ShortAccessorConfig)
-     */
+    @Override
     public void visitShortAccessor( ShortAccessorConfig aAccessor )
     {
-        ShortAccessorMethodInfo myAccessorMethodInfo = new ShortAccessorMethodInfo();
-        accessorMethodInfo = myAccessorMethodInfo;        
+        accessorMethodInfo = new ShortAccessorMethodInfo();
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitIntegerAccessor(com.xylocore.commons.data.copybook.domain.config.IntegerAccessorConfig)
-     */
+    @Override
     public void visitIntegerAccessor( IntegerAccessorConfig aAccessor )
     {
-        IntegerAccessorMethodInfo myAccessorMethodInfo = new IntegerAccessorMethodInfo();
-        accessorMethodInfo = myAccessorMethodInfo;        
+        accessorMethodInfo = new IntegerAccessorMethodInfo();
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitLongAccessor(com.xylocore.commons.data.copybook.domain.config.LongAccessorConfig)
-     */
+    @Override
     public void visitLongAccessor( LongAccessorConfig aAccessor )
     {
-        LongAccessorMethodInfo myAccessorMethodInfo = new LongAccessorMethodInfo();
-        accessorMethodInfo = myAccessorMethodInfo;        
+        accessorMethodInfo = new LongAccessorMethodInfo();
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitFloatAccessor(com.xylocore.commons.data.copybook.domain.config.FloatAccessorConfig)
-     */
+    @Override
     public void visitFloatAccessor( FloatAccessorConfig aAccessor )
     {
-        FloatAccessorMethodInfo myAccessorMethodInfo = new FloatAccessorMethodInfo();
-        accessorMethodInfo = myAccessorMethodInfo;        
+        accessorMethodInfo = new FloatAccessorMethodInfo();
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitDoubleAccessor(com.xylocore.commons.data.copybook.domain.config.DoubleAccessorConfig)
-     */
+    @Override
     public void visitDoubleAccessor( DoubleAccessorConfig aAccessor )
     {
-        DoubleAccessorMethodInfo myAccessorMethodInfo = new DoubleAccessorMethodInfo();
-        accessorMethodInfo = myAccessorMethodInfo;        
+        accessorMethodInfo = new DoubleAccessorMethodInfo();
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitBigIntegerAccessor(com.xylocore.commons.data.copybook.domain.config.BigIntegerAccessorConfig)
-     */
+    @Override
     public void visitBigIntegerAccessor( BigIntegerAccessorConfig aAccessor )
     {
-        BigIntegerAccessorMethodInfo myAccessorMethodInfo = new BigIntegerAccessorMethodInfo();
-        accessorMethodInfo = myAccessorMethodInfo;        
+        accessorMethodInfo = new BigIntegerAccessorMethodInfo();
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitBigDecimalAccessor(com.xylocore.commons.data.copybook.domain.config.BigDecimalAccessorConfig)
-     */
+    @Override
     public void visitBigDecimalAccessor( BigDecimalAccessorConfig aAccessor )
     {
         BigDecimalAccessorMethodInfo myAccessorMethodInfo = new BigDecimalAccessorMethodInfo();
@@ -232,21 +185,14 @@ public class AccessorMethodInfoCreationVisitor
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitStringAccessor(com.xylocore.commons.data.copybook.domain.config.StringAccessorConfig)
-     */
+    @Override
     public void visitStringAccessor( StringAccessorConfig aAccessor )
     {
-        StringAccessorMethodInfo myAccessorMethodInfo = new StringAccessorMethodInfo();
-        accessorMethodInfo = myAccessorMethodInfo;        
+        accessorMethodInfo = new StringAccessorMethodInfo();
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitDateAccessor(com.xylocore.commons.data.copybook.domain.config.DateAccessorConfig)
-     */
+    @Override
     public void visitDateAccessor( DateAccessorConfig aAccessor )
     {
         DateAccessorMethodInfo myAccessorMethodInfo = new DateAccessorMethodInfo();
@@ -256,10 +202,7 @@ public class AccessorMethodInfoCreationVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitAccessor(com.xylocore.commons.data.copybook.domain.config.AccessorConfig)
-     */
+    @Override
     public void visitAccessor( AccessorConfig aAccessor )
     {
         if ( ! skipAccessor )

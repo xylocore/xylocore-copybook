@@ -44,10 +44,7 @@ public class NoNameElement
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Element#acceptVisit(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptVisit( Visitor aVisitor )
     {
         aVisitor.visitNoNameElement( this );
@@ -56,10 +53,7 @@ public class NoNameElement
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Element#acceptLeave(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptLeave( Visitor aVisitor )
     {
         super.acceptLeave( aVisitor );

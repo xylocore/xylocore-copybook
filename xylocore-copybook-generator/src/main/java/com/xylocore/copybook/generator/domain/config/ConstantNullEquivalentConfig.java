@@ -101,11 +101,7 @@ public class ConstantNullEquivalentConfig
     }
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptVisit( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -116,11 +112,7 @@ public class ConstantNullEquivalentConfig
     }
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptLeave( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -138,10 +130,7 @@ public class ConstantNullEquivalentConfig
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableLabelValuePairs(java.util.Map)
-     */
+    @Override
     public void buildDescribableLabelValuePairs( Map<String,String> aLabelValueMap )
     {
         aLabelValueMap.put( "DataUsageCategory", dataUsageCategory.name() );

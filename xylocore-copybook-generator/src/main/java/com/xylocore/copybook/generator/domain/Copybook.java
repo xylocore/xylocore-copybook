@@ -65,10 +65,7 @@ public final class Copybook
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.BasicElement#acceptVisit(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptVisit( Visitor aVisitor )
     {
         aVisitor.visitCopybook( this );
@@ -77,10 +74,7 @@ public final class Copybook
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.BasicElement#acceptLeave(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptLeave( Visitor aVisitor )
     {
         super.acceptLeave( aVisitor );

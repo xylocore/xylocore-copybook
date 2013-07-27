@@ -62,7 +62,10 @@ public abstract class NullEquivalentConfig
      */
     public NullEquivalentConfig( String aName )
     {
-        assert StringUtils.isNotBlank( aName );
+        if ( StringUtils.isBlank( aName ) )
+        {
+            throw new IllegalArgumentException( "name cannot be null or blank" );
+        }
         
         name = aName;
     }
@@ -123,19 +126,13 @@ public abstract class NullEquivalentConfig
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableLabelValuePairs(java.util.Map)
-     */
+    @Override
     public void buildDescribableLabelValuePairs( Map<String,String> aLabelValueMap )
     {
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableCollections(java.util.Map)
-     */
+    @Override
     public void buildDescribableCollections( Map<String, Object> aCollectionsMap )
     {
     }
@@ -148,10 +145,7 @@ public abstract class NullEquivalentConfig
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitable#accept(com.xylocore.commons.data.copybook.domain.config.ConfigVisitor)
-     */
+    @Override
     public void accept( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;

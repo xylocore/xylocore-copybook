@@ -17,7 +17,7 @@
 
 package com.xylocore.copybook.generator.emit.value;
 
-import com.xylocore.copybook.generator.emit.BufferEmitter;
+import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.copybook.runtime.ConstantValue;
 
 

@@ -66,20 +66,14 @@ public class ValidateElementMetadataVisitor
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#shouldVisitChildren(com.xylocore.commons.data.copybook.domain.Element)
-     */
+    @Override
     public boolean shouldVisitChildren( Element aParent )
     {
         return true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void visitDataElement( DataElement aElement )
     {
         assert aElement != null;
@@ -144,19 +138,19 @@ public class ValidateElementMetadataVisitor
     private boolean checkForAccessorConflicts( AccessorConfig   aLhsAccessor,
                                                AccessorConfig   aRhsAccessor  )
     {
-//        if
-//        (
-//                aLhsAccessor.g
-//        )
-//        {
-//            
-//        }
-        
         // TODO: implement
         return false;
     }
     
-    
+
+    /**
+     * FILLIN
+     * 
+     * @param       aLhsNullEquivalent
+     * @param       aRhsNullEquivalent
+     * 
+     * @return
+     */
     private boolean checkForNullEquivalentConflicts( NullEquivalentConfig   aLhsNullEquivalent,
                                                      NullEquivalentConfig   aRhsNullEquivalent  )
     {

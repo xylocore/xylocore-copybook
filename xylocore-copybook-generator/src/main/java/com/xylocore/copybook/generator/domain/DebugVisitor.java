@@ -103,146 +103,105 @@ public class DebugVisitor
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitCopybook(com.xylocore.commons.data.copybook.domain.Copybook)
-     */
+    @Override
     public void visitCopybook( Copybook aCopybook )
     {
         write( "visitCopybook " + getName( aCopybook ) );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveCopybook(com.xylocore.commons.data.copybook.domain.Copybook)
-     */
+    @Override
     public void leaveCopybook( Copybook aCopybook )
     {
         write( "leaveCopybook " + getName( aCopybook ) );
     }
     
     
+    @Override
     public boolean shouldVisitChildren( Element aParent )
     {
         return true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitLevel66Element(com.xylocore.commons.data.copybook.domain.Level66Element)
-     */
+    @Override
     public void visitLevel66Element( Level66Element aElement )
     {
         write( "visitLevel66Element " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveLevel66Element(com.xylocore.commons.data.copybook.domain.Level66Element)
-     */
+    @Override
     public void leaveLevel66Element( Level66Element aElement )
     {
         write( "leaveLevel66Element " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#shouldVisitLevel88Elements(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public boolean shouldVisitLevel88Elements( DataElement aElement )
     {
         return true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitLevel88Element(com.xylocore.commons.data.copybook.domain.Level88Element)
-     */
+    @Override
     public void visitLevel88Element( Level88Element aElement )
     {
         write( "visitLevel88Element " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveLevel88Element(com.xylocore.commons.data.copybook.domain.Level88Element)
-     */
+    @Override
     public void leaveLevel88Element( Level88Element aElement )
     {
         write( "leaveLevel88Element " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void visitDataElement( DataElement aElement )
     {
         write( "visitDataElement " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void leaveDataElement( DataElement aElement )
     {
         write( "leaveDataElement " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitFillerElement(com.xylocore.commons.data.copybook.domain.FillerElement)
-     */
+    @Override
     public void visitFillerElement( FillerElement aElement )
     {
         write( "visitFillerElement " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveFillerElement(com.xylocore.commons.data.copybook.domain.FillerElement)
-     */
+    @Override
     public void leaveFillerElement( FillerElement aElement )
     {
         write( "leaveFillerElement " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitNoNameElement(com.xylocore.commons.data.copybook.domain.NoNameElement)
-     */
+    @Override
     public void visitNoNameElement( NoNameElement aElement )
     {
         write( "visitNoNameElement " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveNoNameElement(com.xylocore.commons.data.copybook.domain.NoNameElement)
-     */
+    @Override
     public void leaveNoNameElement( NoNameElement aElement )
     {
         write( "leaveNoNameElement " + getName( aElement ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitElement(com.xylocore.commons.data.copybook.domain.Element)
-     */
+    @Override
     public void visitElement( Element aElement )
     {
         describeElement( aElement, "visitElement" );
@@ -251,10 +210,7 @@ public class DebugVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveElement(com.xylocore.commons.data.copybook.domain.Element)
-     */
+    @Override
     public void leaveElement( Element aElement )
     {
         outdent();
@@ -272,7 +228,7 @@ public class DebugVisitor
     private void describeElement( Element   aElement,
                                   String    aPrefix   )
     {
-        StringBuffer myBuffer = new StringBuffer();
+        StringBuilder myBuffer = new StringBuilder();
         
         myBuffer.append( aPrefix ).append( " " ).append( getName( aElement ) )
                 .append( ": elementType="    ).append( aElement.getElementType()        )
@@ -334,10 +290,7 @@ public class DebugVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitAccessorMethodInfo(com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
+    @Override
     public void visitAccessorMethodInfo( AccessorMethodInfo aInfo )
     {
         indent();
@@ -346,10 +299,7 @@ public class DebugVisitor
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveAccessorMethodInfo(com.xylocore.commons.data.copybook.domain.AccessorMethodInfo)
-     */
+    @Override
     public void leaveAccessorMethodInfo( AccessorMethodInfo aInfo )
     {
         indent();

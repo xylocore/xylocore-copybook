@@ -17,11 +17,11 @@
 
 package com.xylocore.copybook.generator.emit.pic;
 
+import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.NumericValue;
 import com.xylocore.copybook.generator.domain.Value;
 import com.xylocore.copybook.generator.domain.ZeroValue;
-import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.DataType;
 
 
@@ -71,12 +71,14 @@ public class Computational2PICMarshallerEmitter
     }
     
     
+    @Override
     protected String getDelegateIsValidMethodName( DataType aDataType )
     {
         return "isValid";
     }
     
     
+    @Override
     protected void emitVariableConditionNameMethodParts( BufferEmitter   aEmitter,
                                                          Element         aConditionalVariableElement )
     {

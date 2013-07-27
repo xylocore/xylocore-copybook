@@ -18,8 +18,8 @@
   **
   -->
 
-<xs:schema xmlns              = "http://www.xylocore.com/integen/environment/2007-10"
-           targetNamespace    = "http://www.xylocore.com/integen/environment/2007-10"
+<xs:schema xmlns              = "http://www.xylocore.com/copybook/environment/2007-10"
+           targetNamespace    = "http://www.xylocore.com/copybook/environment/2007-10"
            xmlns:xs           = "http://www.w3.org/2001/XMLSchema"
            elementFormDefault = "qualified">
 
@@ -28,14 +28,31 @@
   
   <xs:complexType name="Environment">
     <xs:sequence>
-      <xs:element name="PackageName" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="ClassName" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="GenerationRootDir" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="CopybookFilename" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="ImplicitRecordName" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="MappingMetadata" type="MappingMetadata"/>
+      <xs:element name="PackageName"                  type="xs:string"                    minOccurs="0" maxOccurs="1"/>
+      <xs:element name="ClassName"                    type="xs:string"                    minOccurs="0" maxOccurs="1"/>
+      <xs:element name="GenerationRootDirectory"      type="xs:string"                    minOccurs="0" maxOccurs="1"/>
+      <xs:element name="CopybookFilename"             type="xs:string"                    minOccurs="0" maxOccurs="1"/>
+      <xs:element name="ImplicitRecordName"           type="xs:string"                    minOccurs="0" maxOccurs="1"/>
+      <xs:element name="MinimumIntegerDataType"       type="MinimumIntegerDataType"       minOccurs="0" maxOccurs="1"/>
+      <xs:element name="MinimumFloatingPointDataType" type="MinimumFloatingPointDataType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="RightMarginLimit"             type="xs:integer"                   minOccurs="0" maxOccurs="0"/>
+      <xs:element name="MappingMetadata"              type="MappingMetadata"              minOccurs="0" maxOccurs="1"/>
     </xs:sequence>
   </xs:complexType>
+  
+  <xs:simpleType name="MinimumIntegerDataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Integer"/>
+      <xs:enumeration value="Long"   />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="MinimumFloatingPointDataType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Float" />
+      <xs:enumeration value="Double"/>
+    </xs:restriction>
+  </xs:simpleType>
   
   <xs:complexType name="MappingMetadata">
     <xs:sequence>
@@ -57,7 +74,7 @@
     </xs:complexContent>
   </xs:complexType>
   
-  <xs:complexType name="BasicDataElement" abstract="true">
+  <xs:complexType name="DataElement">
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:sequence>
@@ -67,16 +84,20 @@
     </xs:complexContent>
   </xs:complexType>
   
-  <xs:complexType name="DataElement">
+  <xs:complexType name="ElementFilter">
+    <xs:attribute name="name" type="xs:string" use="required"/>
+  </x:complexType>
+  
+  <xs:complexType name="IncludedElementFilter">
     <xs:complexContent>
-      <xs:extension base="BasicDataElement">
+      <xs:extension base="ElementFilter">
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   
-  <xs:complexType name="DataElementSet">
+  <xs:complexType name="ExcludedElementFilter">
     <xs:complexContent>
-      <xs:extension base="BasicDataElement">
+      <xs:extension base="ElementFilter">
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

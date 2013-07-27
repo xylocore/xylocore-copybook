@@ -32,11 +32,7 @@ public class DefaultAccessorConfig
     //
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptVisit( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -47,11 +43,7 @@ public class DefaultAccessorConfig
     }
 
 
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptLeave( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;

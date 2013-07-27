@@ -18,7 +18,6 @@
 package com.xylocore.copybook.generator.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,9 +66,9 @@ public class DataElement
     {
         super( aName, aLevel );
         
-        accessorMethodInfos      = Collections.<DataType,AccessorMethodInfo>emptyMap();
-        level88Elements          = Collections.<Level88Element>emptyList();
-        nullEquivalentStrategies = null;
+        accessorMethodInfos      = new HashMap<>();
+        level88Elements          = new ArrayList<>();
+        nullEquivalentStrategies = new ArrayList<>();
     }
     
     
@@ -91,11 +90,6 @@ public class DataElement
      */
     public void addAccessorMethodInfo( AccessorMethodInfo aAccessorMethodInfo )
     {
-        if ( accessorMethodInfos == Collections.EMPTY_MAP )
-        {
-            accessorMethodInfos = new HashMap<DataType,AccessorMethodInfo>();
-        }
-        
         accessorMethodInfos.put( aAccessorMethodInfo.getDataType(), aAccessorMethodInfo );
     }
     
@@ -142,11 +136,6 @@ public class DataElement
     {
         assert aElement != null;
 
-        if ( level88Elements == Collections.EMPTY_LIST )
-        {
-            level88Elements = new ArrayList<Level88Element>();
-        }
-        
         aElement.setParent( this );
         
         level88Elements.add( aElement );
@@ -160,9 +149,7 @@ public class DataElement
      */
     public List<NullEquivalentStrategy> getNullEquivalentStrategies()
     {
-        return nullEquivalentStrategies != null
-                ? nullEquivalentStrategies
-                : Collections.<NullEquivalentStrategy>emptyList();
+        return nullEquivalentStrategies;
     }
     
     
@@ -173,13 +160,11 @@ public class DataElement
      */
     public void setNullEquivalentStrategies( List<NullEquivalentStrategy> aNullEquivalentStrategies )
     {
-        if ( aNullEquivalentStrategies != null && ! aNullEquivalentStrategies.isEmpty() )
+        nullEquivalentStrategies.clear();
+        
+        if ( aNullEquivalentStrategies != null )
         {
-            nullEquivalentStrategies = new ArrayList<>( aNullEquivalentStrategies );
-        }
-        else
-        {
-            nullEquivalentStrategies = null;
+            nullEquivalentStrategies.addAll( aNullEquivalentStrategies );
         }
     }
     
@@ -192,11 +177,6 @@ public class DataElement
     public void addNullEquivalentStrategy( NullEquivalentStrategy aNullEquivalentStrategy )
     {
         assert aNullEquivalentStrategy != null;
-        
-        if ( nullEquivalentStrategies == null )
-        {
-            nullEquivalentStrategies = new ArrayList<>();
-        }
         
         nullEquivalentStrategies.add( aNullEquivalentStrategy );
     }
@@ -224,10 +204,7 @@ public class DataElement
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.BasicElement#acceptVisit(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptVisit( Visitor aVisitor )
     {
         aVisitor.visitDataElement( this );
@@ -236,11 +213,7 @@ public class DataElement
     }
 
 
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptChildren( Visitor aVisitor )
     {
         assert aVisitor != null;
@@ -265,10 +238,7 @@ public class DataElement
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.BasicElement#acceptLeave(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptLeave( Visitor aVisitor )
     {
         super.acceptLeave( aVisitor );

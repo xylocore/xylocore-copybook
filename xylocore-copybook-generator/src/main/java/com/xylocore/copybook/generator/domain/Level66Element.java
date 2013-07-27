@@ -44,6 +44,7 @@ public class Level66Element
     }
     
     
+    @Override
     protected void acceptVisit( Visitor aVisitor )
     {
         aVisitor.visitLevel66Element( this );
@@ -52,7 +53,7 @@ public class Level66Element
     }
     
     
-    
+    @Override
     protected void acceptLeave( Visitor aVisitor )
     {
         super.acceptLeave( aVisitor );

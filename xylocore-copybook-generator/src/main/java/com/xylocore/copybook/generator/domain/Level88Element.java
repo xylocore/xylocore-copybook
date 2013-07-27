@@ -72,10 +72,7 @@ public class Level88Element
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.DataElement#acceptVisit(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptVisit( Visitor aVisitor )
     {
         aVisitor.visitLevel88Element( this );
@@ -84,10 +81,7 @@ public class Level88Element
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.DataElement#acceptLeave(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptLeave( Visitor aVisitor )
     {
         super.acceptLeave( aVisitor );

@@ -82,10 +82,7 @@ public class ConstantCharacterString
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.CharSequence#charAt(int)
-     */
+    @Override
     public char charAt( int aIndex )
     {
         if ( aIndex < 0 || aIndex >= length )
@@ -97,20 +94,14 @@ public class ConstantCharacterString
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.CharSequence#length()
-     */
+    @Override
     public int length()
     {
         return length;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.CharSequence#subSequence(int, int)
-     */
+    @Override
     public CharSequence subSequence( int   aStart,
                                      int   aEnd    )
     {
@@ -123,10 +114,7 @@ public class ConstantCharacterString
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString()
     {
         StringBuffer myBuffer = new StringBuffer();
@@ -146,10 +134,7 @@ public class ConstantCharacterString
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(T)
-     */
+    @Override
     public int compareTo( ConstantCharacterString aRhs )
     {
         int myCmp = ( constantChar < aRhs.constantChar ) ? -1 : (( constantChar > aRhs.constantChar ) ? 1 : 0);

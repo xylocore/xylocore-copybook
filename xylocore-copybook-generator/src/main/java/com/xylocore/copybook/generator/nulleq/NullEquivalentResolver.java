@@ -54,9 +54,13 @@ class NullEquivalentResolver
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.parser.NullEquivalentResolver#resolve(com.xylocore.commons.data.copybook.domain.DataElement, com.xylocore.commons.data.copybook.domain.config.NullEquivalentConfig)
+    /**
+     * FILLIN
+     * 
+     * @param       aDataElement
+     * @param       aNullEquivalentConfig
+     * 
+     * @return
      */
     public NullEquivalentStrategy resolve( DataElement            aDataElement,
                                            NullEquivalentConfig   aNullEquivalentConfig )
@@ -81,10 +85,7 @@ class NullEquivalentResolver
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitNullEquivalent(com.xylocore.commons.data.copybook.domain.config.NullEquivalentConfig)
-     */
+    @Override
     public void visitNullEquivalent( NullEquivalentConfig aNullEquivalent )
     {
         if ( nullEquivalentStrategy == null )
@@ -94,20 +95,15 @@ class NullEquivalentResolver
         }
     }
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitBlankNullEquivalent(com.xylocore.commons.data.copybook.domain.config.BlankNullEquivalentConfig)
-     */
+
+    @Override
     public void visitBlankNullEquivalent( BlankNullEquivalentConfig aNullEquivalent )
     {
         nullEquivalentStrategy = BlankNullEquivalentStrategy.getInstance();
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitConstantNullEquivalent(com.xylocore.commons.data.copybook.domain.config.ConstantNullEquivalentConfig)
-     */
+    @Override
     public void visitConstantNullEquivalent( ConstantNullEquivalentConfig aNullEquivalent )
     {
         nullEquivalentStrategy =

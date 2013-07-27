@@ -44,7 +44,7 @@ public class AssignConvertersVisitor
     //
     
     
-    private List<DataElement> dataElementStack = new ArrayList<DataElement>();
+    private List<DataElement> dataElementStack = new ArrayList<>();
     
     
     
@@ -53,41 +53,29 @@ public class AssignConvertersVisitor
     // Class implementation
     //
 
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#shouldVisitChildren(com.xylocore.commons.data.copybook.domain.Element)
-     */
+
+    @Override
     public boolean shouldVisitChildren( Element aParent )
     {
         return true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void visitDataElement( DataElement aDataElement )
     {
         dataElementStack.add( aDataElement );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void leaveDataElement( DataElement aDataElement )
     {
         dataElementStack.remove( dataElementStack.size()-1 );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitDateAccessorMethodInfo(com.xylocore.commons.data.copybook.domain.DateAccessorMethodInfo)
-     */
+    @Override
     public void visitDateAccessorMethodInfo( DateAccessorMethodInfo aMethodInfo )
     {
         SimpleDateFormatDateConverter myConverter = new SimpleDateFormatDateConverter( aMethodInfo.getPattern() );
@@ -96,10 +84,7 @@ public class AssignConvertersVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitBigDecimalAccessorMethodInfo(com.xylocore.commons.data.copybook.domain.BigDecimalAccessorMethodInfo)
-     */
+    @Override
     public void visitBigDecimalAccessorMethodInfo( BigDecimalAccessorMethodInfo aMethodInfo )
     {
         BigDecimalConverter myConverter = new BigDecimalConverter( aMethodInfo.getScale() );

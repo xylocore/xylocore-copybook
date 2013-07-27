@@ -64,7 +64,7 @@ public class PICParser
     public List<PICSlice> parse( String aSource )
             throws PICException
     {
-        List<PICSlice>     mySlices     = new ArrayList<PICSlice>();
+        List<PICSlice>     mySlices     = new ArrayList<>();
         Set<PICSymbolType> myTypesFound = new HashSet<>();
         char               myChar;
         

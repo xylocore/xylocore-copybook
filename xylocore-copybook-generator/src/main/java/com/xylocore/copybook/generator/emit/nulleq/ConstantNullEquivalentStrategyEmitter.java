@@ -17,7 +17,7 @@
 
 package com.xylocore.copybook.generator.emit.nulleq;
 
-import com.xylocore.copybook.generator.emit.BufferEmitter;
+import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.copybook.runtime.nulleq.ConstantNullEquivalentStrategy;
 
 

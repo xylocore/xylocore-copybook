@@ -20,9 +20,11 @@ import com.xylocore.copybook.runtime.DataType;
 
 
 /**
- * FILLIN
+ * The default name converter implementation for the library.
  *
  * @author      Eric Medley
+ * 
+ * @see         NameConverter
  */
 
 public class DefaultNameConverter
@@ -83,11 +85,12 @@ public class DefaultNameConverter
                                     boolean    aHasMultipleDatatypes,
                                     DataType   aDataType              )
     {
-        StringBuffer myBuffer = new StringBuffer();
-        myBuffer.append( aPrefix                      )
-                .append( convertToBeanName( aSource ) )
-                .append( aMethodType                  )
-                ;
+        StringBuilder myBuffer = new StringBuilder();
+        myBuffer.append( aPrefix );
+        
+        convertToBeanName( myBuffer, aSource );
+        
+        myBuffer.append( aMethodType );
         
         if ( ! aIsDefault && aHasMultipleDatatypes )
         {
@@ -100,21 +103,51 @@ public class DefaultNameConverter
     }
     
     
-    
-    
-    //
-    // NameConverter interface implementation
-    //
-    
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#convertToBeanName(java.lang.String)
+    /**
+     * FILLIN
+     * 
+     * @param       aPrefix
+     * @param       aSource
+     * @param       aSuffix
+     * 
+     * @return
      */
-    public String convertToBeanName( String aSource )
+    private String generateMethodName( String   aPrefix,
+                                       String   aSource,
+                                       String   aSuffix  )
     {
-        StringBuffer myBuffer      = new StringBuffer( aSource.length() );
-        boolean      myNeedCapital = true;
+        assert aPrefix != null;
+        assert aSource != null;
+        assert aSuffix != null;
+        
+        int myMethodNameLength = aPrefix.length() +
+                                 aSource.length() +
+                                 aSuffix.length();
+        
+        StringBuilder myBuilder = new StringBuilder( myMethodNameLength );
+        myBuilder.append( aPrefix );
+        
+        convertToBeanName( myBuilder, aSource );
+        
+        myBuilder.append( aSuffix );
+        
+        return myBuilder.toString();
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @param       aBuffer
+     * @param       aSource
+     */
+    private void convertToBeanName( StringBuilder   aBuffer,
+                                    String          aSource  )
+    {
+        assert aBuffer != null;
+        assert aSource != null;
+        
+        boolean myNeedCapital = true;
         
         for ( int i = 0, ci = aSource.length() ; i < ci ; i++ )
         {
@@ -126,93 +159,85 @@ public class DefaultNameConverter
             }
             else if ( myNeedCapital )
             {
-                myBuffer.append( Character.toUpperCase( myChar ) );
+                aBuffer.append( Character.toUpperCase( myChar ) );
                 myNeedCapital = false;
             }
             else
             {
-                myBuffer.append( Character.toLowerCase( myChar ) );
+                aBuffer.append( Character.toLowerCase( myChar ) );
             }
         }
+    }
+    
+    
+    
+    
+    //
+    // NameConverter interface implementation
+    //
+    
+    
+    @Override
+    public String convertToBeanName( String aSource )
+    {
+        StringBuilder myBuffer = new StringBuilder( aSource.length() );
+        
+        convertToBeanName( myBuffer, aSource );
         
         return myBuffer.toString();
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateRecordLengthMethodName(java.lang.String)
-     */
+    @Override
     public String generateRecordLengthMethodName( String aSource )
     {
-        return "get" + convertToBeanName( aSource ) + "RecordLength";
+        return generateMethodName( "get", aSource, "RecordLength" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateOffsetMethodName(java.lang.String)
-     */
+    @Override
     public String generateOffsetMethodName( String aSource )
     {
-        return "get" + convertToBeanName( aSource ) + "Offset";
+        return generateMethodName( "get", aSource, "Offset" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateRecordLengthMethodName(java.lang.String)
-     */
+    @Override
     public String generateLengthMethodName( String aSource )
     {
-        return "get" + convertToBeanName( aSource ) + "Length";
+        return generateMethodName( "get", aSource, "Length" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateTotalLengthMethodName(java.lang.String)
-     */
+    @Override
     public String generateTotalLengthMethodName( String aSource )
     {
-        return "get" + convertToBeanName( aSource ) + "TotalLength";
+        return generateMethodName( "get", aSource, "TotalLength" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateSingleElementLengthMethodName(java.lang.String)
-     */
+    @Override
     public String generateSingleElementLengthMethodName( String aSource )
     {
-        return "get" + convertToBeanName( aSource ) + "SingleElementLength";
+        return generateMethodName( "get", aSource, "SingleElementLength" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateBlankMethodName(java.lang.String)
-     */
+    @Override
     public String generateBlankMethodName( String aSource )
     {
-        return "is" + convertToBeanName( aSource ) + "Blank";
+        return generateMethodName( "is", aSource, "Blank" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateNullMethodName(java.lang.String)
-     */
+    @Override
     public String generateNullMethodName( String aSource )
     {
-        return "is" + convertToBeanName( aSource ) + "Null";
+        return generateMethodName( "is", aSource, "Null" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateValidMethodName(java.lang.String, com.xylocore.commons.data.copybook.runtime.DataType, boolean, boolean)
-     */
+    @Override
     public String generateValidMethodName( String     aSource,
                                            DataType   aDataType,
                                            boolean    aIsDefault,
@@ -227,10 +252,7 @@ public class DefaultNameConverter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateGetterMethodName(java.lang.String, com.xylocore.commons.data.copybook.runtime.DataType, boolean, boolean)
-     */
+    @Override
     public String generateGetterMethodName( String     aSource,
                                             DataType   aDataType,
                                             boolean    aIsDefault,
@@ -245,10 +267,7 @@ public class DefaultNameConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateSetterMethodName(java.lang.String, com.xylocore.commons.data.copybook.runtime.DataType, boolean, boolean)
-     */
+    @Override
     public String generateSetterMethodName( String     aSource,
                                             DataType   aDataType,
                                             boolean    aIsDefault,
@@ -263,10 +282,7 @@ public class DefaultNameConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.NameConverter#generateConditionNameMethodName(java.lang.String)
-     */
+    @Override
     public String generateConditionNameMethodName( String aSource )
     {
         return "is" + convertToBeanName( aSource );

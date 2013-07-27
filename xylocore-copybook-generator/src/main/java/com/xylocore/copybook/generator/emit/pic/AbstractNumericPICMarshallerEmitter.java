@@ -19,12 +19,12 @@ package com.xylocore.copybook.generator.emit.pic;
 
 import java.math.BigDecimal;
 
+import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.copybook.generator.domain.AccessorMethodInfo;
 import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.NumericValue;
 import com.xylocore.copybook.generator.domain.Value;
 import com.xylocore.copybook.generator.domain.ZeroValue;
-import com.xylocore.copybook.generator.emit.BufferEmitter;
 
 
 /**
@@ -88,6 +88,7 @@ public abstract class AbstractNumericPICMarshallerEmitter
     }
     
 
+    @Override
     protected void emitVariableIsValidMethodParts( BufferEmitter        aEmitter,
                                                    Element              aElement,
                                                    AccessorMethodInfo   aAccessorMethodInfo )
@@ -96,6 +97,7 @@ public abstract class AbstractNumericPICMarshallerEmitter
     }
     
 
+    @Override
     protected void emitVariableConditionNameMethodParts( BufferEmitter   aEmitter,
                                                          Element         aConditionalVariableElement )
     {
@@ -103,6 +105,7 @@ public abstract class AbstractNumericPICMarshallerEmitter
     }
     
     
+    @Override
     protected Comparable<?> convertValue( Element   aElement,
                                           Value     aValue    )
     {

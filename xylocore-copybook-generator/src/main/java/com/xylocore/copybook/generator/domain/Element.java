@@ -18,7 +18,6 @@
 package com.xylocore.copybook.generator.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -132,22 +131,19 @@ public class Element
         
         name           = ( aName != null ) ? aName.toUpperCase() : null;
         level          = aLevel;
-        childrenByName = new TreeMap<String,Element>( String.CASE_INSENSITIVE_ORDER );
+        childrenByName = new TreeMap<>( String.CASE_INSENSITIVE_ORDER );
         size           = 0;
         flags          = 0;
         occursMinValue = 1;
         occursMaxValue = 1;
-        metadataItems  = Collections.<ElementConfig>emptyList();
+        metadataItems  = new ArrayList<ElementConfig>();
         
         // TODO: provide mechanism to set this flag via config
         setNullAllowed( true );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString()
     {
         return name;
@@ -1257,18 +1253,14 @@ public class Element
     {
         assert aElementMetadata != null;
 
-        if ( metadataItems == Collections.<ElementConfig>emptyList() )
-        {
-            metadataItems = new ArrayList<ElementConfig>();
-        }
-        
         metadataItems.add( aElementMetadata );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.BasicElement#acceptVisit(com.xylocore.commons.data.copybook.domain.Visitor)
+    /**
+     * FILLIN
+     * 
+     * @param       aVisitor
      */
     protected void acceptVisit( Visitor aVisitor )
     {
@@ -1300,9 +1292,10 @@ public class Element
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.BasicElement#acceptLeave(com.xylocore.commons.data.copybook.domain.Visitor)
+    /**
+     * FILLIN
+     * 
+     * @param       aVisitor
      */
     protected void acceptLeave( Visitor aVisitor )
     {
@@ -1319,10 +1312,7 @@ public class Element
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitable#accept(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     public void accept( Visitor aVisitor )
     {
         acceptVisit   ( aVisitor );

@@ -67,7 +67,7 @@ public class PlatformDataBehaviorFactory
             mySecurityManager.checkPermission( new RuntimePermission( thisClass.getName() ) );
         }
 
-        Map<String,PlatformDataBehavior> myBehaviorMap = new TreeMap<String,PlatformDataBehavior>( String.CASE_INSENSITIVE_ORDER );
+        Map<String,PlatformDataBehavior> myBehaviorMap = new TreeMap<>( String.CASE_INSENSITIVE_ORDER );
         
         for ( PlatformDataBehavior myBehavior : DefaultPlatformDataBehaviorProvider.getInstance().getBehaviors() )
         {

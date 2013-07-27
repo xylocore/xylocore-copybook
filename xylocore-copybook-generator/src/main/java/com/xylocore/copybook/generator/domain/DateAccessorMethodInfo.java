@@ -76,10 +76,7 @@ public class DateAccessorMethodInfo
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.AccessorMethodInfo#acceptVisit(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptVisit( Visitor aVisitor )
     {
         assert aVisitor != null;
@@ -90,10 +87,7 @@ public class DateAccessorMethodInfo
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.AccessorMethodInfo#acceptLeave(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     protected void acceptLeave( Visitor aVisitor )
     {
         assert aVisitor != null;

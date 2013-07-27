@@ -44,7 +44,24 @@ public class DefaultPlatformDataBehaviorProvider
     
     private static final DefaultPlatformDataBehaviorProvider    instance            = new DefaultPlatformDataBehaviorProvider();
     
-    private final List<PlatformDataBehavior>                    defaultBehaviors;
+    private static final List<PlatformDataBehavior>             defaultBehaviors;
+    
+    
+    
+    
+    //
+    // Static initialization
+    //
+    
+    
+    static
+    {
+        List<PlatformDataBehavior> myList = new ArrayList<>();
+        myList.add( new IBMMainframePlatformDataBehavior() );
+        myList.add( new AsciiPlatformDataBehavior()        );
+        
+        defaultBehaviors = Collections.unmodifiableList( myList );
+    }
     
     
     
@@ -55,15 +72,10 @@ public class DefaultPlatformDataBehaviorProvider
     
     
     /**
-     * FILLIN
+     * Private constructor as per the singleton pattern.
      */
     private DefaultPlatformDataBehaviorProvider()
     {
-        List<PlatformDataBehavior> myList = new ArrayList<PlatformDataBehavior>();
-        myList.add( new IBMMainframePlatformDataBehavior() );
-        myList.add( new AsciiPlatformDataBehavior()        );
-        
-        defaultBehaviors = Collections.unmodifiableList( myList );
     }
     
     
@@ -85,10 +97,7 @@ public class DefaultPlatformDataBehaviorProvider
     //
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehaviorProvider#getBehaviors()
-     */
+    @Override
     public List<PlatformDataBehavior> getBehaviors()
     {
         return defaultBehaviors;

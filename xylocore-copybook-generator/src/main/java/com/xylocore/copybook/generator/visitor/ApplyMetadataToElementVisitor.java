@@ -89,7 +89,7 @@ public class ApplyMetadataToElementVisitor
     {
         Map<DataType,Integer> myMap;
         
-        myMap = new HashMap<DataType,Integer>();
+        myMap = new HashMap<>();
         myMap.put( DataType.Byte     , new Integer( 0 ) );
         myMap.put( DataType.Character, new Integer( 1 ) );
         myMap.put( DataType.Short    , new Integer( 2 ) );
@@ -97,7 +97,7 @@ public class ApplyMetadataToElementVisitor
         myMap.put( DataType.Long     , new Integer( 4 ) );
         integerBasedDataTypes = Collections.unmodifiableMap( myMap );
         
-        myMap = new HashMap<DataType,Integer>();
+        myMap = new HashMap<>();
         myMap.put( DataType.Float , new Integer( 0 ) );
         myMap.put( DataType.Double, new Integer( 1 ) );
         floatingPointBasedDataTypes = Collections.unmodifiableMap( myMap );
@@ -181,21 +181,14 @@ public class ApplyMetadataToElementVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#shouldVisitAccessors(com.xylocore.commons.data.copybook.domain.config.DataElementConfig)
-     */
+    @Override
     public boolean shouldVisitAccessors( DataElementConfig aElement )
     {
         return true;
     }
 
     
-    /**
-     * FILLIN
-     * 
-     * @param       aAccessor
-     */
+    @Override
     public void visitDefaultAccessor( DefaultAccessorConfig aAccessor )
     {
         accessorMethodInfo = createDefaultAccessor( dataElement, aAccessor );
@@ -204,19 +197,15 @@ public class ApplyMetadataToElementVisitor
         skipAccessor = true;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#leaveDefaultAccessor(com.xylocore.commons.data.copybook.domain.config.DefaultAccessorConfig)
-     */
+
+    @Override
     public void leaveDefaultAccessor( DefaultAccessorConfig aAccessor )
     {
         skipAccessor = false;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitNoDefaultAccessor(com.xylocore.commons.data.copybook.domain.config.NoDefaultAccessorConfig)
-     */
+
+    @Override
     public void visitNoDefaultAccessor( NoDefaultAccessorConfig aAccessor )
     {
         dataElement.setNoDefaultAccessor( true );
@@ -225,20 +214,14 @@ public class ApplyMetadataToElementVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#leaveNoDefaultAccessor(com.xylocore.commons.data.copybook.domain.config.NoDefaultAccessorConfig)
-     */
+    @Override
     public void leaveNoDefaultAccessor( NoDefaultAccessorConfig aAccessor )
     {
         skipAccessor = false;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitAccessor(com.xylocore.commons.data.copybook.domain.config.AccessorConfig)
-     */
+    @Override
     public void visitAccessor( AccessorConfig aAccessor )
     {
         if ( ! skipAccessor )
@@ -249,20 +232,14 @@ public class ApplyMetadataToElementVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#shouldVisitNullEquivalents(com.xylocore.commons.data.copybook.domain.config.DataElementConfig)
-     */
+    @Override
     public boolean shouldVisitNullEquivalents( DataElementConfig aElement )
     {
         return true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitBlankNullEquivalent(com.xylocore.commons.data.copybook.domain.config.BlankNullEquivalentConfig)
-     */
+    @Override
     public void visitNullEquivalent( NullEquivalentConfig aNullEquivalent )
     {
         NullEquivalentStrategy myNullEquivalentStrategy = nullEquivalentStrategyFactory.create( dataElement, aNullEquivalent );
@@ -304,65 +281,23 @@ public class ApplyMetadataToElementVisitor
             }
         }
         
-        // TODO: implement more efficiently
-        if ( myDataType == DataType.Byte )
+        switch ( myDataType )
         {
-            ByteAccessorConfig myByteAccessorConfig = new ByteAccessorConfig();
-            myProxyAccessorConfig = myByteAccessorConfig;
-        }
-        else if ( myDataType == DataType.Character )
-        {
-            CharAccessorConfig myCharAccessorConfig = new CharAccessorConfig();
-            myProxyAccessorConfig = myCharAccessorConfig;
-        }
-        else if ( myDataType == DataType.Short )
-        {
-            ShortAccessorConfig myShortAccessorConfig = new ShortAccessorConfig();
-            myProxyAccessorConfig = myShortAccessorConfig;
-        }
-        else if ( myDataType == DataType.Integer )
-        {
-            IntegerAccessorConfig myIntegerAccessorConfig = new IntegerAccessorConfig();
-            myProxyAccessorConfig = myIntegerAccessorConfig;
-        }
-        else if ( myDataType == DataType.Long )
-        {
-            LongAccessorConfig myLongAccessorConfig = new LongAccessorConfig();
-            myProxyAccessorConfig = myLongAccessorConfig;
-        }
-        else if ( myDataType == DataType.Float )
-        {
-            FloatAccessorConfig myFloatAccessorConfig = new FloatAccessorConfig();
-            myProxyAccessorConfig = myFloatAccessorConfig;
-        }
-        else if ( myDataType == DataType.Double )
-        {
-            DoubleAccessorConfig myDoubleAccessorConfig = new DoubleAccessorConfig();
-            myProxyAccessorConfig = myDoubleAccessorConfig;
-        }
-        else if ( myDataType == DataType.BigInteger )
-        {
-            BigIntegerAccessorConfig myBigIntegerAccessorConfig = new BigIntegerAccessorConfig();
-            myProxyAccessorConfig = myBigIntegerAccessorConfig;
-        }
-        else if ( myDataType == DataType.BigDecimal )
-        {
-            BigDecimalAccessorConfig myBigDecimalAccessorConfig = new BigDecimalAccessorConfig();
-            myProxyAccessorConfig = myBigDecimalAccessorConfig;
-        }
-        else if ( myDataType == DataType.String )
-        {
-            StringAccessorConfig myStringAccessorConfig = new StringAccessorConfig();
-            myProxyAccessorConfig = myStringAccessorConfig;
-        }
-        else if ( myDataType == DataType.Date )
-        {
-            DateAccessorConfig myDateAccessorConfig = new DateAccessorConfig();
-            myProxyAccessorConfig = myDateAccessorConfig;
-        }
-        else
-        {
-            throw new IllegalStateException( "data type not mapped: " + myDataType.toString() );
+            case Byte:        myProxyAccessorConfig = new ByteAccessorConfig();       break;
+            case Character:   myProxyAccessorConfig = new CharAccessorConfig();       break;
+            case Short:       myProxyAccessorConfig = new ShortAccessorConfig();      break;
+            case Integer:     myProxyAccessorConfig = new IntegerAccessorConfig();    break;
+            case Long:        myProxyAccessorConfig = new LongAccessorConfig();       break;
+            case Float:       myProxyAccessorConfig = new FloatAccessorConfig();      break;
+            case Double:      myProxyAccessorConfig = new DoubleAccessorConfig();     break;
+            case BigInteger:  myProxyAccessorConfig = new BigIntegerAccessorConfig(); break;
+            case BigDecimal:  myProxyAccessorConfig = new BigDecimalAccessorConfig(); break;
+            case String:      myProxyAccessorConfig = new StringAccessorConfig();     break;
+            case Date:        myProxyAccessorConfig = new DateAccessorConfig();       break;
+    
+            default:
+    
+                throw new IllegalStateException( "data type not mapped: " + myDataType.toString() );
         }
         
         myProxyAccessorConfig.setDefault( true );

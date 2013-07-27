@@ -17,7 +17,6 @@
 
 package com.xylocore.copybook.generator.domain;
 
-import java.io.Serializable;
 
 
 /**
@@ -27,18 +26,14 @@ import java.io.Serializable;
  */
 
 public final class PICSlice
-    implements
-        Serializable
 {
     //
     // Members
     //
     
     
-    private static final long   serialVersionUID    = 1455960964414797102L;
-
-    private PICSymbolType       type;
-    private int                 count;
+    private PICSymbolType   type;
+    private int             count;
     
     
     
@@ -90,19 +85,5 @@ public final class PICSlice
     public void setCount( int aCount )
     {
         count = aCount;
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aPrecedingSlice
-     * 
-     * @return
-     */
-    public boolean isAllowedAfter( PICSlice aPrecedingSlice )
-    {
-        // TODO
-        return true;
     }
 }

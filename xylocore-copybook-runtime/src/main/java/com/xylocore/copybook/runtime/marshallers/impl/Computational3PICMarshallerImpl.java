@@ -68,10 +68,7 @@ public class Computational3PICMarshallerImpl
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AbstractNumericPICMarshaller#validateRange(long, long, long)
-     */
+    @Override
     protected void validateRange( long   aValue,
                                   long   aMinValue,
                                   long   aMaxValue  )
@@ -80,16 +77,13 @@ public class Computational3PICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AbstractNumericPICMarshaller#decodeAsLong(com.xylocore.commons.data.copybook.spi.Context, int, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
-    public long decodeAsLong( CopybookContext    aContext,
-                              int        aOffset,
-                              int        aDigits,
-                              SignType   aSignType,
-                              int        aPrecision,
-                              int        aScalingPosition )
+    @Override
+    public long decodeAsLong( CopybookContext   aContext,
+                              int               aOffset,
+                              int               aDigits,
+                              SignType          aSignType,
+                              int               aPrecision,
+                              int               aScalingPosition )
     {
         long myValue =
                 aContext.getDataBehavior()
@@ -101,17 +95,14 @@ public class Computational3PICMarshallerImpl
     }
     
  
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AbstractNumericPICMarshaller#encodeAsLong(com.xylocore.commons.data.copybook.spi.Context, int, long, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
-    public void encodeAsLong( CopybookContext    aContext,
-                              int        aOffset,
-                              long       aValue,
-                              int        aDigits,
-                              SignType   aSignType,
-                              int        aPrecision,
-                              int        aScalingPosition )
+    @Override
+    public void encodeAsLong( CopybookContext   aContext,
+                              int               aOffset,
+                              long              aValue,
+                              int               aDigits,
+                              SignType          aSignType,
+                              int               aPrecision,
+                              int               aScalingPosition )
     {
         aContext.getDataBehavior()
                 .encodeComp3( aContext,

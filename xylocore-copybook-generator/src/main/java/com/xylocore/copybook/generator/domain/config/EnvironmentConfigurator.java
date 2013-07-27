@@ -46,7 +46,7 @@ public class EnvironmentConfigurator
     public static final String  COPYBOOK_FILENAME_KEY               = "CopybookFilename";
     public static final String  IMPLICIT_RECORD_NAME_KEY            = "ImplicitRecordName";
 
-    private Map<String,String>  overrideProperties;
+    private Map<String,String>  overrideProperties                  = new HashMap<>();;
     
     
     
@@ -103,11 +103,6 @@ public class EnvironmentConfigurator
             throw new IllegalArgumentException( "property name cannot be null, empty, or blank" );
         }
         
-        if ( overrideProperties == Collections.<String,String>emptyMap() )
-        {
-            overrideProperties = new HashMap<String,String>();
-        }
-
         overrideProperties.put( aPropertyName, aPropertyValue );
     }
     
@@ -119,19 +114,11 @@ public class EnvironmentConfigurator
      */
     public void setOverrideProperties( Map<String,String> aProperties )
     {
-        if ( aProperties != null && aProperties.size() != 0 )
+        overrideProperties.clear();
+        
+        if ( aProperties != null )
         {
-            for ( Map.Entry<String,String> myEntry : aProperties.entrySet() )
-            {
-                String myPropertyName  = myEntry.getKey();
-                String myPropertyValue = myEntry.getValue();
-                
-                setOverrideProperty( myPropertyName, myPropertyValue );
-            }
-        }
-        else
-        {
-            overrideProperties = Collections.<String,String>emptyMap();
+            overrideProperties.putAll( aProperties );
         }
     }
     
@@ -206,7 +193,7 @@ public class EnvironmentConfigurator
      */
     public void reset()
     {
-        overrideProperties = Collections.<String,String>emptyMap();
+        overrideProperties.clear();
     }
     
 
@@ -227,7 +214,7 @@ public class EnvironmentConfigurator
         setImplicitRecordName     ( aEnvironment );
     }
     
-    
+
     /**
      * FILLIN
      *

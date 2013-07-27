@@ -35,10 +35,7 @@ public class AlphabeticPICProcessingStrategy
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.parser.AlphanumericPICProcessingStrategy#getSymbolType()
-     */
+    @Override
     protected PICSymbolType getSymbolType()
     {
         return PICSymbolType.Alphanumeric;

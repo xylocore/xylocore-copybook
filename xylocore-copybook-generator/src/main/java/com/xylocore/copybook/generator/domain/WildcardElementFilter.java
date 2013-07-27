@@ -52,6 +52,7 @@ public class WildcardElementFilter
     /**
      * FILLIN
      * 
+     * @param       aPattern
      * @param       aInclusive
      */
     public WildcardElementFilter( String    aPattern,
@@ -67,10 +68,7 @@ public class WildcardElementFilter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString()
     {
         return pattern;
@@ -127,10 +125,7 @@ public class WildcardElementFilter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.parser.ElementFilter#filter(java.util.Set)
-     */
+    @Override
     public void filter( Set<String>   aSource,
                         Set<String>   aResults )
     {

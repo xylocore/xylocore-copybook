@@ -111,8 +111,8 @@ public class CopybookClassGenerator
             
             File myOutputDirectory =
                     StringUtils.isNotEmpty( myPackageName )
-                        ? new File( myGenerationRootDirectory, myPackageName.replace( '.', File.separatorChar ) )
-                        : myGenerationRootDirectory;
+                            ? new File( myGenerationRootDirectory, myPackageName.replace( '.', File.separatorChar ) )
+                            : myGenerationRootDirectory;
             myOutputDirectory.mkdirs();
             
             File myOutputFile = new File( myOutputDirectory, myClassName + ".java" );
@@ -169,8 +169,8 @@ public class CopybookClassGenerator
      */
     private void normalizeCopybook()
     {
-        CopybookNormalizationVisitor myVisitor = new CopybookNormalizationVisitor( environment );
-        myVisitor.normalize( copybook );
+        CopybookNormalizationVisitor myVisitor = new CopybookNormalizationVisitor();
+        myVisitor.normalize( copybook, environment );
     }
     
     

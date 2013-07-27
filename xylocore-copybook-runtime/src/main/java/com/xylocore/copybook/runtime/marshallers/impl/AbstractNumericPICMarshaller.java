@@ -69,12 +69,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsByte( CopybookContext    aContext,
-                                  int        aOffset,
-                                  int        aDigits,
-                                  SignType   aSignType,
-                                  int        aPrecision,
-                                  int        aScalingPosition )
+    public boolean isValidAsByte( CopybookContext   aContext,
+                                  int               aOffset,
+                                  int               aDigits,
+                                  SignType          aSignType,
+                                  int               aPrecision,
+                                  int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -92,12 +92,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public byte decodeAsByte( CopybookContext    aContext,
-                              int        aOffset,
-                              int        aDigits,
-                              SignType   aSignType,
-                              int        aPrecision,
-                              int        aScalingPosition )
+    public byte decodeAsByte( CopybookContext   aContext,
+                              int               aOffset,
+                              int               aDigits,
+                              SignType          aSignType,
+                              int               aPrecision,
+                              int               aScalingPosition )
     {
         long myValue =
                 decodeAsLong( aContext,
@@ -124,21 +124,21 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public void encodeAsByte( CopybookContext    aContext,
-                              int        aOffset,
-                              byte       aValue,
-                              int        aDigits,
-                              SignType   aSignType,
-                              int        aPrecision,
-                              int        aScalingPosition )
+    public void encodeAsByte( CopybookContext   aContext,
+                              int               aOffset,
+                              byte              aValue,
+                              int               aDigits,
+                              SignType          aSignType,
+                              int               aPrecision,
+                              int               aScalingPosition )
     {
         encodeAsLong( aContext,
                       aOffset,
-                      ((long) aValue) & 0xff,
+                      aValue & 0xff,
                       aDigits,
                       aSignType,
                       aPrecision,
-                      aScalingPosition        );
+                      aScalingPosition );
     }
     
 
@@ -154,12 +154,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsChar( CopybookContext    aContext,
-                                  int        aOffset,
-                                  int        aDigits,
-                                  SignType   aSignType,
-                                  int        aPrecision,
-                                  int        aScalingPosition )
+    public boolean isValidAsChar( CopybookContext   aContext,
+                                  int               aOffset,
+                                  int               aDigits,
+                                  SignType          aSignType,
+                                  int               aPrecision,
+                                  int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -177,12 +177,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public char decodeAsChar( CopybookContext    aContext,
-                              int        aOffset,
-                              int        aDigits,
-                              SignType   aSignType,
-                              int        aPrecision,
-                              int        aScalingPosition )
+    public char decodeAsChar( CopybookContext   aContext,
+                              int               aOffset,
+                              int               aDigits,
+                              SignType          aSignType,
+                              int               aPrecision,
+                              int               aScalingPosition )
     {
         long myValue =
                 decodeAsLong( aContext,
@@ -209,21 +209,21 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public void encodeAsChar( CopybookContext    aContext,
-                              int        aOffset,
-                              char       aValue,
-                              int        aDigits,
-                              SignType   aSignType,
-                              int        aPrecision,
-                              int        aScalingPosition )
+    public void encodeAsChar( CopybookContext   aContext,
+                              int               aOffset,
+                              char              aValue,
+                              int               aDigits,
+                              SignType          aSignType,
+                              int               aPrecision,
+                              int               aScalingPosition )
     {
         encodeAsLong( aContext,
                       aOffset,
-                      ((long) aValue) & 0xffff,
+                      aValue & 0xffff,
                       aDigits,
                       aSignType,
                       aPrecision,
-                      aScalingPosition          );
+                      aScalingPosition );
     }
     
 
@@ -239,12 +239,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsShort( CopybookContext    aContext,
-                                   int        aOffset,
-                                   int        aDigits,
-                                   SignType   aSignType,
-                                   int        aPrecision,
-                                   int        aScalingPosition )
+    public boolean isValidAsShort( CopybookContext   aContext,
+                                   int               aOffset,
+                                   int               aDigits,
+                                   SignType          aSignType,
+                                   int               aPrecision,
+                                   int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -262,12 +262,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public short decodeAsShort( CopybookContext    aContext,
-                                int        aOffset,
-                                int        aDigits,
-                                SignType   aSignType,
-                                int        aPrecision,
-                                int        aScalingPosition )
+    public short decodeAsShort( CopybookContext   aContext,
+                                int               aOffset,
+                                int               aDigits,
+                                SignType          aSignType,
+                                int               aPrecision,
+                                int               aScalingPosition )
     {
         long myValue =
                 decodeAsLong( aContext,
@@ -294,21 +294,21 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public void encodeAsShort( CopybookContext    aContext,
-                               int        aOffset,
-                               short      aValue,
-                               int        aDigits,
-                               SignType   aSignType,
-                               int        aPrecision,
-                               int        aScalingPosition )
+    public void encodeAsShort( CopybookContext   aContext,
+                               int               aOffset,
+                               short             aValue,
+                               int               aDigits,
+                               SignType          aSignType,
+                               int               aPrecision,
+                               int               aScalingPosition )
     {
         encodeAsLong( aContext,
                       aOffset,
-                      ((long) aValue) & 0xffff,
+                      aValue,
                       aDigits,
                       aSignType,
                       aPrecision,
-                      aScalingPosition          );
+                      aScalingPosition );
     }
     
 
@@ -324,12 +324,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsInteger( CopybookContext    aContext,
-                                     int        aOffset,
-                                     int        aDigits,
-                                     SignType   aSignType,
-                                     int        aPrecision,
-                                     int        aScalingPosition )
+    public boolean isValidAsInteger( CopybookContext   aContext,
+                                     int               aOffset,
+                                     int               aDigits,
+                                     SignType          aSignType,
+                                     int               aPrecision,
+                                     int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -347,12 +347,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public int decodeAsInteger( CopybookContext    aContext,
-                                int        aOffset,
-                                int        aDigits,
-                                SignType   aSignType,
-                                int        aPrecision,
-                                int        aScalingPosition )
+    public int decodeAsInteger( CopybookContext   aContext,
+                                int               aOffset,
+                                int               aDigits,
+                                SignType          aSignType,
+                                int               aPrecision,
+                                int               aScalingPosition )
     {
         long myValue =
                 decodeAsLong( aContext,
@@ -379,21 +379,21 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public void encodeAsInteger( CopybookContext    aContext,
-                                 int        aOffset,
-                                 int        aValue,
-                                 int        aDigits,
-                                 SignType   aSignType,
-                                 int        aPrecision,
-                                 int        aScalingPosition )
+    public void encodeAsInteger( CopybookContext   aContext,
+                                 int               aOffset,
+                                 int               aValue,
+                                 int               aDigits,
+                                 SignType          aSignType,
+                                 int               aPrecision,
+                                 int               aScalingPosition )
     {
         encodeAsLong( aContext,
                       aOffset,
-                      ((long) aValue) & 0xffffffff,
+                      aValue,
                       aDigits,
                       aSignType,
                       aPrecision,
-                      aScalingPosition              );
+                      aScalingPosition );
     }
     
 
@@ -409,12 +409,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsLong( CopybookContext    aContext,
-                                  int        aOffset,
-                                  int        aDigits,
-                                  SignType   aSignType,
-                                  int        aPrecision,
-                                  int        aScalingPosition )
+    public boolean isValidAsLong( CopybookContext   aContext,
+                                  int               aOffset,
+                                  int               aDigits,
+                                  SignType          aSignType,
+                                  int               aPrecision,
+                                  int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -432,12 +432,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public abstract long decodeAsLong( CopybookContext    aContext,
-                                       int        aOffset,
-                                       int        aDigits,
-                                       SignType   aSignType,
-                                       int        aPrecision,
-                                       int        aScalingPosition );
+    public abstract long decodeAsLong( CopybookContext   aContext,
+                                       int               aOffset,
+                                       int               aDigits,
+                                       SignType          aSignType,
+                                       int               aPrecision,
+                                       int               aScalingPosition );
     
  
     /**
@@ -451,13 +451,13 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public abstract void encodeAsLong( CopybookContext    aContext,
-                                       int        aOffset,
-                                       long       aValue,
-                                       int        aDigits,
-                                       SignType   aSignType,
-                                       int        aPrecision,
-                                       int        aScalingPosition );
+    public abstract void encodeAsLong( CopybookContext   aContext,
+                                       int               aOffset,
+                                       long              aValue,
+                                       int               aDigits,
+                                       SignType          aSignType,
+                                       int               aPrecision,
+                                       int               aScalingPosition );
     
 
     /**
@@ -472,12 +472,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsFloat( CopybookContext    aContext,
-                                   int        aOffset,
-                                   int        aDigits,
-                                   SignType   aSignType,
-                                   int        aPrecision,
-                                   int        aScalingPosition )
+    public boolean isValidAsFloat( CopybookContext   aContext,
+                                   int               aOffset,
+                                   int               aDigits,
+                                   SignType          aSignType,
+                                   int               aPrecision,
+                                   int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -495,12 +495,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public float decodeAsFloat( CopybookContext    aContext,
-                                int        aOffset,
-                                int        aDigits,
-                                SignType   aSignType,
-                                int        aPrecision,
-                                int        aScalingPosition )
+    public float decodeAsFloat( CopybookContext   aContext,
+                                int               aOffset,
+                                int               aDigits,
+                                SignType          aSignType,
+                                int               aPrecision,
+                                int               aScalingPosition )
     {
         return (float) decodeAsDouble( aContext,
                                        aOffset,
@@ -522,13 +522,13 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public void encodeAsFloat( CopybookContext    aContext,
-                               int        aOffset,
-                               float      aValue,
-                               int        aDigits,
-                               SignType   aSignType,
-                               int        aPrecision,
-                               int        aScalingPosition )
+    public void encodeAsFloat( CopybookContext   aContext,
+                               int               aOffset,
+                               float             aValue,
+                               int               aDigits,
+                               SignType          aSignType,
+                               int               aPrecision,
+                               int               aScalingPosition )
     {
         encodeAsDouble( aContext,
                         aOffset,
@@ -552,12 +552,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsDouble( CopybookContext    aContext,
-                                    int        aOffset,
-                                    int        aDigits,
-                                    SignType   aSignType,
-                                    int        aPrecision,
-                                    int        aScalingPosition )
+    public boolean isValidAsDouble( CopybookContext   aContext,
+                                    int               aOffset,
+                                    int               aDigits,
+                                    SignType          aSignType,
+                                    int               aPrecision,
+                                    int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -575,12 +575,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public double decodeAsDouble( CopybookContext    aContext,
-                                  int        aOffset,
-                                  int        aDigits,
-                                  SignType   aSignType,
-                                  int        aPrecision,
-                                  int        aScalingPosition )
+    public double decodeAsDouble( CopybookContext   aContext,
+                                  int               aOffset,
+                                  int               aDigits,
+                                  SignType          aSignType,
+                                  int               aPrecision,
+                                  int               aScalingPosition )
     {
         double myValue =
                 decodeAsLong( aContext,
@@ -605,13 +605,13 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public void encodeAsDouble( CopybookContext    aContext,
-                                int        aOffset,
-                                double     aValue,
-                                int        aDigits,
-                                SignType   aSignType,
-                                int        aPrecision,
-                                int        aScalingPosition )
+    public void encodeAsDouble( CopybookContext   aContext,
+                                int               aOffset,
+                                double            aValue,
+                                int               aDigits,
+                                SignType          aSignType,
+                                int               aPrecision,
+                                int               aScalingPosition )
     {
         long myScaleValue = (long) NumericPICMarshallerHelper.scaleValue( aValue, aPrecision, aScalingPosition, true );
         
@@ -637,12 +637,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsBigInteger( CopybookContext    aContext,
-                                        int        aOffset,
-                                        int        aDigits,
-                                        SignType   aSignType,
-                                        int        aPrecision,
-                                        int        aScalingPosition )
+    public boolean isValidAsBigInteger( CopybookContext   aContext,
+                                        int               aOffset,
+                                        int               aDigits,
+                                        SignType          aSignType,
+                                        int               aPrecision,
+                                        int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -660,12 +660,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public BigInteger decodeAsBigInteger( CopybookContext    aContext,
-                                          int        aOffset,
-                                          int        aDigits,
-                                          SignType   aSignType,
-                                          int        aPrecision,
-                                          int        aScalingPosition )
+    public BigInteger decodeAsBigInteger( CopybookContext   aContext,
+                                          int               aOffset,
+                                          int               aDigits,
+                                          SignType          aSignType,
+                                          int               aPrecision,
+                                          int               aScalingPosition )
     {
         long myValue =
                 decodeAsLong( aContext,
@@ -690,13 +690,13 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public void encodeAsBigInteger( CopybookContext      aContext,
-                                    int          aOffset,
-                                    BigInteger   aValue,
-                                    int          aDigits,
-                                    SignType     aSignType,
-                                    int          aPrecision,
-                                    int          aScalingPosition )
+    public void encodeAsBigInteger( CopybookContext   aContext,
+                                    int               aOffset,
+                                    BigInteger        aValue,
+                                    int               aDigits,
+                                    SignType          aSignType,
+                                    int               aPrecision,
+                                    int               aScalingPosition )
     {
         if ( aValue.bitLength() > 63 )
         {
@@ -725,12 +725,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsBigDecimal( CopybookContext    aContext,
-                                        int        aOffset,
-                                        int        aDigits,
-                                        SignType   aSignType,
-                                        int        aPrecision,
-                                        int        aScalingPosition )
+    public boolean isValidAsBigDecimal( CopybookContext   aContext,
+                                        int               aOffset,
+                                        int               aDigits,
+                                        SignType          aSignType,
+                                        int               aPrecision,
+                                        int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -748,12 +748,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public BigDecimal decodeAsBigDecimal( CopybookContext    aContext,
-                                          int        aOffset,
-                                          int        aDigits,
-                                          SignType   aSignType,
-                                          int        aPrecision,
-                                          int        aScalingPosition )
+    public BigDecimal decodeAsBigDecimal( CopybookContext   aContext,
+                                          int               aOffset,
+                                          int               aDigits,
+                                          SignType          aSignType,
+                                          int               aPrecision,
+                                          int               aScalingPosition )
     {
         BigInteger myValue =
                 decodeAsBigInteger( aContext,
@@ -778,13 +778,13 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public void encodeAsBigDecimal( CopybookContext      aContext,
-                                    int          aOffset,
-                                    BigDecimal   aValue,
-                                    int          aDigits,
-                                    SignType     aSignType,
-                                    int          aPrecision,
-                                    int          aScalingPosition )
+    public void encodeAsBigDecimal( CopybookContext   aContext,
+                                    int               aOffset,
+                                    BigDecimal        aValue,
+                                    int               aDigits,
+                                    SignType          aSignType,
+                                    int               aPrecision,
+                                    int               aScalingPosition )
     {
         // TODO: implement
         throw new UnsupportedOperationException( "not yet implemented" );
@@ -803,12 +803,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public boolean isValidAsString( CopybookContext    aContext,
-                                    int        aOffset,
-                                    int        aDigits,
-                                    SignType   aSignType,
-                                    int        aPrecision,
-                                    int        aScalingPosition )
+    public boolean isValidAsString( CopybookContext   aContext,
+                                    int               aOffset,
+                                    int               aDigits,
+                                    SignType          aSignType,
+                                    int               aPrecision,
+                                    int               aScalingPosition )
     {
         throw new UnsupportedOperationException( "not yet implemented" );
     }
@@ -826,12 +826,12 @@ public abstract class AbstractNumericPICMarshaller
      * 
      * @return
      */
-    public String decodeAsString( CopybookContext    aContext,
-                                  int                aOffset,
-                                  int                aDigits,
-                                  SignType           aSignType,
-                                  int                aPrecision,
-                                  int                aScalingPosition )
+    public String decodeAsString( CopybookContext   aContext,
+                                  int               aOffset,
+                                  int               aDigits,
+                                  SignType          aSignType,
+                                  int               aPrecision,
+                                  int               aScalingPosition )
     {
         long myValue =
                 decodeAsLong( aContext,
@@ -839,7 +839,7 @@ public abstract class AbstractNumericPICMarshaller
                               aDigits,
                               aSignType,
                               aPrecision,
-                              aScalingPosition  );
+                              aScalingPosition );
 
         // TODO: calculate minimum capacity
         StringBuilder myBuffer = aContext.getWorkStringBuilder( 0 );
@@ -895,13 +895,13 @@ public abstract class AbstractNumericPICMarshaller
      * @param       aPrecision
      * @param       aScalingPosition
      */
-    public void encodeAsString( CopybookContext    aContext,
-                                int        aOffset,
-                                String     aValue,
-                                int        aDigits,
-                                SignType   aSignType,
-                                int        aPrecision,
-                                int        aScalingPosition )
+    public void encodeAsString( CopybookContext   aContext,
+                                int               aOffset,
+                                String            aValue,
+                                int               aDigits,
+                                SignType          aSignType,
+                                int               aPrecision,
+                                int               aScalingPosition )
     {
         encodeAsDouble( aContext,
                         aOffset,

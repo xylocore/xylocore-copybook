@@ -17,7 +17,6 @@
 package com.xylocore.copybook.generator.domain.config;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +36,7 @@ public class GroupElementConfig
     //
     
     
-    private List<ElementConfig> elements = Collections.<ElementConfig>emptyList();
+    private List<ElementConfig> elements = new ArrayList<ElementConfig>();
     
     
     
@@ -65,10 +64,12 @@ public class GroupElementConfig
      */
     public void setElements( List<ElementConfig> aElements )
     {
-        elements =
-                ( aElements != null && ! aElements.isEmpty() )
-                        ? new ArrayList<ElementConfig>( aElements )
-                        : Collections.<ElementConfig>emptyList();
+        elements.clear();
+        
+        if ( aElements != null )
+        {
+            elements.addAll( aElements );
+        }
     }
     
     
@@ -81,20 +82,11 @@ public class GroupElementConfig
     {
         assert aElement != null;
         
-        if ( elements == Collections.<ElementConfig>emptyList() )
-        {
-            elements = new ArrayList<ElementConfig>();
-        }
-        
         elements.add( aElement );
     }
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptVisit( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -105,11 +97,7 @@ public class GroupElementConfig
     }
 
 
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptChildren( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -123,11 +111,7 @@ public class GroupElementConfig
     }
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptLeave( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -145,11 +129,8 @@ public class GroupElementConfig
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableCollections(java.util.Map)
-     */
-    public void buildDescribableCollections( Map<String, Object> aCollectionsMap )
+    @Override
+    public void buildDescribableCollections( Map<String,Object> aCollectionsMap )
     {
         super.buildDescribableCollections( aCollectionsMap );
         

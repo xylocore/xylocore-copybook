@@ -400,7 +400,7 @@ public class CopybookTransformationListener
     public void exitConditionNameEntry( @NotNull ConditionNameEntryContext aContext )
     {
         String           myConditionName = aContext.conditionName().WORD().getText();
-        List<ValueRange> myValueRanges   = new ArrayList<ValueRange>();
+        List<ValueRange> myValueRanges   = new ArrayList<>();
         
         for ( ConditionNameEntryValueContext myValueContext : aContext.values )
         {
@@ -516,7 +516,7 @@ public class CopybookTransformationListener
             // TOOD: provide an appropriate error
         }
         
-        currentElement.setOccurs( true );
+        currentElement.setOccurs        ( true       );
         currentElement.setOccursMinValue( myMinValue );
         currentElement.setOccursMaxValue( myMaxValue );
     }

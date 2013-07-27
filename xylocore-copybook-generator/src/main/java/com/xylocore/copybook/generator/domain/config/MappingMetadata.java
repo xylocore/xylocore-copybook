@@ -17,7 +17,6 @@
 package com.xylocore.copybook.generator.domain.config;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +37,7 @@ public class MappingMetadata
     //
     
     
-    private List<ElementConfig> elements = Collections.<ElementConfig>emptyList();
+    private List<ElementConfig> elements = new ArrayList<>();
     
     
     
@@ -66,10 +65,12 @@ public class MappingMetadata
      */
     public void setElements( List<ElementConfig> aElements )
     {
-        elements =
-                ( aElements != null && ! aElements.isEmpty() )
-                        ? new ArrayList<ElementConfig>( aElements )
-                        : Collections.<ElementConfig>emptyList();
+        elements.clear();
+        
+        if ( aElements != null )
+        {
+            elements.addAll( aElements );
+        }
     }
     
     
@@ -82,19 +83,11 @@ public class MappingMetadata
     {
         assert aElement != null;
         
-        if ( elements == Collections.<ElementConfig>emptyList() )
-        {
-            elements = new ArrayList<ElementConfig>();
-        }
-        
         elements.add( aElement );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+    @Override
     public String toString()
     {
         return ConfigEntityDescriber.simpleDescribe( this );
@@ -108,19 +101,13 @@ public class MappingMetadata
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableLabelValuePairs(java.util.Map)
-     */
+    @Override
     public void buildDescribableLabelValuePairs( Map<String,String> aLabelValueMap )
     {
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableCollections(java.util.Map)
-     */
+    @Override
     public void buildDescribableCollections( Map<String, Object> aCollectionsMap )
     {
         aCollectionsMap.put( "Elements", elements );
@@ -134,10 +121,7 @@ public class MappingMetadata
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitable#accept(com.xylocore.commons.data.copybook.domain.config.ConfigVisitor)
-     */
+    @Override
     public void accept( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;

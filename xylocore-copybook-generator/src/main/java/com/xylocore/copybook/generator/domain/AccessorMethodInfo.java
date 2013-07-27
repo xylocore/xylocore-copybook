@@ -205,10 +205,7 @@ public class AccessorMethodInfo
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitable#accept(com.xylocore.commons.data.copybook.domain.Visitor)
-     */
+    @Override
     public void accept( Visitor aVisitor )
     {
         acceptVisit   ( aVisitor );

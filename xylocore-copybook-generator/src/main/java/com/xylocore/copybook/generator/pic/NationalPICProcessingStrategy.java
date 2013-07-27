@@ -31,16 +31,12 @@ public class NationalPICProcessingStrategy
         PICProcessingStrategy
 {
     //
-    // PICConverterStrategy interface implementation
+    // PICProcessingStrategy interface implementation
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.parser.PICConverterStrategy#convert(com.xylocore.commons.data.copybook.domain.Element)
-     */
+    @Override
     public void convert( Element aElement )
     {
-        
     }
 }

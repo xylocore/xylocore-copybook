@@ -150,24 +150,18 @@ public abstract class AbstractPlatformDataBehavior
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#getBehaviorName()
-     */
+    @Override
     public String getBehaviorName()
     {
         return behaviorName;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.common.data.copybook.spi.PlatformDataBehavior#decodeBinary(com.xylocore.common.data.copybook.spi.Context, int, int, boolean)
-     */
+    @Override
     public long decodeBinary( CopybookContext   aContext,
-                              int       aOffset,
-                              int       aDigits,
-                              boolean   aIsSigned )
+                              int               aOffset,
+                              int               aDigits,
+                              boolean           aIsSigned )
     {
         long myValue;
         
@@ -229,15 +223,12 @@ public abstract class AbstractPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.common.data.copybook.spi.PlatformDataBehavior#encodeBinary(com.xylocore.common.data.copybook.spi.Context, int, long, int, boolean)
-     */
+    @Override
     public void encodeBinary( CopybookContext   aContext,
-                              int       aOffset,
-                              long      aValue,
-                              int       aDigits,
-                              boolean   aIsSigned )
+                              int               aOffset,
+                              long              aValue,
+                              int               aDigits,
+                              boolean           aIsSigned )
     {
         long myMaxValue = binaryMaxValues[aDigits];
         
@@ -295,27 +286,21 @@ public abstract class AbstractPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDate(com.xylocore.commons.data.copybook.spi.Context, int, java.util.Date, java.text.DateFormat)
-     */
-    public void encodeDate( CopybookContext      aContext,
-                            int          aOffset,
-                            Date         aValue,
-                            DateFormat   aFormat   )
+    @Override
+    public void encodeDate( CopybookContext   aContext,
+                            int               aOffset,
+                            Date              aValue,
+                            DateFormat        aFormat   )
     {
         // TODO: implement
         throw new UnsupportedOperationException( "not implemented yet" );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeDate(com.xylocore.commons.data.copybook.spi.Context, int, java.text.DateFormat)
-     */
-    public Date decodeDate( CopybookContext      aContext,
-                            int          aOffset,
-                            DateFormat   aFormat   )
+    @Override
+    public Date decodeDate( CopybookContext   aContext,
+                            int               aOffset,
+                            DateFormat        aFormat   )
     {
         // TODO: implement
         throw new UnsupportedOperationException( "not implemented yet" );

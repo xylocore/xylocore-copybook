@@ -165,10 +165,7 @@ public class AsciiPlatformDataBehavior
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#isDisplayCharsBlank(com.xylocore.commons.data.copybook.spi.CopybookContext, int, int)
-     */
+    @Override
     public boolean isDisplayCharsBlank( CopybookContext   aContext,
                                         int               aOffset,
                                         int               aLength   )
@@ -185,10 +182,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeNumericDisplay(com.xylocore.commons.data.copybook.spi.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public long decodeNumericDisplay( CopybookContext   aContext,
                                       int               aOffset,
                                       int               aDigits,
@@ -253,10 +247,7 @@ public class AsciiPlatformDataBehavior
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeNumericDisplay(com.xylocore.commons.data.copybook.spi.CopybookContext, int, long, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public void encodeNumericDisplay( CopybookContext   aContext,
                                       int               aOffset,
                                       long              aValue,
@@ -305,10 +296,7 @@ public class AsciiPlatformDataBehavior
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#isDbcsCharsBlank(com.xylocore.commons.data.copybook.spi.CopybookContext, int, int)
-     */
+    @Override
     public boolean isDbcsCharsBlank( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength   )
@@ -318,10 +306,7 @@ public class AsciiPlatformDataBehavior
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#isNationalCharsBlank(com.xylocore.commons.data.copybook.spi.CopybookContext, int, int)
-     */
+    @Override
     public boolean isNationalCharsBlank( CopybookContext   aContext,
                                          int               aOffset,
                                          int               aLength   )
@@ -343,10 +328,7 @@ public class AsciiPlatformDataBehavior
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeNumericNational(com.xylocore.commons.data.copybook.spi.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public long decodeNumericNational( CopybookContext   aContext,
                                        int               aOffset,
                                        int               aDigits,
@@ -358,10 +340,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeNumericNational(com.xylocore.commons.data.copybook.spi.CopybookContext, int, long, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public void encodeNumericNational( CopybookContext   aContext,
                                        int               aOffset,
                                        long              aValue,
@@ -373,10 +352,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeComp1(com.xylocore.commons.data.copybook.spi.CopybookContext, int)
-     */
+    @Override
     public float decodeComp1( CopybookContext   aContext,
                               int               aOffset   )
     {
@@ -384,10 +360,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeComp1(com.xylocore.commons.data.copybook.spi.CopybookContext, int, float)
-     */
+    @Override
     public void encodeComp1( CopybookContext   aContext,
                              int               aOffset,
                              float             aValue    )
@@ -396,10 +369,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeComp2(com.xylocore.commons.data.copybook.spi.CopybookContext, int)
-     */
+    @Override
     public double decodeComp2( CopybookContext   aContext,
                                int               aOffset   )
     {
@@ -407,10 +377,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeComp2(com.xylocore.commons.data.copybook.spi.CopybookContext, int, double)
-     */
+    @Override
     public void encodeComp2( CopybookContext   aContext,
                              int               aOffset,
                              double            aValue    )
@@ -419,10 +386,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeComp3(com.xylocore.commons.data.copybook.spi.CopybookContext, int, int)
-     */
+    @Override
     public long decodeComp3( CopybookContext   aContext,
                              int               aOffset,
                              int               aDigits   )
@@ -469,10 +433,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeComp3(com.xylocore.commons.data.copybook.spi.CopybookContext, int, long, int, boolean)
-     */
+    @Override
     public void encodeComp3( CopybookContext   aContext,
                              int               aOffset,
                              long              aValue,
@@ -521,10 +482,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decode2ByteComp5(com.xylocore.commons.data.copybook.spi.CopybookContext, int)
-     */
+    @Override
     public long decode2ByteComp5( CopybookContext   aContext,
                                   int               aOffset   )
     {
@@ -533,10 +491,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encode2ByteComp5(com.xylocore.commons.data.copybook.spi.CopybookContext, int, long)
-     */
+    @Override
     public void encode2ByteComp5( CopybookContext   aContext,
                                   int               aOffset,
                                   long              aValue    )
@@ -553,10 +508,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decode4ByteComp5(com.xylocore.commons.data.copybook.spi.CopybookContext, int)
-     */
+    @Override
     public long decode4ByteComp5( CopybookContext   aContext,
                                   int               aOffset   )
     {
@@ -567,10 +519,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encode4ByteComp5(com.xylocore.commons.data.copybook.spi.CopybookContext, int, long)
-     */
+    @Override
     public void encode4ByteComp5( CopybookContext   aContext,
                                   int               aOffset,
                                   long              aValue    )
@@ -589,10 +538,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decode8ByteComp5(com.xylocore.commons.data.copybook.spi.CopybookContext, int)
-     */
+    @Override
     public long decode8ByteComp5( CopybookContext   aContext,
                                   int               aOffset   )
     {
@@ -607,10 +553,7 @@ public class AsciiPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encode8ByteComp5(com.xylocore.commons.data.copybook.spi.CopybookContext, int, long)
-     */
+    @Override
     public void encode8ByteComp5( CopybookContext   aContext,
                                   int               aOffset,
                                   long              aValue    )

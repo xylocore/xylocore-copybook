@@ -270,7 +270,7 @@ public class AbstractCopybookGenerator
     {
         generateDelegationSectionTitle( aOutputStream, "AlphanumericPICMarshaller" );
         
-        List<Parameter> myParameters = new ArrayList<Parameter>();
+        List<Parameter> myParameters = new ArrayList<>();
         myParameters.add( new Parameter( "CopybookContext", "aContext" ) );
         myParameters.add( new Parameter( "int"            , "aOffset"  ) );
         myParameters.add( new Parameter( "int"            , "aSize"    ) );
@@ -330,7 +330,7 @@ public class AbstractCopybookGenerator
     {
         generateDelegationSectionTitle( aOutputStream, "Numeric" + aNumericType + "PICMarshaller" );
         
-        List<Parameter> myParameters = new ArrayList<Parameter>();
+        List<Parameter> myParameters = new ArrayList<>();
         myParameters.add( new Parameter( "CopybookContext", "aContext"      ) );
         myParameters.add( new Parameter( "int"            , "aOffset"       ) );
         myParameters.add( new Parameter( "int"            , "aDigits"       ) );
@@ -378,7 +378,7 @@ public class AbstractCopybookGenerator
                                                                   String            aDataType,
                                                                   String            aDataTypeName    )
     {
-        List<Parameter> myParameters = new ArrayList<Parameter>( aParameters );
+        List<Parameter> myParameters = new ArrayList<>( aParameters );
 
         if ( aDataTypeName.equals( "Date" ) )
         {
@@ -432,7 +432,7 @@ public class AbstractCopybookGenerator
     {
         generateDelegationSectionTitle( aOutputStream, aSectionHeaderType + "PICMarshaller" );
         
-        List<Parameter> myParameters = new ArrayList<Parameter>();
+        List<Parameter> myParameters = new ArrayList<>();
         myParameters.add( new Parameter( "CopybookContext", "aContext" ) );
         myParameters.add( new Parameter( "int"            , "aOffset"  ) );
         
@@ -466,7 +466,7 @@ public class AbstractCopybookGenerator
                                                                         String        aDataType,
                                                                         String        aDataTypeName  )
     {
-        List<Parameter> myParameters = new ArrayList<Parameter>();
+        List<Parameter> myParameters = new ArrayList<>();
         myParameters.add( new Parameter( "CopybookContext", "aContext" ) );
         myParameters.add( new Parameter( "int"            , "aOffset"  ) );
         
@@ -498,7 +498,7 @@ public class AbstractCopybookGenerator
                                                                     String        aNumericType,
                                                                     String        aSectionHeaderType )
     {
-        List<Parameter> myParameters = new ArrayList<Parameter>();
+        List<Parameter> myParameters = new ArrayList<>();
         myParameters.add( new Parameter( "CopybookContext", "aContext"         ) );
         myParameters.add( new Parameter( "int"            , "aOffset"          ) );
         myParameters.add( new Parameter( "int"            , "aDigits"          ) );
@@ -537,7 +537,7 @@ public class AbstractCopybookGenerator
                                                                       String            aDataType,
                                                                       String            aDataTypeName    )
     {
-        List<Parameter> myParameters = new ArrayList<Parameter>( aParameters );
+        List<Parameter> myParameters = new ArrayList<>( aParameters );
 
         generateIsValidMethod( aOutputStream,
                                "public",
@@ -573,7 +573,7 @@ public class AbstractCopybookGenerator
                                                                        String        aDataType,
                                                                        String        aDataTypeName  )
     {
-        List<Parameter> myParameters = new ArrayList<Parameter>();
+        List<Parameter> myParameters = new ArrayList<>();
         myParameters.add( new Parameter( "CopybookContext", "aContext" ) );
         myParameters.add( new Parameter( "int"            , "aOffset"  ) );
         myParameters.add( new Parameter( "int"            , "aSize"    ) );
@@ -709,7 +709,7 @@ public class AbstractCopybookGenerator
                                                             int               aLinesBefore,
                                                             int               aLinesAfter            )
     {
-        List<Parameter> myParameters = new ArrayList<Parameter>( aParameters );
+        List<Parameter> myParameters = new ArrayList<>( aParameters );
         myParameters.add( 2, new Parameter( "String"                               , "aConditionName"                ) );
         myParameters.add( 3, new Parameter( "java.util.Map<String,ConstantValue[]>", "aConditionNameValueMappings"   ) );
         

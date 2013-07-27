@@ -40,7 +40,7 @@ class CopybookInputStream
     
     
     public static final int     INDICATOR_COLUMN        = 7;
-    public static final int     DEFAULT_RIGHT_MARGIN    = 72;
+    public static final int     MINIMUM_RIGHT_MARGIN    = 72;
 
     private InputStream         sourceStream;
     private int                 rightMargin;
@@ -59,17 +59,6 @@ class CopybookInputStream
      * FILLIN
      * 
      * @param       aSourceStream
-     */
-    public CopybookInputStream( InputStream aSourceStream )
-    {
-        this( aSourceStream, DEFAULT_RIGHT_MARGIN );
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aSourceStream
      * @param       aRightMargin
      */
     public CopybookInputStream( InputStream   aSourceStream,
@@ -79,9 +68,11 @@ class CopybookInputStream
         {
             throw new IllegalArgumentException( "aSourceStream" );
         }
-        if ( aRightMargin < 72 )
+        if ( aRightMargin < MINIMUM_RIGHT_MARGIN )
         {
-            throw new IllegalArgumentException( "right margin must be 72 or greater" );
+            throw new IllegalArgumentException( "right margin must be " +
+                                                MINIMUM_RIGHT_MARGIN    +
+                                                " or greater"             );
         }
         
         sourceStream = aSourceStream;

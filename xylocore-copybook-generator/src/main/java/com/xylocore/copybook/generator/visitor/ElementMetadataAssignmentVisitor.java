@@ -25,7 +25,6 @@ import com.xylocore.copybook.generator.domain.ElementFilter;
 import com.xylocore.copybook.generator.domain.config.ConfigVisitor;
 import com.xylocore.copybook.generator.domain.config.DataElementConfig;
 import com.xylocore.copybook.generator.domain.config.Environment;
-import com.xylocore.copybook.generator.domain.config.GroupElementConfig;
 
 
 /**
@@ -43,8 +42,7 @@ class ElementMetadataAssignmentVisitor
     //
     
     
-    private FilterCollectionVisitor     filterCollectionVisitor     = new FilterCollectionVisitor();
-    private Copybook                    copybook;
+    private Copybook copybook;
     
     
     
@@ -57,71 +55,31 @@ class ElementMetadataAssignmentVisitor
     /**
      * FILLIN
      * 
+     * @param       aEnvironment
      * @param       aCopybook
      */
-    public ElementMetadataAssignmentVisitor( Copybook aCopybook )
-    {
-        assert aCopybook != null;
-        
-        copybook = aCopybook;
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aEnvironment
-     */
-    public void assign( Environment aEnvironment )
+    public void assign( Environment   aEnvironment,
+                        Copybook      aCopybook     )
     {
         assert aEnvironment != null;
+        assert aCopybook    != null;
+        
+        copybook = aCopybook;
         
         aEnvironment.accept( this );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitGroupElement(com.xylocore.commons.data.copybook.domain.config.GroupElementConfig)
-     */
-    public void visitGroupElement( GroupElementConfig aGroupElement )
-    {
-    }
-    
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#leaveGroupElement(com.xylocore.commons.data.copybook.domain.config.GroupElementConfig)
-     */
-    public void leaveGroupElement( GroupElementConfig aGroupElement )
-    {
-    }
-    
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitDataElement(com.xylocore.commons.data.copybook.domain.config.DataElementConfig)
-     */
+    @Override
     public void visitDataElement( DataElementConfig aDataElement )
     {
-        ElementFilter[] myFilters = filterCollectionVisitor.collectFilters( aDataElement );
-        List<Element>   myMatches = copybook.getElementDictionary().getMatchingElements( myFilters );
+        FilterCollectionVisitor myFilterCollectionVisitor = new FilterCollectionVisitor();
+        List<ElementFilter>     myFilters                 = myFilterCollectionVisitor.collectFilters( aDataElement );
+        List<Element>           myMatches                 = copybook.getElementDictionary().getMatchingElements( myFilters );
 
         for ( Element myElement : myMatches )
         {
-//            if ( myElement.getElementType() == ElementType.ElementaryItem )
-            {
-                myElement.addMetadata( aDataElement );
-            }
+            myElement.addMetadata( aDataElement );
         }
-    }
-    
-    
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#leaveDataElement(com.xylocore.commons.data.copybook.domain.config.DataElementConfig)
-     */
-    public void leaveDataElement( DataElementConfig aDataElement )
-    {
     }
 }

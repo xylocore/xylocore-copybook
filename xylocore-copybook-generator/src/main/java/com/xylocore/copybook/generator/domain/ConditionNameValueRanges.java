@@ -59,7 +59,7 @@ public class ConditionNameValueRanges
         assert aConditionNameElement != null;
         assert aValueRanges          != null;
         
-        List<ValueRange> myValueRanges = new ArrayList<ValueRange>();
+        List<ValueRange> myValueRanges = new ArrayList<>();
         for ( ValueRange myValueRange : aValueRanges )
         {
             myValueRanges.add( myValueRange );

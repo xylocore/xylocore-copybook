@@ -18,7 +18,6 @@
 package com.xylocore.copybook.generator.domain.config;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -38,9 +37,9 @@ public class DataElementConfig
     //
     
     
-    private List<ElementFilterConfig>   filters         = Collections.<ElementFilterConfig>emptyList();
-    private List<AccessorConfig>        accessors       = Collections.<AccessorConfig>emptyList();
-    private List<NullEquivalentConfig>  nullEquivalents = Collections.<NullEquivalentConfig>emptyList();
+    private List<ElementFilterConfig>   filters         = new ArrayList<>();
+    private List<AccessorConfig>        accessors       = new ArrayList<>();
+    private List<NullEquivalentConfig>  nullEquivalents = new ArrayList<>();
     
     
     
@@ -68,10 +67,12 @@ public class DataElementConfig
      */
     public void setFilters( List<ElementFilterConfig> aFilters )
     {
-        filters =
-                ( aFilters != null && ! aFilters.isEmpty() )
-                    ? new ArrayList<ElementFilterConfig>( aFilters )
-                    : Collections.<ElementFilterConfig>emptyList();
+        filters.clear();
+        
+        if ( aFilters != null )
+        {
+            filters.addAll( aFilters );
+        }
     }
 
     
@@ -82,11 +83,9 @@ public class DataElementConfig
      */
     public void addFilter( ElementFilterConfig aFilter )
     {
-        assert aFilter != null;
-        
-        if ( filters == Collections.<ElementFilterConfig>emptyList() )
+        if ( aFilter == null )
         {
-            filters = new ArrayList<ElementFilterConfig>();
+            throw new IllegalArgumentException( "a filter must be specified" );
         }
         
         filters.add( aFilter );
@@ -111,10 +110,12 @@ public class DataElementConfig
      */
     public void setAccessors( List<AccessorConfig> aAccessors )
     {
-        accessors =
-                ( aAccessors != null && ! aAccessors.isEmpty() )
-                        ? new ArrayList<AccessorConfig>( aAccessors )
-                        : Collections.<AccessorConfig>emptyList();
+        accessors.clear();
+        
+        if ( aAccessors != null )
+        {
+            accessors.addAll( aAccessors );
+        }
     }
     
     
@@ -125,11 +126,9 @@ public class DataElementConfig
      */
     public void addAccessor( AccessorConfig aAccessor )
     {
-        assert aAccessor != null;
-        
-        if ( accessors == Collections.<AccessorConfig>emptyList() )
+        if ( aAccessor == null )
         {
-            accessors = new ArrayList<AccessorConfig>();
+            throw new IllegalArgumentException( "an accessor must be specified" );
         }
         
         accessors.add( aAccessor );
@@ -154,10 +153,12 @@ public class DataElementConfig
      */
     public void setNullEquivalents( List<NullEquivalentConfig> aNullEquivalents )
     {
-        nullEquivalents =
-                ( aNullEquivalents != null && ! aNullEquivalents.isEmpty() )
-                        ? new ArrayList<NullEquivalentConfig>( aNullEquivalents )
-                        : Collections.<NullEquivalentConfig>emptyList();
+        nullEquivalents.clear();
+        
+        if ( aNullEquivalents != null )
+        {
+            nullEquivalents.addAll( aNullEquivalents );
+        }
     }
     
     
@@ -168,22 +169,16 @@ public class DataElementConfig
      */
     public void addNullEquivalent( NullEquivalentConfig aNullEquivalent )
     {
-        assert aNullEquivalent != null;
-        
-        if ( nullEquivalents == Collections.<NullEquivalentConfig>emptyList() )
+        if ( aNullEquivalent == null )
         {
-            nullEquivalents = new ArrayList<NullEquivalentConfig>();
+            throw new IllegalArgumentException( "a null equivalent must be specified" );
         }
         
         nullEquivalents.add( aNullEquivalent );
     }
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptVisit( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -194,11 +189,7 @@ public class DataElementConfig
     }
 
 
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptChildren( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -240,11 +231,7 @@ public class DataElementConfig
     }
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptLeave( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -262,14 +249,11 @@ public class DataElementConfig
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableCollections(java.util.Map)
-     */
-    public void buildDescribableCollections( Map<String, Object> aCollectionsMap )
+    @Override
+    public void buildDescribableCollections( Map<String,Object> aCollectionsMap )
     {
-        aCollectionsMap.put( "Filters"  , filters   );
-        aCollectionsMap.put( "Accessors", accessors );
+        aCollectionsMap.put( "Filters"        , filters         );
+        aCollectionsMap.put( "Accessors"      , accessors       );
         aCollectionsMap.put( "NullEquivalents", nullEquivalents );
     }
 }

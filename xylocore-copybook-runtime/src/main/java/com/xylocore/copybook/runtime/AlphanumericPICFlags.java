@@ -18,6 +18,12 @@
 package com.xylocore.copybook.runtime;
 
 
+/**
+ * FILLIN
+ * 
+ * @author      Eric R. Medley
+ */
+
 public final class AlphanumericPICFlags
 {
     //

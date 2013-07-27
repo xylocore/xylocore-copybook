@@ -138,6 +138,7 @@ public class ConstantValue
     //
     
 
+    @Override
     public int compareTo( Comparable<?> aRhs )
     {
         int myCmp = compareValues( aRhs, value1 );

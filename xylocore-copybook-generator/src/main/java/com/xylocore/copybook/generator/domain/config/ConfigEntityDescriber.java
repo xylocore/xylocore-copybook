@@ -21,8 +21,15 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.commons.util.FormatHelper;
 
+
+/**
+ * FILLIN
+ * 
+ * @author      Eric R. Medley
+ */
 
 public class ConfigEntityDescriber
 {
@@ -31,9 +38,7 @@ public class ConfigEntityDescriber
     //
     
     
-    private StringBuilder   buffer;
-    private int             indentLevel;
-    private int             indentWidth;
+    private BufferEmitter emitter;
     
     
     
@@ -61,8 +66,7 @@ public class ConfigEntityDescriber
     public ConfigEntityDescriber( int   aIndentLevel,
                                   int   aIndentWidth  )
     {
-        indentLevel = aIndentLevel;
-        indentWidth = aIndentWidth;
+        emitter = new BufferEmitter( aIndentLevel, aIndentWidth );
     }
     
     
@@ -89,38 +93,20 @@ public class ConfigEntityDescriber
      */
     public String describe( ConfigEntityDescribable aDescribable )
     {
-        StringBuilder myBuffer = new StringBuilder();
-        
-        describe( aDescribable, myBuffer );
-        
-        return myBuffer.toString();
-    }
-    
-
-    /**
-     * FILLIN
-     * 
-     * @param       aDescribable
-     * @param       aBuffer
-     * @param       aIndentLevel
-     */
-    public void describe( ConfigEntityDescribable   aDescribable,
-                          StringBuilder             aBuffer       )
-    {
-        if ( aBuffer == null )
+        if ( aDescribable == null )
         {
-            throw new IllegalArgumentException( "aBuffer" );
+            throw new IllegalArgumentException( "a describable object must be specified" );
         }
         
         try
         {
-            buffer = aBuffer;
-
             describeImpl( aDescribable );
+            
+            return emitter.getBuffer().toString();
         }
         finally
         {
-            buffer = null;
+            emitter.clear();
         }
     }
     
@@ -130,29 +116,51 @@ public class ConfigEntityDescriber
      * 
      * @param       aDescribable
      * @param       aBuffer
-     * @param       aIndentLevel
+     */
+    public void describe( ConfigEntityDescribable   aDescribable,
+                          StringBuilder             aBuffer       )
+    {
+        if ( aDescribable == null )
+        {
+            throw new IllegalArgumentException( "a describable object must be specified" );
+        }
+        if ( aBuffer == null )
+        {
+            throw new IllegalArgumentException( "a buffer must be specified" );
+        }
+
+        try
+        {
+            describeImpl( aDescribable );
+            
+            aBuffer.append( emitter.getBuffer() );
+        }
+        finally
+        {
+            emitter.clear();
+        }
+    }
+    
+
+    /**
+     * FILLIN
+     * 
+     * @param       aDescribable
      */
     private void describeImpl( ConfigEntityDescribable aDescribable )
     {
-        int    myOuterIndent = calculateIndent();
-        String myClassName   = getDescribableClassName( aDescribable );
+        assert aDescribable != null;
         
-        FormatHelper.stringOfCharacters( buffer, ' ', myOuterIndent );
-        
-        buffer.append( myClassName )
-              .append( "\n"        )
-              ;
-        
-        FormatHelper.stringOfCharacters( buffer, ' ', myOuterIndent );
-        
-        buffer.append( "[\n" );
+        String myClassName = getDescribableClassName( aDescribable );
+
+        emitter.line( myClassName )
+               .line( "["         )
+               ;
         
         describeElements   ( aDescribable );
         describeCollections( aDescribable );
 
-        FormatHelper.stringOfCharacters( buffer, ' ', myOuterIndent );
-        
-        buffer.append( "]\n" );
+        emitter.line( "]" );
     }
     
     
@@ -165,51 +173,11 @@ public class ConfigEntityDescriber
      */
     private String getDescribableClassName( ConfigEntityDescribable aDescribable )
     {
+        assert aDescribable != null;
+        
         String myClassName = aDescribable.getClass().getName();
         
         return myClassName.substring( myClassName.lastIndexOf( '.' )+1 );
-    }
-    
-    
-    /**
-     * FILLIN
-     */
-    private void incrementIndent()
-    {
-        indentLevel++;
-    }
-    
-    
-    /**
-     * FILLIN
-     */
-    private void decrementIndent()
-    {
-        indentLevel--;
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @return
-     */
-    private int calculateIndent()
-    {
-        return calculateIndent( 0 );
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aOffset
-     * 
-     * @return
-     */
-    private int calculateIndent( int aOffset )
-    {
-        return (indentLevel+aOffset)*indentWidth;
     }
     
     
@@ -220,7 +188,9 @@ public class ConfigEntityDescriber
      */
     private void describeElements( ConfigEntityDescribable aDescribable )
     {
-        Map<String,String> myLabelValuePairs = new LinkedHashMap<String,String>();
+        assert aDescribable != null;
+        
+        Map<String,String> myLabelValuePairs = new LinkedHashMap<>();
         aDescribable.buildDescribableLabelValuePairs( myLabelValuePairs );
         
         int myMaximumLabelWidth = 0;
@@ -228,24 +198,24 @@ public class ConfigEntityDescriber
         {
             myMaximumLabelWidth = Math.max( myMaximumLabelWidth, myKey.length() );
         }
-        
-        incrementIndent();
 
-        for ( Map.Entry<String, String> myEntry : myLabelValuePairs.entrySet() )
+        emitter.increment();
+
+        for ( Map.Entry<String,String> myEntry : myLabelValuePairs.entrySet() )
         {
             String myLabel = myEntry.getKey();
             String myValue = myEntry.getValue();
+
+            emitter.indent();
             
-            FormatHelper.stringOfCharacters( buffer, ' ', calculateIndent()                                   );
-            FormatHelper.formatString      ( buffer, myLabel, myMaximumLabelWidth, FormatHelper.Justify.Right );
-            
-            buffer.append( ": "    )
-                  .append( myValue )
-                  .append( "\n"    )
-                  ;
+            FormatHelper.formatString( emitter.getBuffer(), myLabel, myMaximumLabelWidth, FormatHelper.Justify.Right );
+
+            emitter.append ( ": ", myValue )
+                   .newline(               )
+                   ;
         }
-        
-        decrementIndent();
+
+        emitter.decrement();
     }
     
     
@@ -256,12 +226,14 @@ public class ConfigEntityDescriber
      */
     private void describeCollections( ConfigEntityDescribable aDescribable )
     {
-        Map<String,Object> myCollectionsMap = new LinkedHashMap<String,Object>();
+        assert aDescribable != null;
+        
+        Map<String,Object> myCollectionsMap = new LinkedHashMap<>();
         aDescribable.buildDescribableCollections( myCollectionsMap );
         
         if ( ! myCollectionsMap.isEmpty() )
         {
-            incrementIndent();
+            emitter.increment();
             
             for ( Map.Entry<String,Object> myEntry : myCollectionsMap.entrySet() )
             {
@@ -270,7 +242,7 @@ public class ConfigEntityDescriber
 
                 if ( myObject == null || myObject instanceof ConfigEntityDescribable )
                 {
-                    buffer.append( "\n" );
+                    emitter.line();
                     
                     if ( myObject != null )
                     {
@@ -278,15 +250,9 @@ public class ConfigEntityDescriber
                     }
                     else
                     {
-                        FormatHelper.stringOfCharacters( buffer, ' ', calculateIndent() );
-                        
-                        buffer.append( myTitle )
-                              .append( "\n"    )
-                              ;
-                        
-                        FormatHelper.stringOfCharacters( buffer, ' ', calculateIndent( 1 ) );
-                        
-                        buffer.append( "***** not available *****\n" );
+                        emitter.line ( myTitle                     )
+                               .line1( "***** not available *****" )
+                               ;
                     }
                 }
                 else
@@ -300,7 +266,7 @@ public class ConfigEntityDescriber
                 }
             }
             
-            decrementIndent();
+            emitter.decrement();
         }
     }
     
@@ -314,15 +280,13 @@ public class ConfigEntityDescriber
     private void describeCollection( String                                aTitle,
                                      Collection<ConfigEntityDescribable>   aCollection )
     {
-        buffer.append( "\n" );
+        assert aTitle      != null;
+        assert aCollection != null;
         
-        FormatHelper.stringOfCharacters( buffer, ' ', calculateIndent() );
-        
-        buffer.append( aTitle )
-              .append( ":\n"  )
-              ;
-        
-        incrementIndent();
+        emitter.line     (             )
+               .line     ( aTitle, ":" )
+               .increment(             )
+               ;
         
         if ( ! aCollection.isEmpty() )
         {
@@ -333,11 +297,9 @@ public class ConfigEntityDescriber
         }
         else
         {
-            FormatHelper.stringOfCharacters( buffer, ' ', calculateIndent() );
-            
-            buffer.append( "***** not available *****\n" );
+            emitter.line( "***** not available *****" );
         }
         
-        decrementIndent();
+        emitter.decrement();
     }
 }

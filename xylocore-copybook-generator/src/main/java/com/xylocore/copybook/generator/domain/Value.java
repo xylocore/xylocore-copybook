@@ -33,10 +33,7 @@ public abstract class Value
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
+    @Override
     public boolean equals( Object aOpaqueRhs )
     {
         if ( aOpaqueRhs == null || ! (aOpaqueRhs instanceof Value) )
@@ -62,10 +59,7 @@ public abstract class Value
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
+    @Override
     public int compareTo( Value aRhs )
     {
         return getClass().getName().compareTo( aRhs.getClass().getName() );

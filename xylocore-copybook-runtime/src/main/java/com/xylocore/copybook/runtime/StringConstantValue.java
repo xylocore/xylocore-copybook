@@ -71,14 +71,7 @@ public class StringConstantValue
     }
     
     
-    /**
-     * FILLIN
-     *
-     * @param       aValue1
-     * @param       aValue2
-     * 
-     * @return
-     */
+    @Override
     protected int compareValues( Comparable<?>   aValue1,
                                  Comparable<?>   aValue2  )
     {

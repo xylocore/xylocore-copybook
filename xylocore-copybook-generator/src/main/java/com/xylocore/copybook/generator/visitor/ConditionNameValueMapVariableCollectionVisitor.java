@@ -103,7 +103,7 @@ public class ConditionNameValueMapVariableCollectionVisitor
     {
         try
         {
-            conditionNameValueRangesList = new ArrayList<ConditionNameValueRanges>();
+            conditionNameValueRangesList = new ArrayList<>();
             
             for ( Element myElement : aElements )
             {
@@ -119,10 +119,7 @@ public class ConditionNameValueMapVariableCollectionVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void visitDataElement( DataElement aElement )
     {
         assert aElement != null;
@@ -153,7 +150,7 @@ public class ConditionNameValueMapVariableCollectionVisitor
         
         Arrays.sort( myValueRangeArray, valueRangeComparator );
         
-        List<ValueRange> myCompressedValueRanges = new ArrayList<ValueRange>();
+        List<ValueRange> myCompressedValueRanges = new ArrayList<>();
         ValueRange       myLastRange             = myValueRangeArray[0];
         
         for ( int i = 1, ci = myValueRangeArray.length ; i < ci ; i++ )

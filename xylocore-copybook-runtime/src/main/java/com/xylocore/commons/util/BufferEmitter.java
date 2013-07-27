@@ -1,9 +1,8 @@
-package com.xylocore.copybook.generator.emit;
+package com.xylocore.commons.util;
 
 import java.io.IOException;
 import java.io.Writer;
 
-import com.xylocore.commons.util.FormatHelper;
 
 
 /**
@@ -38,11 +37,22 @@ public class BufferEmitter
      */
     public BufferEmitter( int aIndentWidth )
     {
-        assert aIndentWidth > 0;
-        
+        this( 0, aIndentWidth );
+    }
+
+    
+    /**
+     * FILLIN
+     * 
+     * @param       aIndentLevel
+     * @param       aIndentWidth
+     */
+    public BufferEmitter( int   aIndentLevel,
+                          int   aIndentWidth  )
+    {
         buffer = new StringBuilder( 1024 );
-        
-        reset( aIndentWidth );
+
+        reset( aIndentLevel, aIndentWidth );
     }
     
     
@@ -294,7 +304,27 @@ public class BufferEmitter
      */
     public BufferEmitter reset( int aIndentWidth )
     {
-        indentLevel = 0;
+        return reset( 0, aIndentWidth );
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @param       aIndentLevel
+     * @param       aIndentWidth
+     * 
+     * @return
+     */
+    public BufferEmitter reset( int   aIndentLevel,
+                                int   aIndentWidth  )
+    {
+        if ( aIndentLevel < 0 )
+        {
+            throw new IllegalArgumentException( "the indent level cannot be less than zero" );
+        }
+        
+        indentLevel = aIndentLevel;
         indentWidth = aIndentWidth;
         
         clear();

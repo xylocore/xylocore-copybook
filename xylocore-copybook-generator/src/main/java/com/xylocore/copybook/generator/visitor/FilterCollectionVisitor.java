@@ -18,7 +18,6 @@
 package com.xylocore.copybook.generator.visitor;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.xylocore.copybook.generator.domain.ElementFilter;
@@ -30,7 +29,8 @@ import com.xylocore.copybook.generator.domain.config.IncludedElementFilterConfig
 
 
 /**
- * FILLIN
+ * A configuration visitor that gathers the element filters for a particular
+ * data element configuration.
  * 
  * @author      Eric R. Medley
  */
@@ -55,79 +55,50 @@ public class FilterCollectionVisitor
 
     
     /**
-     * FILLIN
+     * Returns the element filters for the specified data element configuration.
      * 
      * @param       aElement
-     * 
-     * @return
+     *                  The data element configuration element of interest.
+     *                  
+     * @return      The element filters for the specified data element configuration.
      */
-    public ElementFilter[] collectFilters( DataElementConfig aElement )
+    public List<ElementFilter> collectFilters( DataElementConfig aElement )
     {
-        filters = Collections.<ElementFilter>emptyList();
+        filters = new ArrayList<>();
         
         aElement.accept( this );
         
-        return filters.toArray( new ElementFilter[filters.size()] );
+        return filters;
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#leaveDataElement(com.xylocore.commons.data.copybook.domain.config.DataElementConfig)
-     */
+    @Override
     public void leaveDataElement( DataElementConfig aElement )
     {
         if ( filters.isEmpty() )
         {
-            addFilter( new WildcardElementFilter( aElement.getId(), true ) );
+            filters.add( new WildcardElementFilter( aElement.getId(), true ) );
         }
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#shouldVisitElementFilters(com.xylocore.commons.data.copybook.domain.config.DataElementConfig)
-     */
+    @Override
     public boolean shouldVisitElementFilters( DataElementConfig aElement )
     {
         return true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitIncludedElementFilter(com.xylocore.commons.data.copybook.domain.config.IncludedElementFilterConfig)
-     */
+    @Override
     public void visitIncludedElementFilter( IncludedElementFilterConfig aElementFilter )
     {
-        addFilter( new WildcardElementFilter( aElementFilter.getName(), true ) );
+        filters.add( new WildcardElementFilter( aElementFilter.getName(), true ) );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitor#visitExcludedElementFilter(com.xylocore.commons.data.copybook.domain.config.ExcludedElementFilterConfig)
-     */
+    @Override
     public void visitExcludedElementFilter( ExcludedElementFilterConfig aElementFilter )
     {
-        addFilter( new WildcardElementFilter( aElementFilter.getName(), false ) );
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aFilter
-     */
-    private void addFilter( ElementFilter aFilter )
-    {
-        assert aFilter != null;
-        
-        if ( filters == Collections.<ElementFilter>emptyList() )
-        {
-            filters = new ArrayList<ElementFilter>();
-        }
-        
-        filters.add( aFilter );
+        filters.add( new WildcardElementFilter( aElementFilter.getName(), false ) );
     }
 }

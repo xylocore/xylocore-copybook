@@ -60,7 +60,7 @@ public class PICMarshallerCollectionVisitor
     //
     
     
-    private static final Map<DataCategory,PICMarshallerBuilder> marshallerBuilders      = new HashMap<DataCategory,PICMarshallerBuilder>();
+    private static final Map<DataCategory,PICMarshallerBuilder> marshallerBuilders      = new HashMap<>();
     private Map<DataElement,PICMarshaller>                      elementMarshallerMap;
     
     
@@ -147,7 +147,7 @@ public class PICMarshallerCollectionVisitor
     {
         try
         {
-            elementMarshallerMap = new HashMap<DataElement,PICMarshaller>();
+            elementMarshallerMap = new HashMap<>();
             
             for ( Element myElement : aElements )
             {
@@ -163,10 +163,7 @@ public class PICMarshallerCollectionVisitor
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void visitDataElement( DataElement aElement )
     {
         DataCategory         myDataCategory = aElement.getDataCategory();

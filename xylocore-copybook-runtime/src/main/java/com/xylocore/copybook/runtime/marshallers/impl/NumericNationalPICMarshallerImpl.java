@@ -71,10 +71,7 @@ public class NumericNationalPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.AbstractNumericPICMarshaller#validateRange(long, long, long)
-     */
+    @Override
     protected void validateRange( long   aValue,
                                   long   aMinValue,
                                   long   aMaxValue  )
@@ -83,10 +80,7 @@ public class NumericNationalPICMarshallerImpl
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.impl.AbstractExternalNumericPICMarshaller#validateUsingConverter(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.converters.Converter)
-     */
+    @Override
     protected boolean validateUsingConverter( CopybookContext   aContext,
                                               int               aOffset,
                                               int               aDigits,
@@ -107,10 +101,7 @@ public class NumericNationalPICMarshallerImpl
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.impl.AbstractExternalNumericPICMarshaller#decodeUsingConverter(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.converters.Converter)
-     */
+    @Override
     protected Object decodeUsingConverter( CopybookContext   aContext,
                                            int               aOffset,
                                            int               aDigits,
@@ -131,10 +122,7 @@ public class NumericNationalPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.impl.AbstractExternalNumericPICMarshaller#encodeUsingConverter(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.lang.Object, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.converters.Converter)
-     */
+    @Override
     protected void encodeUsingConverter( CopybookContext   aContext,
                                          int               aOffset,
                                          Object            aValue,
@@ -157,10 +145,7 @@ public class NumericNationalPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.impl.AbstractExternalNumericPICMarshaller#checkUsingNullEquivalent(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy)
-     */
+    @Override
     protected boolean checkUsingNullEquivalent( CopybookContext          aContext,
                                                 int                      aOffset,
                                                 int                      aDigits,
@@ -181,10 +166,7 @@ public class NumericNationalPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.impl.AbstractExternalNumericPICMarshaller#encodeUsingNullEquivalent(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy)
-     */
+    @Override
     protected void encodeUsingNullEquivalent( CopybookContext          aContext,
                                               int                      aOffset,
                                               int                      aDigits,
@@ -212,10 +194,7 @@ public class NumericNationalPICMarshallerImpl
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isBlank(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public boolean isBlank( CopybookContext   aContext,
                             int               aOffset,
                             int               aDigits,
@@ -231,10 +210,7 @@ public class NumericNationalPICMarshallerImpl
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#blank(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public void blank( CopybookContext   aContext,
                        int               aOffset,
                        int               aDigits,
@@ -250,10 +226,7 @@ public class NumericNationalPICMarshallerImpl
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.impl.AbstractExternalNumericPICMarshaller#decodeAsLong(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public long decodeAsLong( CopybookContext   aContext,
                               int               aOffset,
                               int               aDigits,
@@ -276,10 +249,7 @@ public class NumericNationalPICMarshallerImpl
     }
     
  
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.impl.AbstractExternalNumericPICMarshaller#encodeAsLong(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, long, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public void encodeAsLong( CopybookContext   aContext,
                               int               aOffset,
                               long              aValue,

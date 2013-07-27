@@ -23,8 +23,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.commons.util.FormatHelper;
-import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.ConstantValue;
 
 
@@ -55,7 +55,7 @@ public abstract class AbstractConstantValueEmitter
     
     static
     {
-        Set<String> mySet = new HashSet<String>();
+        Set<String> mySet = new HashSet<>();
         
         mySet.add( BigDecimal.class.getName() );
         mySet.add( BigInteger.class.getName() );
@@ -266,6 +266,7 @@ public abstract class AbstractConstantValueEmitter
     //
     
     
+    @Override
     public void emit( BufferEmitter   aEmitter,
                       ConstantValue   aValue    )
     {

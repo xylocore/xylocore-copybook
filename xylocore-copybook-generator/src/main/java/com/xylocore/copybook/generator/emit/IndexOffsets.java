@@ -17,6 +17,7 @@
 
 package com.xylocore.copybook.generator.emit;
 
+import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.copybook.generator.domain.Element;
 
 

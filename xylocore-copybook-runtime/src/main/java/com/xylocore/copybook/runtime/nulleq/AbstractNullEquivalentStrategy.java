@@ -288,30 +288,21 @@ public abstract class AbstractNullEquivalentStrategy
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isDirect()
-     */
+    @Override
     public boolean isDirect()
     {
         return false;
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isDataUsageCategorySupported(com.xylocore.commons.data.copybook.runtime.DataUsageCategory)
-     */
+    @Override
     public boolean isDataUsageCategorySupported( DataUsageCategory aDataUsageCategory )
     {
         return getSupportedDataUsageCategories().contains( aDataUsageCategory );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isNumericDisplayNull(com.xylocore.commons.data.copybook.runtime.marshallers.NumericDisplayPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public final boolean isNumericDisplayNull( NumericDisplayPICMarshaller   aPICMarshaller,
                                                CopybookContext               aContext,
                                                int                           aOffset,
@@ -334,10 +325,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#setNumericDisplayNull(com.xylocore.commons.data.copybook.runtime.marshallers.NumericDisplayPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public final void setNumericDisplayNull( NumericDisplayPICMarshaller   aPICMarshaller,
                                              CopybookContext               aContext,
                                              int                           aOffset,
@@ -360,10 +348,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isNumericNationalNull(com.xylocore.commons.data.copybook.runtime.marshallers.NumericNationalPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public final boolean isNumericNationalNull( NumericNationalPICMarshaller   aPICMarshaller,
                                                 CopybookContext                aContext,
                                                 int                            aOffset,
@@ -386,10 +371,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#setNumericNationalNull(com.xylocore.commons.data.copybook.runtime.marshallers.NumericNationalPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public final void setNumericNationalNull( NumericNationalPICMarshaller   aPICMarshaller,
                                               CopybookContext                aContext,
                                               int                            aOffset,
@@ -412,10 +394,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isBinaryNull(com.xylocore.commons.data.copybook.runtime.marshallers.BinaryPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
+    @Override
     public final boolean isBinaryNull( BinaryPICMarshaller   aPICMarshaller,
                                        CopybookContext       aContext,
                                        int                   aOffset,
@@ -436,17 +415,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aPICMarshaller
-     * @param       aContext
-     * @param       aOffset
-     * @param       aDigits
-     * @param       aSignType
-     * @param       aPrecision
-     * @param       aScalingPosition
-     */
+    @Override
     public final void setBinaryNull( BinaryPICMarshaller   aPICMarshaller,
                                      CopybookContext       aContext,
                                      int                   aOffset,
@@ -467,10 +436,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isComputational1Null(com.xylocore.commons.data.copybook.runtime.marshallers.Computational1PICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int)
-     */
+    @Override
     public final boolean isComputational1Null( Computational1PICMarshaller   aPICMarshaller,
                                                CopybookContext               aContext,
                                                int                           aOffset         )
@@ -483,10 +449,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#setComputational1Null(com.xylocore.commons.data.copybook.runtime.marshallers.Computational1PICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int)
-     */
+    @Override
     public final void setComputational1Null( Computational1PICMarshaller   aPICMarshaller,
                                              CopybookContext               aContext,
                                              int                           aOffset         )
@@ -499,10 +462,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isComputational2Null(com.xylocore.commons.data.copybook.runtime.marshallers.Computational2PICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int)
-     */
+    @Override
     public final boolean isComputational2Null( Computational2PICMarshaller   aPICMarshaller,
                                                CopybookContext               aContext,
                                                int                           aOffset         )
@@ -515,10 +475,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#setComputational2Null(com.xylocore.commons.data.copybook.runtime.marshallers.Computational2PICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int)
-     */
+    @Override
     public final void setComputational2Null( Computational2PICMarshaller   aPICMarshaller,
                                              CopybookContext               aContext,
                                              int                           aOffset         )
@@ -531,10 +488,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isComputational3Null(com.xylocore.commons.data.copybook.runtime.marshallers.Computational3PICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
+    @Override
     public final boolean isComputational3Null( Computational3PICMarshaller   aPICMarshaller,
                                                CopybookContext               aContext,
                                                int                           aOffset,
@@ -555,10 +509,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#setComputational3Null(com.xylocore.commons.data.copybook.runtime.marshallers.Computational3PICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
+    @Override
     public final void setComputational3Null( Computational3PICMarshaller   aPICMarshaller,
                                              CopybookContext               aContext,
                                              int                           aOffset,
@@ -579,10 +530,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isComputational5Null(com.xylocore.commons.data.copybook.runtime.marshallers.Computational5PICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
+    @Override
     public final boolean isComputational5Null( Computational5PICMarshaller   aPICMarshaller,
                                                CopybookContext               aContext,
                                                int                           aOffset,
@@ -603,10 +551,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#setComputational5Null(com.xylocore.commons.data.copybook.runtime.marshallers.Computational5PICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
+    @Override
     public final void setComputational5Null( Computational5PICMarshaller   aPICMarshaller,
                                              CopybookContext               aContext,
                                              int                           aOffset,
@@ -627,10 +572,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#isAlphanumericNull(com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public final boolean isAlphanumericNull( AlphanumericPICMarshaller   aPICMarshaller,
                                              CopybookContext             aContext,
                                              int                         aOffset,
@@ -646,10 +588,7 @@ public abstract class AbstractNullEquivalentStrategy
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy#setAlphanumericNull(com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     public final void setAlphanumericNull( AlphanumericPICMarshaller   aPICMarshaller,
                                            CopybookContext             aContext,
                                            int                         aOffset,
@@ -672,10 +611,7 @@ public abstract class AbstractNullEquivalentStrategy
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(NullEquivalentStrategy)
-     */
+    @Override
     public int compareTo( NullEquivalentStrategy aRhs )
     {
         return getClass().getName().compareTo( aRhs.getClass().getName() );

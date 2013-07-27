@@ -80,6 +80,17 @@ class ElementDictionaryBuilderVisitor
         {
             return element;
         }
+        
+        
+        /**
+         * FILLIN
+         * 
+         * @return
+         */
+        public String getElementPath()
+        {
+            return elementPath;
+        }
     }
     
     
@@ -90,7 +101,7 @@ class ElementDictionaryBuilderVisitor
     //
     
     
-    private List<StackEntry>    elementStack    = new ArrayList<StackEntry>();
+    private List<StackEntry>    elementStack    = new ArrayList<>();
     private Copybook            copybook;
     
     
@@ -114,20 +125,14 @@ class ElementDictionaryBuilderVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#shouldVisitChildren(com.xylocore.commons.data.copybook.domain.Element)
-     */
+    @Override
     public boolean shouldVisitChildren( Element aParent )
     {
         return true;
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#visitDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void visitDataElement( DataElement aElement )
     {
         String myElementName  = aElement.getName();
@@ -140,7 +145,7 @@ class ElementDictionaryBuilderVisitor
             
             if ( myPreviousStackEntry != null )
             {
-                myElementPath = myPreviousStackEntry.elementPath + "/" + myElementName; 
+                myElementPath = myPreviousStackEntry.getElementPath() + "/" + myElementName; 
             }
             else
             {
@@ -155,10 +160,7 @@ class ElementDictionaryBuilderVisitor
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.Visitor#leaveDataElement(com.xylocore.commons.data.copybook.domain.DataElement)
-     */
+    @Override
     public void leaveDataElement( DataElement aElement )
     {
         if ( ! elementStack.isEmpty() )

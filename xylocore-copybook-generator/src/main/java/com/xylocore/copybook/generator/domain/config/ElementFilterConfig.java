@@ -66,10 +66,8 @@ public class ElementFilterConfig
         name = aName;
     }
     
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+
+    @Override
     public String toString()
     {
         return ConfigEntityDescriber.simpleDescribe( this );
@@ -120,20 +118,14 @@ public class ElementFilterConfig
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableLabelValuePairs(java.util.Map)
-     */
+    @Override
     public void buildDescribableLabelValuePairs( Map<String,String> aLabelValueMap )
     {
         aLabelValueMap.put( "Name", name );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigEntityDescribable#buildDescribableCollections(java.util.Map)
-     */
+    @Override
     public void buildDescribableCollections( Map<String, Object> aCollectionsMap )
     {
     }
@@ -146,10 +138,7 @@ public class ElementFilterConfig
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.ConfigVisitable#accept(com.xylocore.commons.data.copybook.domain.config.ConfigVisitor)
-     */
+    @Override
     public void accept( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;

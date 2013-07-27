@@ -98,20 +98,14 @@ public class BigDecimalConverter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.nulleq.AbstractNullEquivalentStrategy#getSupportedDataUsageCategories()
-     */
+    @Override
     protected Set<DataUsageCategory> getSupportedDataUsageCategories()
     {
         return supportedDataUsageCategories;
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#isExternalNumericValid(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     protected boolean isExternalNumericValid( DataUsageCategory              aDataUsageCategory, 
                                               ExternalNumericPICMarshaller   aPICMarshaller,
                                               CopybookContext                aContext,
@@ -127,10 +121,7 @@ public class BigDecimalConverter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#decodeExternalNumeric(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     protected Object decodeExternalNumeric( DataUsageCategory              aDataUsageCategory, 
                                             ExternalNumericPICMarshaller   aPICMarshaller,
                                             CopybookContext                aContext,
@@ -146,10 +137,7 @@ public class BigDecimalConverter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#encodeExternalNumeric(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.lang.Object, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     protected void encodeExternalNumeric( DataUsageCategory              aDataUsageCategory, 
                                           ExternalNumericPICMarshaller   aPICMarshaller,
                                           CopybookContext                aContext,
@@ -166,10 +154,7 @@ public class BigDecimalConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#isInternalFloatingPointValid(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.InternalFloatingPointPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int)
-     */
+    @Override
     protected boolean isInternalFloatingPointValid( DataUsageCategory                    aDataUsageCategory, 
                                                     InternalFloatingPointPICMarshaller   aPICMarshaller,
                                                     CopybookContext                      aContext,
@@ -180,10 +165,7 @@ public class BigDecimalConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#decodeInternalFloatingPoint(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.InternalFloatingPointPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int)
-     */
+    @Override
     protected Object decodeInternalFloatingPoint( DataUsageCategory                    aDataUsageCategory, 
                                                   InternalFloatingPointPICMarshaller   aPICMarshaller,
                                                   CopybookContext                      aContext,
@@ -194,10 +176,7 @@ public class BigDecimalConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#encodeInternalFloatingPoint(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.InternalFloatingPointPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.lang.Object)
-     */
+    @Override
     protected void encodeInternalFloatingPoint( DataUsageCategory                    aDataUsageCategory, 
                                                 InternalFloatingPointPICMarshaller   aPICMarshaller,
                                                 CopybookContext                      aContext,
@@ -209,10 +188,7 @@ public class BigDecimalConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#isInternalNonFloatingPointValid(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.InternalNonFloatingPointPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
+    @Override
     protected boolean isInternalNonFloatingPointValid( DataUsageCategory                       aDataUsageCategory, 
                                                        InternalNonFloatingPointPICMarshaller   aPICMarshaller,
                                                        CopybookContext                         aContext,
@@ -227,10 +203,7 @@ public class BigDecimalConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#decodeInternalNonFloatingPoint(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.InternalNonFloatingPointPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
+    @Override
     protected Object decodeInternalNonFloatingPoint( DataUsageCategory                       aDataUsageCategory, 
                                                      InternalNonFloatingPointPICMarshaller   aPICMarshaller,
                                                      CopybookContext                         aContext,
@@ -245,10 +218,7 @@ public class BigDecimalConverter
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#encodeInternalNonFloatingPoint(com.xylocore.commons.data.copybook.runtime.DataUsageCategory, com.xylocore.commons.data.copybook.runtime.marshallers.InternalNonFloatingPointPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.lang.Object, int, com.xylocore.commons.data.copybook.runtime.SignType, int, int)
-     */
+    @Override
     protected void encodeInternalNonFloatingPoint( DataUsageCategory                       aDataUsageCategory, 
                                                    InternalNonFloatingPointPICMarshaller   aPICMarshaller,
                                                    CopybookContext                         aContext,
@@ -264,10 +234,7 @@ public class BigDecimalConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#isExternalAlphanumericValid(com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     protected boolean isExternalAlphanumericValid( AlphanumericPICMarshaller   aPICMarshaller,
                                                    CopybookContext             aContext,
                                                    int                         aOffset,
@@ -279,10 +246,7 @@ public class BigDecimalConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#decodeExternalAlphanumeric(com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int)
-     */
+    @Override
     protected Object decodeExternalAlphanumeric( AlphanumericPICMarshaller   aPICMarshaller,
                                                  CopybookContext             aContext,
                                                  int                         aOffset,
@@ -294,10 +258,7 @@ public class BigDecimalConverter
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#encodeExternalAlphanumeric(com.xylocore.commons.data.copybook.runtime.marshallers.AlphanumericPICMarshaller, com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.lang.Object, int, int)
-     */
+    @Override
     protected void encodeExternalAlphanumeric( AlphanumericPICMarshaller   aPICMarshaller,
                                                CopybookContext             aContext,
                                                int                         aOffset,
@@ -317,10 +278,7 @@ public class BigDecimalConverter
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.converters.AbstractConverter#compareTo(java.lang.Object)
-     */
+    @Override
     public int compareTo( Converter aOpaqueRhs )
     {
         int myCmp = super.compareTo( aOpaqueRhs );

@@ -28,6 +28,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.commons.util.FormatHelper;
 import com.xylocore.copybook.generator.domain.AccessorMethodInfo;
 import com.xylocore.copybook.generator.domain.ConditionNameValueRanges;

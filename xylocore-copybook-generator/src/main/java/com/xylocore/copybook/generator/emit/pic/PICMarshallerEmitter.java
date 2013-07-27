@@ -17,12 +17,12 @@
 
 package com.xylocore.copybook.generator.emit.pic;
 
+import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.copybook.generator.domain.AccessorMethodInfo;
 import com.xylocore.copybook.generator.domain.DataElement;
 import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.Level88Element;
 import com.xylocore.copybook.generator.domain.ValueRange;
-import com.xylocore.copybook.generator.emit.BufferEmitter;
 import com.xylocore.copybook.runtime.marshallers.PICMarshaller;
 
 

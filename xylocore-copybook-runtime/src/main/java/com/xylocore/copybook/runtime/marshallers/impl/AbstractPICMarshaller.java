@@ -35,10 +35,7 @@ public abstract class AbstractPICMarshaller
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Comparable#compareTo(T)
-     */
+    @Override
     public int compareTo( PICMarshaller aOpaqueRhs )
     {
         return getClass().getName().compareTo( aOpaqueRhs.getClass().getName() );

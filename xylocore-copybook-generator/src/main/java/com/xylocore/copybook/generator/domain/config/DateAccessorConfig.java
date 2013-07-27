@@ -20,6 +20,12 @@ import java.util.Map;
 
 import com.xylocore.copybook.runtime.DataType;
 
+
+/**
+ * FILLIN
+ * 
+ * @author      Eric R. Medley
+ */
 public class DateAccessorConfig
     extends
         AccessorConfig
@@ -70,11 +76,7 @@ public class DateAccessorConfig
     }
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptVisit( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -85,11 +87,7 @@ public class DateAccessorConfig
     }
     
     
-    /**
-     * FILLIN
-     * 
-     * @param       aVisitor
-     */
+    @Override
     protected void acceptLeave( ConfigVisitor aVisitor )
     {
         assert aVisitor != null;
@@ -107,10 +105,7 @@ public class DateAccessorConfig
     //
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.domain.config.AccessorConfig#buildDescribableLabelValuePairs(java.util.Map)
-     */
+    @Override
     public void buildDescribableLabelValuePairs( Map<String,String> aLabelValueMap )
     {
         super.buildDescribableLabelValuePairs( aLabelValueMap );

@@ -54,6 +54,7 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
     private Charset         nationalCharset;
     private CharsetDecoder  nationalDecoder;
     private CharsetEncoder  nationalEncoder;
+
     
     
     
@@ -107,6 +108,12 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
     }
     
     
+    /**
+     * FILLIN
+     * 
+     * @param       aDecoder
+     * @param       aEncoder
+     */
     private void setupCoders( CharsetDecoder   aDecoder,
                               CharsetEncoder   aEncoder  )
     {
@@ -177,7 +184,12 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
             throw new IllegalArgumentException( "aLength" );
         }
         
-        decodeChars( aDecoder, aContext, aBytesPerCharacter, aOffset, aLength, aContext.getWorkBuffer( aLength ) );
+        decodeChars( aDecoder,
+                     aContext,
+                     aBytesPerCharacter,
+                     aOffset,
+                     aLength,
+                     aContext.getWorkBuffer( aLength ) );
     }
     
 
@@ -217,7 +229,10 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
             throw new IllegalArgumentException( "aLength" );
         }
         
-        aContext.decode( aDecoder, aOffset, aOffset+aBytesPerCharacter*aLength, aTargetBuffer );
+        aContext.decode( aDecoder,
+                         aOffset,
+                         aOffset+aBytesPerCharacter*aLength,
+                         aTargetBuffer                       );
     }
 
     
@@ -238,7 +253,13 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
                               int               aLength,
                               char[]            aTargetData         )
     {
-        decodeChars( aDecoder, aContext, aBytesPerCharacter, aOffset, aLength, aTargetData, 0 );
+        decodeChars( aDecoder,
+                     aContext,
+                     aBytesPerCharacter,
+                     aOffset,
+                     aLength,
+                     aTargetData,
+                     0                   );
     }
 
 
@@ -270,7 +291,10 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
         
         CharBuffer myWorkBuffer = aContext.getWorkBuffer( aLength );
 
-        aContext.decode( aDecoder, aOffset, aOffset+aBytesPerCharacter*aLength, myWorkBuffer );
+        aContext.decode( aDecoder,
+                         aOffset,
+                         aOffset+aBytesPerCharacter*aLength,
+                         myWorkBuffer                        );
         
         myWorkBuffer.flip();
         myWorkBuffer.get( aTargetData, aTargetStart, aLength );
@@ -297,7 +321,12 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
             throw new IllegalArgumentException( "aLength" );
         }
         
-        encodeChars( aEncoder, aContext, aBytesPerCharacter, aOffset, aLength, aContext.getWorkBuffer( aLength ) );
+        encodeChars( aEncoder,
+                     aContext,
+                     aBytesPerCharacter,
+                     aOffset,
+                     aLength,
+                     aContext.getWorkBuffer( aLength ) );
     }
 
 
@@ -337,7 +366,10 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
             throw new IllegalArgumentException( "aLength" );
         }
         
-        aContext.encode( aEncoder, aBytesPerCharacter, aOffset, aSourceBuffer );
+        aContext.encode( aEncoder,
+                         aBytesPerCharacter,
+                         aOffset,
+                         aSourceBuffer       );
     }
     
     
@@ -358,7 +390,13 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
                               int               aLength,
                               CharSequence      aSourceData         )
     {
-        encodeChars( aEncoder, aContext, aBytesPerCharacter, aOffset, aLength, aSourceData, 0 );
+        encodeChars( aEncoder,
+                     aContext,
+                     aBytesPerCharacter,
+                     aOffset,
+                     aLength,
+                     aSourceData,
+                     0                   );
     }
     
     
@@ -411,7 +449,10 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
         append( myWorkBuffer, aSourceData, aSourceStart, aLength );
         myWorkBuffer.flip();
         
-        aContext.encode( aEncoder, aBytesPerCharacter, aOffset, myWorkBuffer );
+        aContext.encode( aEncoder,
+                         aBytesPerCharacter,
+                         aOffset,
+                         myWorkBuffer        );
     }
     
     
@@ -437,7 +478,13 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
             throw new IllegalArgumentException( "aSourceData" );
         }
 
-        encodeChars( aEncoder, aContext, aBytesPerCharacter, aOffset, aLength, aSourceData, 0 );
+        encodeChars( aEncoder,
+                     aContext,
+                     aBytesPerCharacter,
+                     aOffset,
+                     aLength,
+                     aSourceData,
+                     0                   );
     }
     
     
@@ -490,7 +537,10 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
         myWorkBuffer.put( aSourceData, aSourceStart, aLength );
         myWorkBuffer.flip();
 
-        aContext.encode( aEncoder, aBytesPerCharacter, aOffset, myWorkBuffer );
+        aContext.encode( aEncoder,
+                         aBytesPerCharacter,
+                         aOffset,
+                         myWorkBuffer        );
     }
     
     
@@ -501,10 +551,7 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
     //
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#isNumericDisplayBlank(com.xylocore.commons.data.copybook.spi.Context, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public boolean isNumericDisplayBlank( CopybookContext   aContext,
                                           int               aOffset,
                                           int               aDigits,
@@ -521,10 +568,7 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#blankNumericDisplay(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public void blankNumericDisplay( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aDigits,
@@ -544,161 +588,172 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int)
-     */
+    @Override
     public void decodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength   )
     {
-        decodeChars( displayDecoder, aContext, 1, aOffset, aLength );
+        decodeChars( displayDecoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength         );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.nio.CharBuffer)
-     */
+    @Override
     public void decodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength,
                                     CharBuffer        aTargetBuffer )
     {
-        decodeChars( displayDecoder, aContext, 1, aOffset, aLength, aTargetBuffer );
+        decodeChars( displayDecoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength,
+                     aTargetBuffer   );
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[])
-     */
+    @Override
     public void decodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength,
                                     char[]            aTargetData )
     {
-        decodeChars( displayDecoder, aContext, 1, aOffset, aLength, aTargetData );
+        decodeChars( displayDecoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength,
+                     aTargetData     );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[], int)
-     */
+    @Override
     public void decodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength,
                                     char[]            aTargetData,
                                     int               aTargetStart )
     {
-        decodeChars( displayDecoder, aContext, 1, aOffset, aLength, aTargetData, aTargetStart );
+        decodeChars( displayDecoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength,
+                     aTargetData,
+                     aTargetStart    );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int)
-     */
+    @Override
     public void encodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength   )
     {
-        encodeChars( displayEncoder, aContext, 1, aOffset, aLength );
+        encodeChars( displayEncoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength         );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.nio.CharBuffer)
-     */
+    @Override
     public void encodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength,
                                     CharBuffer        aSourceBuffer )
     {
-        encodeChars( displayEncoder, aContext, 1, aOffset, aLength, aSourceBuffer );
+        encodeChars( displayEncoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength,
+                     aSourceBuffer   );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.lang.CharSequence)
-     */
+    @Override
     public void encodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength,
                                     CharSequence      aSourceData )
     {
-        encodeChars( displayEncoder, aContext, 1, aOffset, aLength, aSourceData );
+        encodeChars( displayEncoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength,
+                     aSourceData     );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.lang.CharSequence, int)
-     */
+    @Override
     public void encodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength,
                                     CharSequence      aSourceData,
                                     int               aSourceStart )
     {
-        encodeChars( displayEncoder, aContext, 1, aOffset, aLength, aSourceData, aSourceStart );
+        encodeChars( displayEncoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength,
+                     aSourceData,
+                     aSourceStart    );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[])
-     */
+    @Override
     public void encodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength,
                                     char[]            aSourceData )
     {
-        encodeChars( displayEncoder, aContext, 1, aOffset, aLength, aSourceData );
+        encodeChars( displayEncoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength,
+                     aSourceData     );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDisplayChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[], int)
-     */
+    @Override
     public void encodeDisplayChars( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aLength,
                                     char[]            aSourceData,
                                     int               aSourceStart )
     {
-        encodeChars( displayEncoder, aContext, 1, aOffset, aLength, aSourceData, aSourceStart );
+        encodeChars( displayEncoder,
+                     aContext,
+                     1,
+                     aOffset,
+                     aLength,
+                     aSourceData,
+                     aSourceStart    );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#isNumericDbcsBlank(com.xylocore.commons.data.copybook.spi.Context, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public boolean isNumericDbcsBlank( CopybookContext   aContext,
                                        int               aOffset,
                                        int               aDigits,
                                        SignType          aSignType,
                                        SignPosition      aSignPosition )
     {
-//        int myLength = aDigits;
-//        if ( aSignType == SignType.Separate )
-//        {
-//            myLength++;
-//        }
-        
-        return isDbcsCharsBlank( aContext, aOffset, aDigits );
+        return isDbcsCharsBlank( aContext,
+                                 aOffset,
+                                 aDigits   );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#blankNumericDbcs(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public void blankNumericDbcs( CopybookContext   aContext,
                                   int               aOffset,
                                   int               aDigits,
@@ -718,161 +773,172 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int)
-     */
+    @Override
     public void decodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength   )
     {
-        decodeChars( dbcsDecoder, aContext, 2, aOffset, aLength );
+        decodeChars( dbcsDecoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength      );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.nio.CharBuffer)
-     */
+    @Override
     public void decodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength,
                                  CharBuffer        aTargetBuffer )
     {
-        decodeChars( dbcsDecoder, aContext, 2, aOffset, aLength, aTargetBuffer );
+        decodeChars( dbcsDecoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aTargetBuffer );
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[])
-     */
+    @Override
     public void decodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength,
                                  char[]            aTargetData )
     {
-        decodeChars( dbcsDecoder, aContext, 2, aOffset, aLength, aTargetData );
+        decodeChars( dbcsDecoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aTargetData  );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[], int)
-     */
+    @Override
     public void decodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength,
                                  char[]            aTargetData,
                                  int               aTargetStart )
     {
-        decodeChars( dbcsDecoder, aContext, 2, aOffset, aLength, aTargetData, aTargetStart );
+        decodeChars( dbcsDecoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aTargetData,
+                     aTargetStart );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int)
-     */
+    @Override
     public void encodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength   )
     {
-        encodeChars( dbcsEncoder, aContext, 2, aOffset, aLength );
+        encodeChars( dbcsEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength      );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.nio.CharBuffer)
-     */
+    @Override
     public void encodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength,
                                  CharBuffer        aSourceBuffer )
     {
-        encodeChars( dbcsEncoder, aContext, 2, aOffset, aLength, aSourceBuffer );
+        encodeChars( dbcsEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceBuffer );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.lang.CharSequence)
-     */
+    @Override
     public void encodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength,
                                  CharSequence      aSourceData )
     {
-        encodeChars( dbcsEncoder, aContext, 2, aOffset, aLength, aSourceData );
+        encodeChars( dbcsEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceData  );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.lang.CharSequence, int)
-     */
+    @Override
     public void encodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength,
                                  CharSequence      aSourceData,
                                  int               aSourceStart )
     {
-        encodeChars( dbcsEncoder, aContext, 2, aOffset, aLength, aSourceData, aSourceStart );
+        encodeChars( dbcsEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceData,
+                     aSourceStart );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[])
-     */
+    @Override
     public void encodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength,
                                  char[]            aSourceData )
     {
-        encodeChars( dbcsEncoder, aContext, 2, aOffset, aLength, aSourceData );
+        encodeChars( dbcsEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceData  );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeDbcsChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[], int)
-     */
+    @Override
     public void encodeDbcsChars( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aLength,
                                  char[]            aSourceData,
                                  int               aSourceStart )
     {
-        encodeChars( dbcsEncoder, aContext, 2, aOffset, aLength, aSourceData, aSourceStart );
+        encodeChars( dbcsEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceData,
+                     aSourceStart );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#isNumericNationalBlank(com.xylocore.commons.data.copybook.spi.Context, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public boolean isNumericNationalBlank( CopybookContext   aContext,
                                            int               aOffset,
                                            int               aDigits,
                                            SignType          aSignType,
                                            SignPosition      aSignPosition )
     {
-//        int myLength = aDigits;
-//        if ( aSignType == SignType.Separate )
-//        {
-//            myLength++;
-//        }
-        
-        return isNationalCharsBlank( aContext, aOffset, aDigits );
+        return isNationalCharsBlank( aContext,
+                                     aOffset,
+                                     aDigits   );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#blankNumericNational(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition)
-     */
+    @Override
     public void blankNumericNational( CopybookContext   aContext,
                                       int               aOffset,
                                       int               aDigits,
@@ -892,133 +958,154 @@ public abstract class AbstractCharsetBasedPlatformDataBehavior
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int)
-     */
+    @Override
     public void decodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength   )
     {
-        decodeChars( nationalDecoder, aContext, 2, aOffset, aLength );
+        decodeChars( nationalDecoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength          );
     }
     
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.nio.CharBuffer)
-     */
+    @Override
     public void decodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength,
                                      CharBuffer        aTargetBuffer )
     {
-        decodeChars( nationalDecoder, aContext, 2, aOffset, aLength, aTargetBuffer );
+        decodeChars( nationalDecoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aTargetBuffer    );
     }
 
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[])
-     */
+    @Override
     public void decodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength,
                                      char[]            aTargetData )
     {
-        decodeChars( nationalDecoder, aContext, 2, aOffset, aLength, aTargetData );
+        decodeChars( nationalDecoder,
+                     aContext,
+                     2, 
+                     aOffset,
+                     aLength,
+                     aTargetData      );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#decodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[], int)
-     */
+    @Override
     public void decodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength,
                                      char[]            aTargetData,
                                      int               aTargetStart )
     {
-        decodeChars( nationalDecoder, aContext, 2, aOffset, aLength, aTargetData, aTargetStart );
+        decodeChars( nationalDecoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aTargetData,
+                     aTargetStart     );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int)
-     */
+    @Override
     public void encodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength   )
     {
-        encodeChars( nationalEncoder, aContext, 2, aOffset, aLength );
+        encodeChars( nationalEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength          );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.nio.CharBuffer)
-     */
+    @Override
     public void encodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength,
                                      CharBuffer        aSourceBuffer )
     {
-        encodeChars( nationalEncoder, aContext, 2, aOffset, aLength, aSourceBuffer );
+        encodeChars( nationalEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceBuffer    );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.lang.CharSequence)
-     */
+    @Override
     public void encodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength,
                                      CharSequence      aSourceData )
     {
-        encodeChars( nationalEncoder, aContext, 2, aOffset, aLength, aSourceData );
+        encodeChars( nationalEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceData      );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int, java.lang.CharSequence, int)
-     */
+    @Override
     public void encodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength,
                                      CharSequence      aSourceData,
                                      int               aSourceStart )
     {
-        encodeChars( nationalEncoder, aContext, 2, aOffset, aLength, aSourceData, aSourceStart );
+        encodeChars( nationalEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceData,
+                     aSourceStart     );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[])
-     */
+    @Override
     public void encodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength,
                                      char[]            aSourceData )
     {
-        encodeChars( nationalEncoder, aContext, 2, aOffset, aLength, aSourceData );
+        encodeChars( nationalEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceData      );
     }
     
     
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.spi.PlatformDataBehavior#encodeNationalChars(com.xylocore.commons.data.copybook.spi.Context, int, int, char[], int)
-     */
+    @Override
     public void encodeNationalChars( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aLength,
                                      char[]            aSourceData,
                                      int               aSourceStart )
     {
-        encodeChars( nationalEncoder, aContext, 2, aOffset, aLength, aSourceData, aSourceStart );
+        encodeChars( nationalEncoder,
+                     aContext,
+                     2,
+                     aOffset,
+                     aLength,
+                     aSourceData,
+                     aSourceStart     );
     }
 }

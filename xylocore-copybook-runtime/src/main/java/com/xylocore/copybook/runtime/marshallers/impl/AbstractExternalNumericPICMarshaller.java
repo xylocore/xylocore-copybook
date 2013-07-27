@@ -459,10 +459,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     //
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsByte(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public boolean isValidAsByte( CopybookContext   aContext,
                                   int               aOffset,
                                   int               aDigits,
@@ -478,15 +475,12 @@ public abstract class AbstractExternalNumericPICMarshaller
                             aSignPosition,
                             aPrecision,
                             aScalingPosition,
-                            ((long) Byte.MIN_VALUE) & 0xff,
-                            ((long) Byte.MAX_VALUE) & 0xff  );
+                            Byte.MIN_VALUE,
+                            Byte.MAX_VALUE    );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsByte(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public byte decodeAsByte( CopybookContext   aContext,
                               int               aOffset,
                               int               aDigits,
@@ -510,10 +504,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsByte(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, byte, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public void encodeAsByte( CopybookContext   aContext,
                               int               aOffset,
                               byte              aValue,
@@ -525,7 +516,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     {
         encodeAsLong( aContext,
                       aOffset,
-                      ((long) aValue) & 0xff,
+                      aValue & 0xff,
                       aDigits,
                       aSignType,
                       aSignPosition,
@@ -534,10 +525,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsChar(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public boolean isValidAsChar( CopybookContext   aContext,
                                   int               aOffset,
                                   int               aDigits,
@@ -553,15 +541,12 @@ public abstract class AbstractExternalNumericPICMarshaller
                             aSignPosition,
                             aPrecision,
                             aScalingPosition,
-                            ((long) Character.MIN_VALUE) & 0xffff,
-                            ((long) Character.MAX_VALUE) & 0xffff  );
+                            Character.MIN_VALUE & 0xffff,
+                            Character.MAX_VALUE & 0xffff  );
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsChar(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public char decodeAsChar( CopybookContext   aContext,
                               int               aOffset,
                               int               aDigits,
@@ -585,10 +570,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsChar(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, char, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public void encodeAsChar( CopybookContext   aContext,
                               int               aOffset,
                               char              aValue,
@@ -600,7 +582,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     {
         encodeAsLong( aContext,
                       aOffset,
-                      ((long) aValue) & 0xffff,
+                      aValue & 0xffff,
                       aDigits,
                       aSignType,
                       aSignPosition,
@@ -609,10 +591,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsShort(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public boolean isValidAsShort( CopybookContext   aContext,
                                    int               aOffset,
                                    int               aDigits,
@@ -633,10 +612,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsShort(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public short decodeAsShort( CopybookContext   aContext,
                                 int               aOffset,
                                 int               aDigits,
@@ -660,10 +636,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsShort(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, short, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public void encodeAsShort( CopybookContext   aContext,
                                int               aOffset,
                                short             aValue,
@@ -684,10 +657,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public boolean isValidAsInteger( CopybookContext   aContext,
                                      int               aOffset,
                                      int               aDigits,
@@ -708,10 +678,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public int decodeAsInteger( CopybookContext   aContext,
                                 int               aOffset,
                                 int               aDigits,
@@ -735,10 +702,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public void encodeAsInteger( CopybookContext   aContext,
                                  int               aOffset,
                                  int               aValue,
@@ -759,10 +723,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsLong(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public boolean isValidAsLong( CopybookContext   aContext,
                                   int               aOffset,
                                   int               aDigits,
@@ -783,10 +744,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsLong(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public abstract long decodeAsLong( CopybookContext   aContext,
                                        int               aOffset,
                                        int               aDigits,
@@ -796,10 +754,7 @@ public abstract class AbstractExternalNumericPICMarshaller
                                        int               aScalingPosition );
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsLong(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, long, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public abstract void encodeAsLong( CopybookContext   aContext,
                                        int               aOffset,
                                        long              aValue,
@@ -810,10 +765,7 @@ public abstract class AbstractExternalNumericPICMarshaller
                                        int               aScalingPosition );
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsFloat(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public boolean isValidAsFloat( CopybookContext   aContext,
                                    int               aOffset,
                                    int               aDigits,
@@ -826,10 +778,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsFloat(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public float decodeAsFloat( CopybookContext   aContext,
                                 int               aOffset,
                                 int               aDigits,
@@ -848,10 +797,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsFloat(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, float, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public void encodeAsFloat( CopybookContext   aContext,
                                int               aOffset,
                                float             aValue,
@@ -872,10 +818,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsDouble(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public boolean isValidAsDouble( CopybookContext   aContext,
                                     int               aOffset,
                                     int               aDigits,
@@ -888,10 +831,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsDouble(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public double decodeAsDouble( CopybookContext   aContext,
                                   int               aOffset,
                                   int               aDigits,
@@ -916,10 +856,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsDouble(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, double, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int)
-     */
+    @Override
     public void encodeAsDouble( CopybookContext   aContext,
                                 int               aOffset,
                                 double            aValue,
@@ -946,10 +883,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsBigInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public boolean isValidAsBigInteger( CopybookContext            aContext,
                                         int                        aOffset,
                                         int                        aDigits,
@@ -996,10 +930,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsBigInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public BigInteger decodeAsBigInteger( CopybookContext            aContext,
                                           int                        aOffset,
                                           int                        aDigits,
@@ -1040,10 +971,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsBigInteger(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.math.BigInteger, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public void encodeAsBigInteger( CopybookContext            aContext,
                                     int                        aOffset,
                                     BigInteger                 aValue,
@@ -1088,10 +1016,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsBigDecimal(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public boolean isValidAsBigDecimal( CopybookContext            aContext,
                                         int                        aOffset,
                                         int                        aDigits,
@@ -1143,10 +1068,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsBigDecimal(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public BigDecimal decodeAsBigDecimal( CopybookContext            aContext,
                                           int                        aOffset,
                                           int                        aDigits,
@@ -1192,10 +1114,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsBigDecimal(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.math.BigDecimal, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public void encodeAsBigDecimal( CopybookContext            aContext,
                                     int                        aOffset,
                                     BigDecimal                 aValue,
@@ -1240,10 +1159,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsString(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public boolean isValidAsString( CopybookContext            aContext,
                                     int                        aOffset,
                                     int                        aDigits,
@@ -1289,10 +1205,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsString(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public String decodeAsString( CopybookContext            aContext,
                                   int                        aOffset,
                                   int                        aDigits,
@@ -1372,10 +1285,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsString(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.lang.String, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public void encodeAsString( CopybookContext            aContext,
                                 int                        aOffset,
                                 String                     aValue,
@@ -1430,10 +1340,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#isValidAsDate(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.converters.Converter, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public boolean isValidAsDate( CopybookContext            aContext,
                                   int                        aOffset,
                                   int                        aDigits,
@@ -1486,10 +1393,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#decodeAsDate(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.converters.Converter, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public Date decodeAsDate( CopybookContext            aContext,
                               int                        aOffset,
                               int                        aDigits,
@@ -1529,11 +1433,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
 
-
-    /*
-     * (non-Javadoc)
-     * @see com.xylocore.commons.data.copybook.runtime.marshallers.ExternalNumericPICMarshaller#encodeAsDate(com.xylocore.commons.data.copybook.runtime.CopybookContext, int, java.util.Date, int, com.xylocore.commons.data.copybook.runtime.SignType, com.xylocore.commons.data.copybook.runtime.SignPosition, int, int, com.xylocore.commons.data.copybook.runtime.converters.Converter, com.xylocore.commons.data.copybook.runtime.nulleq.NullEquivalentStrategy[])
-     */
+    @Override
     public void encodeAsDate( CopybookContext            aContext,
                               int                        aOffset,
                               Date                       aValue,
@@ -1575,21 +1475,7 @@ public abstract class AbstractExternalNumericPICMarshaller
     }
 
     
-    /**
-     * FILLIN
-     *
-     * @param       aContext
-     * @param       aOffset
-     * @param       aConditionName
-     * @param       aConditionNameValueMappings
-     * @param       aDigits
-     * @param       aSignType
-     * @param       aSignPosition
-     * @param       aPrecision
-     * @param       aScalingPosition
-     * 
-     * @return
-     */
+    @Override
     public boolean isConditionNameValid( CopybookContext               aContext,                   
                                          int                           aOffset,                    
                                          String                        aConditionName,             
