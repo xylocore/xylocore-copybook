@@ -40,11 +40,11 @@ public class SimpleDateFormatDateConverterEmitter
     public void emitDeclaration( BufferEmitter                   aEmitter,
                                  SimpleDateFormatDateConverter   aConverter )
     {
-        aEmitter.append( "new "                  )
-                .append( getClass().getName()    )
-                .append( "( \""                  )
-                .append( aConverter.getPattern() )
-                .append( "\" )"                  )
+        aEmitter.append( "new "                          )
+                .append( aConverter.getClass().getName() )
+                .append( "( \""                          )
+                .append( aConverter.getPattern()         )
+                .append( "\" )"                          )
                 ;
     }
 }

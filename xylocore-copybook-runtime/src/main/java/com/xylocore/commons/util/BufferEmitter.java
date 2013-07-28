@@ -144,6 +144,21 @@ public class BufferEmitter
         return this;
     }
     
+
+    /**
+     * FILLIN
+     * 
+     * @param       aChar
+     * 
+     * @return
+     */
+    public BufferEmitter append( char aChar )
+    {
+        buffer.append( aChar );
+        
+        return this;
+    }
+    
     
     /**
      * FILLIN

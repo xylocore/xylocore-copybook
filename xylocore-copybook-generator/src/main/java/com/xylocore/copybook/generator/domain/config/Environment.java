@@ -18,8 +18,7 @@ package com.xylocore.copybook.generator.domain.config;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
+import com.xylocore.commons.util.JavaLanguageHelper;
 import com.xylocore.copybook.runtime.CopybookContext;
 import com.xylocore.copybook.runtime.DataType;
 
@@ -120,22 +119,6 @@ public class Environment
     /**
      * FILLIN
      * 
-     * @param       aPackageName
-     */
-    public void setPackageName( String aPackageName )
-    {
-        if ( aPackageName == null )
-        {
-            aPackageName = "";
-        }
-        
-        packageName = aPackageName;
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
      * @return
      */
     public String getClassName()
@@ -151,34 +134,32 @@ public class Environment
      */
     public void setClassName( String aClassName )
     {
-        if ( StringUtils.isNotEmpty( aClassName ) )
+        if ( aClassName != null )
         {
+            if ( ! JavaLanguageHelper.isJavaClassName( aClassName ) )
+            {
+                throw new IllegalArgumentException( "invalid class name (" + aClassName + ")" );
+            }
+            
             int myEndOfPackageIndex = aClassName.lastIndexOf( '.' );
             if ( myEndOfPackageIndex != -1 )
             {
-                String myPackageName = aClassName.substring( 0, myEndOfPackageIndex );
-                
-                aClassName = aClassName.substring( myEndOfPackageIndex+1 );
-                if ( StringUtils.isEmpty( aClassName ) )
-                {
-                    throw new IllegalArgumentException( "a class name cannot end with a period" );
-                }
-                
-                setPackageName( myPackageName );
-                
-                className = aClassName;
+                packageName = aClassName.substring( 0, myEndOfPackageIndex );
+                className   = aClassName.substring( myEndOfPackageIndex+1 );
             }
             else
             {
-                className = aClassName;
+                packageName = "";
+                className   = aClassName;
             }
         }
         else
         {
-            className = null;
+            packageName = null;
+            className   = null;
         }
     }
-
+    
     
     /**
      * FILLIN

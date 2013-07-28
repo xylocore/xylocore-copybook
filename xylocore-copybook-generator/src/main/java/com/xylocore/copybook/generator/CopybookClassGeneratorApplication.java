@@ -70,11 +70,10 @@ public class CopybookClassGeneratorApplication
     @Override
     protected void buildOptions( Options aOptions )
     {
-        aOptions.addOption( "p", "package"    , true, "the package for the generated copybook class" );
-        aOptions.addOption( "c", "class"      , true, "the name of the copybook class"               );
-        aOptions.addOption( "g", "genrootdir" , true, "the generation root directory"                );
-        aOptions.addOption( "m", "metafile"   , true, "the environment metafile filename"            );
-        aOptions.addOption( "i", "implrecname", true, "the implicit record name"                     );
+        aOptions.addOption( "c", "class"      , true, "the name of the copybook class"    );
+        aOptions.addOption( "g", "genrootdir" , true, "the generation root directory"     );
+        aOptions.addOption( "m", "metafile"   , true, "the environment metafile filename" );
+        aOptions.addOption( "i", "implrecname", true, "the implicit record name"          );
     }
                               
     
@@ -84,7 +83,6 @@ public class CopybookClassGeneratorApplication
     {
         cliProperties = new HashMap<>();
 
-        checkOption( aCommandLine, "package"    , EnvironmentConfigurator.PACKAGE_NAME_KEY                  );
         checkOption( aCommandLine, "class"      , EnvironmentConfigurator.CLASS_NAME_KEY                    );
         checkOption( aCommandLine, "genrootdir" , EnvironmentConfigurator.GENERATION_ROOT_DIR_KEY           );
         checkOption( aCommandLine, "metafile"   , EnvironmentConfigurator.ENVIRONMENT_METADATA_FILENAME_KEY );
@@ -103,6 +101,14 @@ public class CopybookClassGeneratorApplication
         }
         
         cliProperties.put( EnvironmentConfigurator.COPYBOOK_FILENAME_KEY, myArgList.get( 0 ) );
+        
+        // Use the current working directory for the generation root directory if a generation root
+        // directory was not specified
+        if ( cliProperties.get( EnvironmentConfigurator.GENERATION_ROOT_DIR_KEY ) == null )
+        {
+            String myCurrentWorkingDirectory = System.getProperty( "user.dir" );
+            cliProperties.put( EnvironmentConfigurator.GENERATION_ROOT_DIR_KEY, myCurrentWorkingDirectory );
+        }
     }
 
 

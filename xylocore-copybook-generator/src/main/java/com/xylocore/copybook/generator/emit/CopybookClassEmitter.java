@@ -281,19 +281,19 @@ public class CopybookClassEmitter
         {
             String myMapSuffix = "Map<String," + ConstantValue.class.getName() + "[]>";
             
-            emitter.clear    (                                                                                   )
-                   .line     ( "//"                                                                              )
-                   .line     ( "// Condition name value mappings"                                                )
-                   .line     ( "//"                                                                              )
-                   .line     (                                                                                   )
-                   .line     (                                                                                   )
-                   .line     ( "private static final java.util.", myMapSuffix, " conditionNameValueMappings;"    )
-                   .line     (                                                                                   )
-                   .line     ( "static"                                                                          )
-                   .line     ( "{"                                                                               )
-                   .line     ( "java.util.", myMapSuffix, " myMappings = new java.util.Hash", myMapSuffix, "();" )
-                   .line     (                                                                                   )
-                   .increment(                                                                                   )
+            emitter.clear    (                                                                                )
+                   .line     ( "//"                                                                           )
+                   .line     ( "// Condition name value mappings"                                             )
+                   .line     ( "//"                                                                           )
+                   .line     (                                                                                )
+                   .line     (                                                                                )
+                   .line     ( "private static final java.util.", myMapSuffix, " conditionNameValueMappings;" )
+                   .line     (                                                                                )
+                   .line     ( "static"                                                                       )
+                   .line     ( "{"                                                                            )
+                   .increment(                                                                                )
+                   .line     ( "java.util.", myMapSuffix, " myMappings = new java.util.HashMap<>();"          )
+                   .line     (                                                                                )
                    ;
 
             for ( ConditionNameValueRanges myConditionNameValueRanges : myConditionNameValueRangesList )
@@ -303,20 +303,20 @@ public class CopybookClassEmitter
                 Element              myParent      = myElement.getParent();
                 PICMarshallerEmitter myEmitter     = getMarshallerEmitter( myParent );
 
-                emitter.line     ( "addConditionNameValueMapping\n"            )
+                emitter.line     ( "addConditionNameValueMapping"              )
                        .line     ( "("                                         )
                        .line1    ( "myMappings,"                               )
                        .line1    ( "\"", myElement.getName(), "\","            )
                        .line1    ( "new ", ConstantValue.class.getName(), "[]" )
                        .line2    ( "{"                                         )
-                       .increment( 2                                           )
+                       .increment( 3                                           )
                        ;
                 
                 for ( Iterator<ValueRange> myValueRangeIterator = myValueRanges.iterator() ; myValueRangeIterator.hasNext() ; )
                 {
                     ValueRange myValueRange = myValueRangeIterator.next();
 
-                    emitter.indent( 1 );
+                    emitter.indent();
                     
                     myEmitter.emitValueRange( emitter, myParent, myValueRange );
                     
@@ -325,8 +325,8 @@ public class CopybookClassEmitter
                            ;
                 }
 
-                emitter.decrement( 2    )
-                       .line     ( "}"  )
+                emitter.decrement( 3    )
+                       .line2    ( "}"  )
                        .line     ( ");" )
                        ;
             }
@@ -509,7 +509,7 @@ public class CopybookClassEmitter
                .line (                                                                              )
                .line ( "public static ", myClassName, " getInstance()"                              )
                .line ( "{"                                                                          )
-               .line1( 1, "return instance;"                                                        )
+               .line1( "return instance;"                                                           )
                .line ( "}"                                                                          )
                .line (                                                                              )
                .line (                                                                              )
@@ -629,18 +629,18 @@ public class CopybookClassEmitter
                 environment.getNameConverter()
                            .generateOffsetMethodName( aElement.getName() );
         
-        emitter.indent(                                                                        )
-               .append( "public int ", myOffsetMethodName, "(", aElement.isOccurs() ? " " : "" )
+        emitter.indent(                                                                                     )
+               .append( "public int ", myOffsetMethodName, "(", aElement.isOccursOrSubordinate() ? " " : "" )
                ;
             
         appendIndexParameterDeclarations( aElement, false );
         
-        emitter.append   ( aElement.isOccurs() ? " " : "", ")" )
-               .newline  (                                     )
-               .line     ( "{"                                 )
-               .increment(                                     )
-               .indent   (                                     )
-               .append   ( "return "                           )
+        emitter.append   ( aElement.isOccursOrSubordinate() ? " " : "", ")" )
+               .newline  (                                                  )
+               .line     ( "{"                                              )
+               .increment(                                                  )
+               .indent   (                                                  )
+               .append   ( "return "                                        )
                ;
         
         IndexOffsets myIndexOffset = new IndexOffsets();

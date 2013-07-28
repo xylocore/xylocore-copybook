@@ -892,6 +892,23 @@ public class Element
     
     /**
      * FILLIN
+     * 
+     * @return
+     */
+    public boolean isOccursOrSubordinate()
+    {
+        boolean myFlag = isOccurs();
+        if ( ! myFlag && parent != null )
+        {
+            myFlag = parent.isOccursOrSubordinate();
+        }
+        
+        return myFlag;
+    }
+    
+    
+    /**
+     * FILLIN
      *
      * @return
      */

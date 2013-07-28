@@ -40,11 +40,11 @@ public class BigDecimalConverterEmitter
     public void emitDeclaration( BufferEmitter         aEmitter,
                                  BigDecimalConverter   aConverter )
     {
-        aEmitter.append( "new "                )
-                .append( getClass().getName()  )
-                .append( "( "                  )
-                .append( aConverter.getScale() )
-                .append( " )"                  )
+        aEmitter.append( "new "                          )
+                .append( aConverter.getClass().getName() )
+                .append( "( "                            )
+                .append( aConverter.getScale()           )
+                .append( " )"                            )
                 ;
     }
 }

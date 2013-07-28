@@ -50,7 +50,37 @@ public class StringValue
      */
     public StringValue( String aValue )
     {
-        int myIndex = aValue.length();
+        char myQuoteChar = aValue.charAt( aValue.length()-1 );
+        assert myQuoteChar == '"' || myQuoteChar == '\'';
+        
+        int myIndex = aValue.indexOf( myQuoteChar );
+        assert myIndex  >= 0;
+        
+//        String myPrefix = ( myIndex > 0 ) ? aValue.substring( 0, myIndex ) : null;
+        
+        aValue = aValue.substring( myIndex+1, aValue.length()-1 );
+        if ( aValue.indexOf( myQuoteChar ) != -1 )
+        {
+            StringBuilder myBuffer = new StringBuilder( aValue.length() );
+            
+            for ( myIndex = 0 ; myIndex < aValue.length() ; myIndex++ )
+            {
+                char myChar = aValue.charAt( myIndex );
+                if ( myChar == myQuoteChar )
+                {
+                    assert aValue.charAt( myIndex+1 ) == myQuoteChar;
+                    myIndex++;
+                }
+                
+                myBuffer.append( myChar );
+            }
+            
+            aValue = myBuffer.toString();
+        }
+        
+        // TODO: process prefix
+        
+        myIndex = aValue.length();
         while ( myIndex > 0 && aValue.charAt( myIndex-1 ) == ' ' )
         {
             myIndex--;

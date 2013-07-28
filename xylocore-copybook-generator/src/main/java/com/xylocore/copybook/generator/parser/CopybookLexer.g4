@@ -209,7 +209,7 @@ mode PIC;
 PICTURE_STRING                  :   PICTURE_FRAGMENT
                                     (   (   ','
                                         |   '.'
-                                        )
+                                        )?
                                         PICTURE_FRAGMENT
                                     )*
                                     -> popMode

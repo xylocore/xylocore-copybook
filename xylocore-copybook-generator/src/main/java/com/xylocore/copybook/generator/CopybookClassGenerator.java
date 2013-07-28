@@ -184,7 +184,8 @@ public class CopybookClassGenerator
         String myGenerationRootDirectoryName = environment.getGenerationRootDirectory();
         if ( myGenerationRootDirectoryName == null )
         {
-            throw new EnvironmentConfigurationException( "a generation root directory cannot be null" );
+            // If a generation root directory has not been specified, use the current directory
+            throw new EnvironmentConfigurationException( "a generation root directory must be specified" );
         }
         
         File myGenerationRootDirectory = new File( myGenerationRootDirectoryName );
@@ -198,7 +199,7 @@ public class CopybookClassGenerator
         {
             throw new EnvironmentConfigurationException( "the specified generation root directory (" +
                                                          myGenerationRootDirectory.getPath()         +
-                                                         ") exists but is not a directory"             );
+                                                         ") is not a directory"                        );
         }
         
         // TODO: implement validation

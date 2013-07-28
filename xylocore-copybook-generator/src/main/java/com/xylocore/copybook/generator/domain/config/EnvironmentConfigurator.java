@@ -39,7 +39,6 @@ public class EnvironmentConfigurator
     //
     
     
-    public static final String  PACKAGE_NAME_KEY                    = "PackageName";
     public static final String  CLASS_NAME_KEY                      = "ClassName";
     public static final String  GENERATION_ROOT_DIR_KEY             = "GenerationRootDir";
     public static final String  ENVIRONMENT_METADATA_FILENAME_KEY   = "EnvMetadataFilename";
@@ -207,7 +206,6 @@ public class EnvironmentConfigurator
         assert aEnvironment != null;
         
         setMetadataFilename       ( aEnvironment );
-        setPackageName            ( aEnvironment );
         setClassName              ( aEnvironment );
         setGenerationRootDirectory( aEnvironment );
         setCopybookFilename       ( aEnvironment );
@@ -228,23 +226,6 @@ public class EnvironmentConfigurator
         if ( myPropertyValue != null )
         {
             aEnvironment.setMetadataFilename( myPropertyValue );
-        }
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aEnvironment
-     */
-    private void setPackageName( Environment aEnvironment )
-    {
-        assert aEnvironment != null;
-        
-        String myPropertyValue = overrideProperties.get( PACKAGE_NAME_KEY );
-        if ( myPropertyValue != null )
-        {
-            aEnvironment.setPackageName( myPropertyValue );
         }
     }
     
