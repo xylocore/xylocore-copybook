@@ -16,6 +16,10 @@
 
 package com.xylocore.copybook.generator.domain.config;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 /**
  * FILLIN
@@ -23,6 +27,8 @@ package com.xylocore.copybook.generator.domain.config;
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY )
+@XmlRootElement ( name = "exclude"       )
 public class ExcludedElementFilterConfig
     extends
         ElementFilterConfig
@@ -31,6 +37,25 @@ public class ExcludedElementFilterConfig
     // Class implementation
     //
     
+    
+    /**
+     * FILLIN
+     */
+    public ExcludedElementFilterConfig()
+    {
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @param       aName
+     */
+    public ExcludedElementFilterConfig( String aName )
+    {
+        super( aName );
+    }
+
     
     @Override
     protected void acceptVisit( ConfigVisitor aVisitor )

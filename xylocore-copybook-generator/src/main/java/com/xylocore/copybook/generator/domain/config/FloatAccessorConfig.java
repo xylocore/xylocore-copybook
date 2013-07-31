@@ -16,6 +16,10 @@
 
 package com.xylocore.copybook.generator.domain.config;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.xylocore.copybook.runtime.DataType;
 
 
@@ -25,6 +29,8 @@ import com.xylocore.copybook.runtime.DataType;
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY  )
+@XmlRootElement ( name = "float-accessor" )
 public class FloatAccessorConfig
     extends
         AccessorConfig

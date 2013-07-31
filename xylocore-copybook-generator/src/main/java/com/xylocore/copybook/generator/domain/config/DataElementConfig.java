@@ -21,6 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
 
 /**
  * FILLIN
@@ -28,6 +34,11 @@ import java.util.Map;
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY            )
+@XmlRootElement ( name      = "data-element"        )
+@XmlType        ( propOrder = { "filters",
+                                "accessors",
+                                "nullEquivalents" } )
 public class DataElementConfig
     extends
         ElementConfig
@@ -54,6 +65,7 @@ public class DataElementConfig
      * 
      * @return
      */
+    @XmlElementRef
     public List<ElementFilterConfig> getFilters()
     {
         return filters;
@@ -97,6 +109,7 @@ public class DataElementConfig
      * 
      * @return
      */
+    @XmlElementRef
     public List<AccessorConfig> getAccessors()
     {
         return accessors;
@@ -140,6 +153,7 @@ public class DataElementConfig
      * 
      * @return
      */
+    @XmlElementRef
     public List<NullEquivalentConfig> getNullEquivalents()
     {
         return nullEquivalents;

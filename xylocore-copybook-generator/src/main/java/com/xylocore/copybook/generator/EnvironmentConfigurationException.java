@@ -14,7 +14,7 @@
 //   limitations under the License.
 //
 
-package com.xylocore.copybook.generator.domain.config;
+package com.xylocore.copybook.generator;
 
 
 /**

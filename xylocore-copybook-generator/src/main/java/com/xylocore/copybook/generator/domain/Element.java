@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import com.xylocore.copybook.generator.domain.config.DefaultNameConverter;
 import com.xylocore.copybook.generator.domain.config.ElementConfig;
 import com.xylocore.copybook.runtime.DataCategory;
 import com.xylocore.copybook.runtime.DataType;
@@ -349,44 +348,6 @@ public class Element
         assert aName != null && aName.length() != 0;
         
         return childrenByName.get( aName );
-    }
-    
-
-    /**
-     * FILLIN
-     *
-     * @param       aElement
-     * @param       aIndent
-     */
-    public static void dump( Element   aElement,
-                             int       aIndent   )
-    {
-        while ( aElement != null )
-        {
-            for ( int i = 0, ci = aIndent*4 ; i < ci ; i++ )
-            {
-                System.out.write( ' ' );
-            }
-
-            String myName     = "";
-            String myBeanName = "";
-
-            if ( aElement instanceof DataElement )
-            {
-                myName     = ((DataElement) aElement).getName();
-                myBeanName = DefaultNameConverter.getInstance().convertToBeanName( myName );
-            }
-            else if ( aElement instanceof FillerElement )
-            {
-                myName = "FILLER";
-            }
-
-            System.out.println( aElement.getLevel() + " " + myName + "   " + myBeanName );
-
-            dump( aElement.getFirstChild(), aIndent+1 );
-
-            aElement = aElement.getNextSibling();
-        }
     }
     
     

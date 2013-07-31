@@ -16,6 +16,10 @@
 
 package com.xylocore.copybook.generator.domain.config;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 
 /**
@@ -24,6 +28,8 @@ package com.xylocore.copybook.generator.domain.config;
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY        )
+@XmlRootElement ( name = "no-default-accessor" )
 public class NoDefaultAccessorConfig
     extends
         AccessorConfig

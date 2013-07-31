@@ -18,6 +18,11 @@ package com.xylocore.copybook.generator.domain.config;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 
 /**
  * FILLIN
@@ -25,7 +30,15 @@ import java.util.Map;
  * @author      Eric R. Medley
  */
 
-public class ElementFilterConfig
+@XmlAccessorType( XmlAccessType.PROPERTY )
+@XmlSeeAlso
+(
+    {
+        IncludedElementFilterConfig.class,
+        ExcludedElementFilterConfig.class
+    }
+)
+public abstract class ElementFilterConfig
     implements
         ConfigEntityDescribable,
         ConfigVisitable
@@ -44,12 +57,32 @@ public class ElementFilterConfig
     // Class implementation
     //
 
+
+    /**
+     * FILLIN
+     */
+    public ElementFilterConfig()
+    {
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @param aName
+     */
+    public ElementFilterConfig( String aName )
+    {
+        setName( aName );
+    }
+    
     
     /**
      * FILLIN
      * 
      * @return
      */
+    @XmlAttribute
     public String getName()
     {
         return name;

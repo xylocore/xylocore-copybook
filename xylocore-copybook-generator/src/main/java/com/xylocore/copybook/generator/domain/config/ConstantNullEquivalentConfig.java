@@ -19,6 +19,11 @@ package com.xylocore.copybook.generator.domain.config;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.xylocore.copybook.runtime.DataUsageCategory;
 
 
@@ -28,6 +33,8 @@ import com.xylocore.copybook.runtime.DataUsageCategory;
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY            )
+@XmlRootElement ( name = "constant-null-equivalent" )
 public class ConstantNullEquivalentConfig
     extends
         NullEquivalentConfig
@@ -53,7 +60,34 @@ public class ConstantNullEquivalentConfig
      */
     public ConstantNullEquivalentConfig()
     {
+        this( null, null );
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @param       aValue
+     */
+    public ConstantNullEquivalentConfig( String aValue )
+    {
+        this( aValue, null );
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @param       aValue
+     * @param       aDataUsageCategory
+     */
+    public ConstantNullEquivalentConfig( String              aValue,
+                                         DataUsageCategory   aDataUsageCategory )
+    {
         super( "ConstantNullEquivalent" );
+        
+        value             = aValue;
+        dataUsageCategory = aDataUsageCategory;
     }
     
     
@@ -62,6 +96,7 @@ public class ConstantNullEquivalentConfig
      * 
      * @return
      */
+    @XmlAttribute( name = "data-usage-category" )
     public DataUsageCategory getDataUsageCategory()
     {
         return dataUsageCategory;
@@ -84,6 +119,7 @@ public class ConstantNullEquivalentConfig
      * 
      * @return
      */
+    @XmlAttribute( name = "value", required = true )
     public String getValue()
     {
         return value;

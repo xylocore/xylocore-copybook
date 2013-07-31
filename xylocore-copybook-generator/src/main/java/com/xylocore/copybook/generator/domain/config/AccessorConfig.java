@@ -19,6 +19,11 @@ package com.xylocore.copybook.generator.domain.config;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
+
 import com.xylocore.copybook.runtime.DataType;
 
 
@@ -28,6 +33,25 @@ import com.xylocore.copybook.runtime.DataType;
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY )
+@XmlSeeAlso
+(
+    {
+        BigDecimalAccessorConfig.class,
+        BigIntegerAccessorConfig.class,
+        ByteAccessorConfig.class,
+        CharAccessorConfig.class,
+        DateAccessorConfig.class,
+        DefaultAccessorConfig.class,
+        DoubleAccessorConfig.class,
+        FloatAccessorConfig.class,
+        IntegerAccessorConfig.class,
+        LongAccessorConfig.class,
+        NoDefaultAccessorConfig.class,
+        ShortAccessorConfig.class,
+        StringAccessorConfig.class
+    }
+)
 public abstract class AccessorConfig
     implements
         ConfigEntityDescribable,
@@ -74,6 +98,7 @@ public abstract class AccessorConfig
      * 
      * @return
      */
+    @XmlTransient
     public DataType getDataType()
     {
         return dataType;
@@ -85,6 +110,7 @@ public abstract class AccessorConfig
      *
      * @return
      */
+    @XmlTransient
     public boolean isDefault()
     {
         return isDefault;

@@ -41,8 +41,8 @@ import org.codehaus.plexus.compiler.util.scan.mapping.SourceMapping;
 import org.codehaus.plexus.compiler.util.scan.mapping.SuffixMapping;
 
 import com.xylocore.copybook.generator.CopybookClassGenerator;
-import com.xylocore.copybook.generator.domain.config.Environment;
-import com.xylocore.copybook.generator.domain.config.EnvironmentConfigurator;
+import com.xylocore.copybook.generator.Environment;
+import com.xylocore.copybook.generator.EnvironmentConfigurator;
 
 //import com.xylocore.commons.data.copybook.generator.CopybookClassGenerator;
 
@@ -322,8 +322,7 @@ public class CopybookMojo
         
         if ( myMetadataFileExists )
         {
-            myCliProperties.put( EnvironmentConfigurator.ENVIRONMENT_METADATA_FILENAME_KEY,
-                                 myMetadataFilename                                         );
+            myCliProperties.put( EnvironmentConfigurator.METADATA_FILENAME_KEY, myMetadataFilename );
         }
         
         getLog().info( "COPYBOOK: processing copybook " + myCopybookPath );

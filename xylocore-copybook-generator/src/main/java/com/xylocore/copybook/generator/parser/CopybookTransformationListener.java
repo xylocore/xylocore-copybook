@@ -27,6 +27,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
+import com.xylocore.copybook.generator.Environment;
 import com.xylocore.copybook.generator.domain.Copybook;
 import com.xylocore.copybook.generator.domain.DataElement;
 import com.xylocore.copybook.generator.domain.Element;
@@ -45,7 +46,6 @@ import com.xylocore.copybook.generator.domain.StringValue;
 import com.xylocore.copybook.generator.domain.Value;
 import com.xylocore.copybook.generator.domain.ValueRange;
 import com.xylocore.copybook.generator.domain.ZeroValue;
-import com.xylocore.copybook.generator.domain.config.Environment;
 import com.xylocore.copybook.generator.parser.CopybookParser.BlankWhenZeroClauseContext;
 import com.xylocore.copybook.generator.parser.CopybookParser.CharacterLiteralContext;
 import com.xylocore.copybook.generator.parser.CopybookParser.ConditionNameEntryContext;
@@ -221,7 +221,7 @@ public class CopybookTransformationListener
             if ( aElement.getLevel() != 1 && aElement.getLevel() != 77 )
             {
                 // Is there an implicit record name available?
-                String myImplicitRecordName = environment.getImplicitRecordName();
+                String myImplicitRecordName = environment.getMetadata().getImplicitRecordName();
                 if ( myImplicitRecordName == null )
                 {
                     // TODO: implicit record information is required whenever the first element is not a record-level element (1 or 77)

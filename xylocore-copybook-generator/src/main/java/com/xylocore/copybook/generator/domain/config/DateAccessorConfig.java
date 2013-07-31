@@ -18,6 +18,11 @@ package com.xylocore.copybook.generator.domain.config;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.xylocore.copybook.runtime.DataType;
 
 
@@ -26,6 +31,9 @@ import com.xylocore.copybook.runtime.DataType;
  * 
  * @author      Eric R. Medley
  */
+
+@XmlAccessorType( XmlAccessType.PROPERTY )
+@XmlRootElement ( name = "date-accessor" )
 public class DateAccessorConfig
     extends
         AccessorConfig
@@ -50,7 +58,16 @@ public class DateAccessorConfig
      */
     public DateAccessorConfig()
     {
+        this( null );
+    }
+    
+    
+    
+    public DateAccessorConfig( String aPattern )
+    {
         super( DataType.Date );
+        
+        pattern = aPattern;
     }
     
 
@@ -59,6 +76,7 @@ public class DateAccessorConfig
      * 
      * @return
      */
+    @XmlAttribute
     public String getPattern()
     {
         return pattern;

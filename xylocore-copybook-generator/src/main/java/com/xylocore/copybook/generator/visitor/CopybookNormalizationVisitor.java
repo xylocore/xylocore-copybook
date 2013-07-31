@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.xylocore.copybook.generator.Environment;
 import com.xylocore.copybook.generator.domain.Copybook;
 import com.xylocore.copybook.generator.domain.DataElement;
 import com.xylocore.copybook.generator.domain.Element;
@@ -34,7 +35,6 @@ import com.xylocore.copybook.generator.domain.PICSlice;
 import com.xylocore.copybook.generator.domain.PICSymbolType;
 import com.xylocore.copybook.generator.domain.StringAccessorMethodInfo;
 import com.xylocore.copybook.generator.domain.Visitor;
-import com.xylocore.copybook.generator.domain.config.Environment;
 import com.xylocore.copybook.generator.pic.AlphabeticPICProcessingStrategy;
 import com.xylocore.copybook.generator.pic.AlphanumericEditedPICProcessingStrategy;
 import com.xylocore.copybook.generator.pic.AlphanumericPICProcessingStrategy;
@@ -264,7 +264,7 @@ public class CopybookNormalizationVisitor
         assert aEnvironment != null;
         
         environment          = aEnvironment;
-        applyMetadataVisitor = new ApplyMetadataToElementVisitor( aEnvironment );
+        applyMetadataVisitor = new ApplyMetadataToElementVisitor( aEnvironment.getMetadata() );
         
         aCopybook.accept( this );
     }
@@ -282,7 +282,7 @@ public class CopybookNormalizationVisitor
         myBuilder.build( aCopybook );
         
         ElementMetadataAssignmentVisitor myAssignmentVisitor = new ElementMetadataAssignmentVisitor();
-        myAssignmentVisitor.assign( environment, aCopybook );
+        myAssignmentVisitor.assign( environment.getMetadata(), aCopybook );
         
         ValidateElementMetadataVisitor myValidateElementMetadataVisitor = new ValidateElementMetadataVisitor();
         myValidateElementMetadataVisitor.validate( aCopybook );
@@ -300,7 +300,9 @@ public class CopybookNormalizationVisitor
         {
             calculateSizeAndOffset( myChild, 0 );
             
-            myChild.setRecordLengthMethodName( environment.getNameConverter().generateRecordLengthMethodName( myChild.getName() ) );
+            myChild.setRecordLengthMethodName( environment.getMetadata()
+                                                          .getNameConverter()
+                                                          .generateRecordLengthMethodName( myChild.getName() ) );
 
             myMaximumRecordLength = Math.max( myMaximumRecordLength, myChild.getSize() );
         }

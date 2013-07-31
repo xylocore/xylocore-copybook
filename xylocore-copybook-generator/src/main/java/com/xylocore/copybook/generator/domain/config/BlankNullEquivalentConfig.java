@@ -17,12 +17,18 @@
 
 package com.xylocore.copybook.generator.domain.config;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * FILLIN
  * 
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY         )
+@XmlRootElement ( name = "blank-null-equivalent" )
 public class BlankNullEquivalentConfig
     extends
         NullEquivalentConfig

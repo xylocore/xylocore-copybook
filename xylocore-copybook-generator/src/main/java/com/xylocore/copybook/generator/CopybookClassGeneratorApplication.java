@@ -26,8 +26,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import com.xylocore.commons.util.AbstractApplication;
-import com.xylocore.copybook.generator.domain.config.Environment;
-import com.xylocore.copybook.generator.domain.config.EnvironmentConfigurator;
 
 
 /**
@@ -83,10 +81,10 @@ public class CopybookClassGeneratorApplication
     {
         cliProperties = new HashMap<>();
 
-        checkOption( aCommandLine, "class"      , EnvironmentConfigurator.CLASS_NAME_KEY                    );
-        checkOption( aCommandLine, "genrootdir" , EnvironmentConfigurator.GENERATION_ROOT_DIR_KEY           );
-        checkOption( aCommandLine, "metafile"   , EnvironmentConfigurator.ENVIRONMENT_METADATA_FILENAME_KEY );
-        checkOption( aCommandLine, "implrecname", EnvironmentConfigurator.IMPLICIT_RECORD_NAME_KEY          );
+        checkOption( aCommandLine, "class"      , EnvironmentConfigurator.CLASS_NAME_KEY           );
+        checkOption( aCommandLine, "genrootdir" , EnvironmentConfigurator.GENERATION_ROOT_DIR_KEY  );
+        checkOption( aCommandLine, "metafile"   , EnvironmentConfigurator.METADATA_FILENAME_KEY    );
+        checkOption( aCommandLine, "implrecname", EnvironmentConfigurator.IMPLICIT_RECORD_NAME_KEY );
         
         @SuppressWarnings( "unchecked" )
         List<String> myArgList = aCommandLine.getArgList();

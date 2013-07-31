@@ -85,7 +85,7 @@
   
   <xs:complexType name="ElementFilter">
     <xs:attribute name="name" type="xs:string" use="required"/>
-  </x:complexType>
+  </xs:complexType>
   
   <xs:complexType name="IncludedElementFilter">
     <xs:complexContent>

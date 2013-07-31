@@ -19,6 +19,11 @@ package com.xylocore.copybook.generator.domain.config;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.xylocore.copybook.runtime.DataType;
 
 
@@ -28,6 +33,8 @@ import com.xylocore.copybook.runtime.DataType;
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY        )
+@XmlRootElement ( name = "big-decimal-accessor" )
 public class BigDecimalAccessorConfig
     extends
         AccessorConfig
@@ -52,9 +59,20 @@ public class BigDecimalAccessorConfig
      */
     public BigDecimalAccessorConfig()
     {
+        this( 0 );
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @param       aScale
+     */
+    public BigDecimalAccessorConfig( int aScale )
+    {
         super( DataType.BigDecimal );
         
-        scale = 0;
+        scale = aScale;
     }
     
     
@@ -63,6 +81,7 @@ public class BigDecimalAccessorConfig
      * 
      * @return
      */
+    @XmlAttribute
     public int getScale()
     {
         return scale;

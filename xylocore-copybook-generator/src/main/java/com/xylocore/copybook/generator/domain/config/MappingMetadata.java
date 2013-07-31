@@ -20,6 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlType;
+
 
 /**
  * FILLIN
@@ -27,6 +32,8 @@ import java.util.Map;
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY     )
+@XmlType        ( propOrder = { "elements" } )
 public class MappingMetadata
     implements
         ConfigEntityDescribable,
@@ -52,6 +59,7 @@ public class MappingMetadata
      * 
      * @return
      */
+    @XmlElementRef
     public List<ElementConfig> getElements()
     {
         return elements;

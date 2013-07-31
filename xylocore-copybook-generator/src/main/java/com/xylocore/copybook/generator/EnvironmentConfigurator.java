@@ -14,7 +14,7 @@
 //   limitations under the License.
 //
 
-package com.xylocore.copybook.generator.domain.config;
+package com.xylocore.copybook.generator;
 
 import java.io.File;
 import java.util.Collections;
@@ -23,7 +23,8 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.xylocore.copybook.generator.domain.config.parser.EnvironmentMetadataMarshallingStrategy;
+import com.xylocore.copybook.generator.domain.config.Metadata;
+import com.xylocore.copybook.generator.domain.config.parser.MetadataMarshallingStrategy;
 
 
 /**
@@ -39,13 +40,13 @@ public class EnvironmentConfigurator
     //
     
     
-    public static final String  CLASS_NAME_KEY                      = "ClassName";
-    public static final String  GENERATION_ROOT_DIR_KEY             = "GenerationRootDir";
-    public static final String  ENVIRONMENT_METADATA_FILENAME_KEY   = "EnvMetadataFilename";
-    public static final String  COPYBOOK_FILENAME_KEY               = "CopybookFilename";
-    public static final String  IMPLICIT_RECORD_NAME_KEY            = "ImplicitRecordName";
+    public static final String  CLASS_NAME_KEY              = "ClassName";
+    public static final String  GENERATION_ROOT_DIR_KEY     = "GenerationRootDir";
+    public static final String  METADATA_FILENAME_KEY       = "MetadataFilename";
+    public static final String  COPYBOOK_FILENAME_KEY       = "CopybookFilename";
+    public static final String  IMPLICIT_RECORD_NAME_KEY    = "ImplicitRecordName";
 
-    private Map<String,String>  overrideProperties                  = new HashMap<>();;
+    private Map<String,String>  overrideProperties          = new HashMap<>();;
     
     
     
@@ -129,24 +130,8 @@ public class EnvironmentConfigurator
      */
     public Environment configure()
     {
-        Environment myEnvironment;
-
-        String myMetadataFilename = overrideProperties.get( ENVIRONMENT_METADATA_FILENAME_KEY );
-        if ( myMetadataFilename != null )
-        {
-            if ( StringUtils.isBlank( myMetadataFilename ) )
-            {
-                throw new EnvironmentConfigurationException( "the environment metadata filename cannot be empty or blank" );
-            }
-            
-            myEnvironment = configure( myMetadataFilename );
-        }
-        else
-        {
-            myEnvironment = new Environment();
-            
-            applyOverrides( myEnvironment );
-        }
+        String      myMetadataFilename = overrideProperties.get( METADATA_FILENAME_KEY );
+        Environment myEnvironment      = configure( myMetadataFilename );
         
         return myEnvironment;
     }
@@ -161,12 +146,19 @@ public class EnvironmentConfigurator
      */
     public Environment configure( String aFilename )
     {
-        if ( StringUtils.isBlank( aFilename ) )
+        File myFile = null;
+        
+        if ( aFilename != null )
         {
-            throw new EnvironmentConfigurationException( "the environment metadata filename cannot be null, empty, or blank" );
+            if ( StringUtils.isBlank( aFilename ) )
+            {
+                throw new EnvironmentConfigurationException( "the copybook metadata filename cannot be empty or blank" );
+            }
+            
+            myFile = new File( aFilename );
         }
         
-        return configure( new File( aFilename ) );
+        return configure( myFile );
     }
     
     
@@ -179,7 +171,18 @@ public class EnvironmentConfigurator
      */
     public Environment configure( File aFile )
     {
-        Environment myEnvironment = EnvironmentMetadataMarshallingStrategy.getInstance().unmarshal( aFile );
+        Metadata myMetadata;
+        
+        if ( aFile != null )
+        {
+            myMetadata = MetadataMarshallingStrategy.getInstance().unmarshal( aFile );
+        }
+        else
+        {
+            myMetadata = new Metadata();
+        }
+        
+        Environment myEnvironment = new Environment( myMetadata );
         
         applyOverrides( myEnvironment );
         
@@ -205,45 +208,10 @@ public class EnvironmentConfigurator
     {
         assert aEnvironment != null;
         
-        setMetadataFilename       ( aEnvironment );
-        setClassName              ( aEnvironment );
         setGenerationRootDirectory( aEnvironment );
+        setClassName              ( aEnvironment );
         setCopybookFilename       ( aEnvironment );
         setImplicitRecordName     ( aEnvironment );
-    }
-    
-
-    /**
-     * FILLIN
-     *
-     * @param       aEnvironment
-     */
-    private void setMetadataFilename( Environment aEnvironment )
-    {
-        assert aEnvironment != null;
-        
-        String myPropertyValue = overrideProperties.get( ENVIRONMENT_METADATA_FILENAME_KEY );
-        if ( myPropertyValue != null )
-        {
-            aEnvironment.setMetadataFilename( myPropertyValue );
-        }
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aEnvironment
-     */
-    private void setClassName( Environment aEnvironment )
-    {
-        assert aEnvironment != null;
-        
-        String myPropertyValue = overrideProperties.get( CLASS_NAME_KEY );
-        if ( myPropertyValue != null )
-        {
-            aEnvironment.setClassName( myPropertyValue );
-        }
     }
     
     
@@ -269,6 +237,23 @@ public class EnvironmentConfigurator
      * 
      * @param       aEnvironment
      */
+    private void setClassName( Environment aEnvironment )
+    {
+        assert aEnvironment != null;
+        
+        String myPropertyValue = overrideProperties.get( CLASS_NAME_KEY );
+        if ( myPropertyValue != null )
+        {
+            aEnvironment.getMetadata().setClassName( myPropertyValue );
+        }
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @param       aEnvironment
+     */
     private void setCopybookFilename( Environment aEnvironment )
     {
         assert aEnvironment != null;
@@ -276,7 +261,7 @@ public class EnvironmentConfigurator
         String myPropertyValue = overrideProperties.get( COPYBOOK_FILENAME_KEY );
         if ( myPropertyValue != null )
         {
-            aEnvironment.setCopybookFilename( myPropertyValue );
+            aEnvironment.getMetadata().setCopybookFilename( myPropertyValue );
         }
     }
     
@@ -293,7 +278,7 @@ public class EnvironmentConfigurator
         String myPropertyValue = overrideProperties.get( IMPLICIT_RECORD_NAME_KEY );
         if ( myPropertyValue != null )
         {
-            aEnvironment.setImplicitRecordName( myPropertyValue );
+            aEnvironment.getMetadata().setImplicitRecordName( myPropertyValue );
         }
     }
 }

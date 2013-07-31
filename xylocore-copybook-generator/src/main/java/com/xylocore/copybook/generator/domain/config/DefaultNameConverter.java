@@ -32,38 +32,8 @@ public class DefaultNameConverter
         NameConverter
 {
     //
-    // Members
-    //
-    
-    
-    private static final NameConverter instance = new DefaultNameConverter();
-    
-    
-    
-    
-    //
     // Class implementation
     //
-    
-    
-    
-    /**
-     * Private constructor as per singleton pattern.
-     */
-    private DefaultNameConverter()
-    {
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @return
-     */
-    public static NameConverter getInstance()
-    {
-        return instance;
-    }
     
     
     /**

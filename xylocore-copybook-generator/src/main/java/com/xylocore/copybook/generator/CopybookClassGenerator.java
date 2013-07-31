@@ -25,13 +25,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.xylocore.copybook.generator.domain.Copybook;
 import com.xylocore.copybook.generator.domain.DataElement;
 import com.xylocore.copybook.generator.domain.Element;
-import com.xylocore.copybook.generator.domain.config.Environment;
-import com.xylocore.copybook.generator.domain.config.EnvironmentConfigurationException;
+import com.xylocore.copybook.generator.domain.config.Metadata;
 import com.xylocore.copybook.generator.emit.CopybookClassEmitter;
 import com.xylocore.copybook.generator.parser.CopybookProcessor;
 import com.xylocore.copybook.generator.visitor.CopybookNormalizationVisitor;
@@ -87,7 +87,7 @@ public class CopybookClassGenerator
     {
         if ( aEnvironment == null )
         {
-            throw new IllegalArgumentException( "a environment must be specified" );
+            throw new IllegalArgumentException( "an environment must be specified" );
         }
         
         environment = aEnvironment;
@@ -104,10 +104,11 @@ public class CopybookClassGenerator
         try
         {
             processCopybook();
-            
-            String myPackageName             = environment.getPackageName();
-            String myClassName               = environment.getClassName();
-            File   myGenerationRootDirectory = new File( environment.getGenerationRootDirectory() );
+
+            Metadata myMetadata = environment.getMetadata();
+            String   myPackageName             = ClassUtils.getPackageName( myMetadata.getClassName() );
+            String   myClassName               = ClassUtils.getShortClassName( myMetadata.getClassName() );
+            File     myGenerationRootDirectory = new File( environment.getGenerationRootDirectory() );
             
             File myOutputDirectory =
                     StringUtils.isNotEmpty( myPackageName )

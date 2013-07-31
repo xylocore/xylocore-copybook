@@ -14,14 +14,20 @@
 //   limitations under the License.
 //
 
+
 package com.xylocore.copybook.generator.domain.config;
 
 import java.util.Map;
 
-import com.xylocore.commons.util.JavaLanguageHelper;
-import com.xylocore.copybook.runtime.CopybookContext;
-import com.xylocore.copybook.runtime.DataType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
+import com.xylocore.copybook.generator.EnvironmentConfigurationException;
+import com.xylocore.copybook.runtime.DataType;
 
 
 /**
@@ -30,7 +36,17 @@ import com.xylocore.copybook.runtime.DataType;
  * @author      Eric R. Medley
  */
 
-public class Environment
+@XmlAccessorType( XmlAccessType.PROPERTY                          )
+@XmlRootElement ( name      = "metadata"                          )
+@XmlType        ( propOrder = { "copybookFilename",
+                                "className",
+                                "implicitRecordName",
+                                "minimumIntegerDataType",
+                                "minimumFloatingPointDataType",
+                                "rightMarginLimit",
+                                "nameConverterClassName",
+                  		        "mappingMetadata"               } )
+public class Metadata
     implements
         ConfigEntityDescribable,
         ConfigVisitable
@@ -40,18 +56,29 @@ public class Environment
     //
     
     
-    private String              metadataFilename;
     private String              copybookFilename;
-    private String              packageName;
     private String              className;
-    private String              generationRootDirectory;
     private String              implicitRecordName;
     private DataType            minimumIntegerDataType;
     private DataType            minimumFloatingPointDataType;
+    private int                 rightMarginLimit;
+    private NameConverter       nameConverter;
     private MappingMetadata     mappingMetadata;
-    private NameConverter       nameConverter                   = DefaultNameConverter.getInstance();
-    private int                 rightMarginLimit                = 72;
-    private String              copybookContextClassName        = CopybookContext.class.getName();
+    
+    
+    
+    
+    //
+    // Instance initialization
+    //
+    
+    
+    {
+        setMinimumIntegerDataType      ( DataType.Byte                        );
+        setMinimumFloatingPointDataType( DataType.Float                       );
+        setNameConverterClassName      ( DefaultNameConverter.class.getName() );
+        setRightMarginLimit            ( 72                                   );
+    }
     
     
     
@@ -63,31 +90,10 @@ public class Environment
 
     /**
      * FILLIN
-     *
-     * @return
-     */
-    public String getMetadataFilename()
-    {
-        return metadataFilename;
-    }
-    
-    
-    /**
-     * FILLIN
-     *
-     * @param       aMetadataFilename
-     */
-    public void setMetadataFilename( String aMetadataFilename )
-    {
-        metadataFilename = aMetadataFilename;
-    }
-    
-    
-    /**
-     * FILLIN
      * 
      * @return
      */
+    @XmlElement( name = "copybook-filename" )
     public String getCopybookFilename()
     {
         return copybookFilename;
@@ -110,17 +116,7 @@ public class Environment
      * 
      * @return
      */
-    public String getPackageName()
-    {
-        return packageName;
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @return
-     */
+    @XmlElement( name = "class-name" )
     public String getClassName()
     {
         return className;
@@ -134,54 +130,7 @@ public class Environment
      */
     public void setClassName( String aClassName )
     {
-        if ( aClassName != null )
-        {
-            if ( ! JavaLanguageHelper.isJavaClassName( aClassName ) )
-            {
-                throw new IllegalArgumentException( "invalid class name (" + aClassName + ")" );
-            }
-            
-            int myEndOfPackageIndex = aClassName.lastIndexOf( '.' );
-            if ( myEndOfPackageIndex != -1 )
-            {
-                packageName = aClassName.substring( 0, myEndOfPackageIndex );
-                className   = aClassName.substring( myEndOfPackageIndex+1 );
-            }
-            else
-            {
-                packageName = "";
-                className   = aClassName;
-            }
-        }
-        else
-        {
-            packageName = null;
-            className   = null;
-        }
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aGenerationRootDirectory
-     * 
-     * @return
-     */
-    public String getGenerationRootDirectory()
-    {
-        return generationRootDirectory;
-    }
-
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aGenerationRootDirectory
-     */
-    public void setGenerationRootDirectory( String aGenerationRootDirectory )
-    {
-        generationRootDirectory = aGenerationRootDirectory;
+        className = aClassName;
     }
     
     
@@ -190,6 +139,7 @@ public class Environment
      * 
      * @return
      */
+    @XmlElement( name = "implicit-record-name" )
     public String getImplicitRecordName()
     {
         return implicitRecordName;
@@ -212,6 +162,7 @@ public class Environment
      * 
      * @return
      */
+    @XmlElement( name = "minimum-integer-data-type" )
     public DataType getMinimumIntegerDataType()
     {
         return minimumIntegerDataType;
@@ -225,7 +176,13 @@ public class Environment
      */
     public void setMinimumIntegerDataType( DataType aDataType )
     {
-        if ( aDataType != DataType.Integer && aDataType != DataType.Long )
+        if
+        (
+            aDataType != DataType.Byte    &&
+            aDataType != DataType.Short   &&
+            aDataType != DataType.Integer &&
+            aDataType != DataType.Long
+        )
         {
             throw new IllegalArgumentException( "data type cannot be used for the minimum integer data type: " + aDataType );
         }
@@ -239,6 +196,7 @@ public class Environment
      * 
      * @return
      */
+    @XmlElement( name = "minimum-floating-point-data-type" )
     public DataType getMinimumFloatingPointDataType()
     {
         return minimumFloatingPointDataType;
@@ -266,50 +224,7 @@ public class Environment
      * 
      * @return
      */
-    public MappingMetadata getMappingMetadata()
-    {
-        return mappingMetadata;
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param       aMappingMetadata
-     */
-    public void setMappingMetadata( MappingMetadata aMappingMetadata )
-    {
-        mappingMetadata = aMappingMetadata;
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @return
-     */
-    public NameConverter getNameConverter()
-    {
-        return nameConverter;
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @param aNameConverter
-     */
-    public void setNameConverter( NameConverter aNameConverter )
-    {
-        nameConverter = aNameConverter;
-    }
-    
-    
-    /**
-     * FILLIN
-     * 
-     * @return
-     */
+    @XmlElement( name = "right-margin-limit" )
     public int getRightMarginLimit()
     {
         return rightMarginLimit;
@@ -326,26 +241,74 @@ public class Environment
         rightMarginLimit = aRightMarginLimit;
     }
     
-    
+
     /**
      * FILLIN
-     *
+     * 
      * @return
      */
-    public String getCopybookContextClassName()
+    @XmlElement( name = "name-converter" )
+    public String getNameConverterClassName()
     {
-        return copybookContextClassName;
+        return nameConverter.getClass().getName();
     }
     
     
     /**
      * FILLIN
-     *
-     * @param       aCopybookContextClassName
+     * 
+     * @param       aClassName
      */
-    public void setCopybookContextClassName( String aCopybookContextClassName )
+    public void setNameConverterClassName( String aClassName )
     {
-        copybookContextClassName = aCopybookContextClassName;
+        try
+        {
+            @SuppressWarnings( "unchecked" )
+            Class<? extends NameConverter> myClass = (Class<? extends NameConverter>) Class.forName( aClassName );
+            
+            nameConverter = myClass.newInstance();
+        }
+        catch ( Exception myException )
+        {
+            throw new EnvironmentConfigurationException( "unable to create name converter: " +
+                                                             myException.getMessage(),
+                                                         myException                           );
+        }
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @return
+     */
+    @XmlTransient
+    public NameConverter getNameConverter()
+    {
+        return nameConverter;
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @return
+     */
+    @XmlElement( name = "mapping-metadata" )
+    public MappingMetadata getMappingMetadata()
+    {
+        return mappingMetadata;
+    }
+    
+    
+    /**
+     * FILLIN
+     * 
+     * @param       aMappingMetadata
+     */
+    public void setMappingMetadata( MappingMetadata aMappingMetadata )
+    {
+        mappingMetadata = aMappingMetadata;
     }
     
     
@@ -366,13 +329,13 @@ public class Environment
     @Override
     public void buildDescribableLabelValuePairs( Map<String,String> aLabelValueMap )
     {
-        aLabelValueMap.put( "MetadataFilename"        , metadataFilename         );
-        aLabelValueMap.put( "PackageName"             , packageName              );
-        aLabelValueMap.put( "ClassName"               , className                );
-        aLabelValueMap.put( "GenerationRootDirectory" , generationRootDirectory  );
-        aLabelValueMap.put( "CopybookFilename"        , copybookFilename         );
-        aLabelValueMap.put( "ImplicitRecordName"      , implicitRecordName       );
-        aLabelValueMap.put( "CopybookContextClassName", copybookContextClassName );
+        aLabelValueMap.put( "CopybookFilename"            , copybookFilename                     );
+        aLabelValueMap.put( "ClassName"                   , className                            );
+        aLabelValueMap.put( "ImplicitRecordName"          , implicitRecordName                   );
+        aLabelValueMap.put( "MinimumIntegerDataType"      , minimumIntegerDataType.name()        );
+        aLabelValueMap.put( "MinimumFloatingPointDataType", minimumFloatingPointDataType.name()  );
+        aLabelValueMap.put( "RightMarginLimit"            , Integer.toString( rightMarginLimit ) );
+        aLabelValueMap.put( "NameConverterClassName"      , nameConverter.getClass().getName()   );
     }
 
 
@@ -395,13 +358,13 @@ public class Environment
     {
         assert aVisitor != null;
         
-        aVisitor.visitEnvironment( this );
+        aVisitor.visitMetadata( this );
 
         if ( mappingMetadata != null )
         {
             mappingMetadata.accept( aVisitor );
         }
         
-        aVisitor.leaveEnvironment( this );
+        aVisitor.leaveMetadata( this );
     }
 }

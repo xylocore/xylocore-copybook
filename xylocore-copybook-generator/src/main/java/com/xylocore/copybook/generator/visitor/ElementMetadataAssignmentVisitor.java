@@ -24,7 +24,7 @@ import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.ElementFilter;
 import com.xylocore.copybook.generator.domain.config.ConfigVisitor;
 import com.xylocore.copybook.generator.domain.config.DataElementConfig;
-import com.xylocore.copybook.generator.domain.config.Environment;
+import com.xylocore.copybook.generator.domain.config.Metadata;
 
 
 /**
@@ -55,18 +55,18 @@ class ElementMetadataAssignmentVisitor
     /**
      * FILLIN
      * 
-     * @param       aEnvironment
+     * @param       aMetadata
      * @param       aCopybook
      */
-    public void assign( Environment   aEnvironment,
-                        Copybook      aCopybook     )
+    public void assign( Metadata   aMetadata,
+                        Copybook   aCopybook  )
     {
-        assert aEnvironment != null;
-        assert aCopybook    != null;
+        assert aMetadata != null;
+        assert aCopybook != null;
         
         copybook = aCopybook;
         
-        aEnvironment.accept( this );
+        aMetadata.accept( this );
     }
     
     

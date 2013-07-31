@@ -35,10 +35,10 @@ import com.xylocore.copybook.generator.domain.config.DateAccessorConfig;
 import com.xylocore.copybook.generator.domain.config.DefaultAccessorConfig;
 import com.xylocore.copybook.generator.domain.config.DoubleAccessorConfig;
 import com.xylocore.copybook.generator.domain.config.ElementConfig;
-import com.xylocore.copybook.generator.domain.config.Environment;
 import com.xylocore.copybook.generator.domain.config.FloatAccessorConfig;
 import com.xylocore.copybook.generator.domain.config.IntegerAccessorConfig;
 import com.xylocore.copybook.generator.domain.config.LongAccessorConfig;
+import com.xylocore.copybook.generator.domain.config.Metadata;
 import com.xylocore.copybook.generator.domain.config.NoDefaultAccessorConfig;
 import com.xylocore.copybook.generator.domain.config.NullEquivalentConfig;
 import com.xylocore.copybook.generator.domain.config.ShortAccessorConfig;
@@ -67,7 +67,7 @@ public class ApplyMetadataToElementVisitor
     private static final Map<DataType,Integer>          integerBasedDataTypes;
     private static final Map<DataType,Integer>          floatingPointBasedDataTypes;
     
-    private Environment                                 environment;
+    private Metadata                                    metadata;
     private AccessorMethodInfoCreationVisitor           accessorMethodInfoCreationVisitor;
     private DataElement                                 dataElement;
     private boolean                                     skipAccessor;
@@ -114,13 +114,13 @@ public class ApplyMetadataToElementVisitor
     /**
      * FILLIN
      * 
-     * @param       aEnvironment
+     * @param       aMetadata
      */
-    public ApplyMetadataToElementVisitor( Environment aEnvironment )
+    public ApplyMetadataToElementVisitor( Metadata aMetadata )
     {
-        assert aEnvironment != null;
+        assert aMetadata != null;
         
-        environment                       = aEnvironment;
+        metadata                          = aMetadata;
         accessorMethodInfoCreationVisitor = new AccessorMethodInfoCreationVisitor();
     }
     
@@ -139,9 +139,9 @@ public class ApplyMetadataToElementVisitor
 
         Integer myDataTypeOffset;
         
-        if ( environment.getMinimumIntegerDataType() != null )
+        if ( metadata.getMinimumIntegerDataType() != null )
         {
-            minimumIntegerDataType = environment.getMinimumIntegerDataType();
+            minimumIntegerDataType = metadata.getMinimumIntegerDataType();
         }
         else
         {
@@ -150,9 +150,9 @@ public class ApplyMetadataToElementVisitor
         myDataTypeOffset             = integerBasedDataTypes.get( minimumIntegerDataType );
         minimumIntegerDataTypeOffset = myDataTypeOffset.intValue();
         
-        if ( environment.getMinimumFloatingPointDataType() != null )
+        if ( metadata.getMinimumFloatingPointDataType() != null )
         {
-            minimumFloatingPointDataType = environment.getMinimumFloatingPointDataType();
+            minimumFloatingPointDataType = metadata.getMinimumFloatingPointDataType();
         }
         else
         {

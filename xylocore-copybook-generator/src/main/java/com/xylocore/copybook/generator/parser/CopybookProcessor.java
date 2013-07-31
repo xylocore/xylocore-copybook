@@ -20,7 +20,6 @@ package com.xylocore.copybook.generator.parser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -28,10 +27,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import com.xylocore.copybook.generator.parser.CopybookLexer;
-import com.xylocore.copybook.generator.parser.CopybookParser;
+import com.xylocore.copybook.generator.Environment;
 import com.xylocore.copybook.generator.domain.Copybook;
-import com.xylocore.copybook.generator.domain.config.Environment;
+import com.xylocore.copybook.generator.domain.config.Metadata;
 
 
 /**
@@ -58,8 +56,9 @@ public class CopybookProcessor
     {
         try ( InputStream myInputStream = openCopybookSource( aEnvironment ) )
         {
+            Metadata                       myMetadata    = aEnvironment.getMetadata();
             CopybookInputStream            myCIS         = new CopybookInputStream( myInputStream,
-                                                                                    aEnvironment.getRightMarginLimit() );
+                                                                                    myMetadata.getRightMarginLimit() );
             ANTLRInputStream               myInput       = new ANTLRInputStream( myCIS );
             CopybookLexer                  myLexer       = new CopybookLexer( myInput );
             CommonTokenStream              myTokenStream = new CommonTokenStream( myLexer );
@@ -94,7 +93,8 @@ public class CopybookProcessor
     {
         assert aEnvironment != null;
         
-        String      myFilename     = aEnvironment.getCopybookFilename();
+        Metadata    myMetadata     = aEnvironment.getMetadata();
+        String      myFilename     = myMetadata.getCopybookFilename();
         InputStream myInputStream;
         
         if ( myFilename.equals( "-" ) )
@@ -103,25 +103,7 @@ public class CopybookProcessor
         }
         else
         {
-            Path myInputFile = Paths.get( myFilename );
-
-            if ( myInputFile.getParent() == null )
-            {
-                if ( ! Files.isRegularFile( myInputFile ) )
-                {
-                    String myMetadataFilename = aEnvironment.getMetadataFilename();
-                    if ( myMetadataFilename != null )
-                    {
-                        Path myMetadataPath = Paths.get( myMetadataFilename ).getParent();
-                        if ( myMetadataPath != null )
-                        {
-                            myInputFile = myMetadataPath.resolve( myFilename );
-                        }
-                    }
-                }
-            }
-
-            myInputStream = Files.newInputStream( myInputFile );
+            myInputStream = Files.newInputStream( Paths.get( myFilename ) );
         }
 
         return myInputStream;

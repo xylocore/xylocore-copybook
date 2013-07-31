@@ -28,8 +28,11 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.ClassUtils;
+
 import com.xylocore.commons.util.BufferEmitter;
 import com.xylocore.commons.util.FormatHelper;
+import com.xylocore.copybook.generator.Environment;
 import com.xylocore.copybook.generator.domain.AccessorMethodInfo;
 import com.xylocore.copybook.generator.domain.ConditionNameValueRanges;
 import com.xylocore.copybook.generator.domain.Copybook;
@@ -38,7 +41,8 @@ import com.xylocore.copybook.generator.domain.Element;
 import com.xylocore.copybook.generator.domain.ElementType;
 import com.xylocore.copybook.generator.domain.Level88Element;
 import com.xylocore.copybook.generator.domain.ValueRange;
-import com.xylocore.copybook.generator.domain.config.Environment;
+import com.xylocore.copybook.generator.domain.config.Metadata;
+import com.xylocore.copybook.generator.domain.config.NameConverter;
 import com.xylocore.copybook.generator.emit.convert.ConverterEmitterFactory;
 import com.xylocore.copybook.generator.emit.nulleq.NullEquivalentStrategyEmitterFactory;
 import com.xylocore.copybook.generator.emit.pic.AlphanumericPICMarshallerEmitter;
@@ -55,6 +59,7 @@ import com.xylocore.copybook.generator.visitor.ConverterCollectionVisitor;
 import com.xylocore.copybook.generator.visitor.PICMarshallerCollectionVisitor;
 import com.xylocore.copybook.runtime.AbstractCopybook;
 import com.xylocore.copybook.runtime.ConstantValue;
+import com.xylocore.copybook.runtime.CopybookContext;
 import com.xylocore.copybook.runtime.DataCategory;
 import com.xylocore.copybook.runtime.DataType;
 import com.xylocore.copybook.runtime.DataUsageCategory;
@@ -88,6 +93,7 @@ public class CopybookClassEmitter
     private Map<Converter,String>                                       converterInstanceNameMappings;
     private Map<List<NullEquivalentStrategy>,String>                    nullEquivalentStrategySetInstanceNameMappings;
     private BufferEmitter                                               emitter;
+    private NameConverter                                               nameConverter;
     
     
     
@@ -161,6 +167,7 @@ public class CopybookClassEmitter
         elementsOfInterest = aElementsOfInterest;
         writer             = aWriter;
         emitter            = new BufferEmitter( DEFAULT_INDENT_WIDTH );
+        nameConverter      = aEnvironment.getMetadata().getNameConverter();
         
         converterInstanceNameMappings.clear();
         nullEquivalentStrategySetInstanceNameMappings.clear();
@@ -182,9 +189,13 @@ public class CopybookClassEmitter
     private void generateSourceFileHeader()
             throws IOException
     {
-        emitter.clear(                                               )
-               .line ( "package ", environment.getPackageName(), ";" )
-               .line (                                               )
+        Metadata myMetadata    = environment.getMetadata();
+        String   myPackageName = ClassUtils.getPackageName( myMetadata.getClassName() );
+        String   myClassName   = ClassUtils.getShortClassName( myMetadata.getClassName() );
+        
+        emitter.clear(                                )
+               .line ( "package ", myPackageName, ";" )
+               .line (                                )
                ;
         
         for ( String myImportedClassName : importedClasses )
@@ -192,14 +203,14 @@ public class CopybookClassEmitter
             emitter.line( "import ", myImportedClassName, ";" );
         }
         
-        emitter.line     (                                             )
-               .line     (                                             )
-               .line     ( "public class ", environment.getClassName() )
-               .line1    ( "extends"                                   )
-               .line2    ( AbstractCopybook.class.getName()            )
-               .line     ( "{"                                         )
-               .write    ( writer                                      )
-               .increment(                                             )
+        emitter.line     (                                  )
+               .line     (                                  )
+               .line     ( "public class ", myClassName     )
+               .line1    ( "extends"                        )
+               .line2    ( AbstractCopybook.class.getName() )
+               .line     ( "{"                              )
+               .write    ( writer                           )
+               .increment(                                  )
                ;
     }
     
@@ -489,7 +500,7 @@ public class CopybookClassEmitter
     private void generateElementsSource()
             throws IOException
     {
-        String myClassName = environment.getClassName();
+        String myClassName = ClassUtils.getShortClassName( environment.getMetadata().getClassName() );
 
         emitter.clear(                                                                              )
                .line ( "//"                                                                         )
@@ -625,9 +636,7 @@ public class CopybookClassEmitter
     {
         assert aElement != null;
 
-        String myOffsetMethodName =
-                environment.getNameConverter()
-                           .generateOffsetMethodName( aElement.getName() );
+        String myOffsetMethodName = nameConverter.generateOffsetMethodName( aElement.getName() );
         
         emitter.indent(                                                                                     )
                .append( "public int ", myOffsetMethodName, "(", aElement.isOccursOrSubordinate() ? " " : "" )
@@ -664,26 +673,23 @@ public class CopybookClassEmitter
     private void generateLengthMethodCall( DataElement aElement )
     {
         assert aElement != null;
-        
+
         if ( aElement.isOccurs() )
         {
             String myTotalLengthMethodName =
-                    environment.getNameConverter()
-                               .generateTotalLengthMethodName( aElement.getName() );
+                    nameConverter.generateTotalLengthMethodName( aElement.getName() );
 
             generateLengthMethod( myTotalLengthMethodName, aElement.getSize() );
             
             String mySingleElementLengthMethodName =
-                    environment.getNameConverter()
-                               .generateSingleElementLengthMethodName( aElement.getName() );
+                    nameConverter.generateSingleElementLengthMethodName( aElement.getName() );
 
             generateLengthMethod( mySingleElementLengthMethodName, aElement.getNonIndexedSize() );
         }
         else
         {
             String myLengthMethodName =
-                    environment.getNameConverter()
-                               .generateLengthMethodName( aElement.getName() );
+                    nameConverter.generateLengthMethodName( aElement.getName() );
             
             generateLengthMethod( myLengthMethodName, aElement.getSize() );
         }
@@ -723,11 +729,10 @@ public class CopybookClassEmitter
         if ( myPICMarshallerEmitter.isBlankMethodNeeded( aElement ) )
         {
             String myBlankMethodName =
-                    environment.getNameConverter()
-                               .generateBlankMethodName( aElement.getName() );
+                    nameConverter.generateBlankMethodName( aElement.getName() );
 
             emitter.indent()
-                   .append( "public boolean ", myBlankMethodName, "( ", environment.getCopybookContextClassName(), " aContext" )
+                   .append( "public boolean ", myBlankMethodName, "( ", CopybookContext.class.getName(), " aContext" )
                    ;
             
             appendIndexParameterDeclarations( aElement, true );
@@ -765,11 +770,10 @@ public class CopybookClassEmitter
         if ( myPICMarshallerEmitter.isNullMethodNeeded( aElement ) )
         {
             String myNullMethodName =
-                    environment.getNameConverter()
-                               .generateNullMethodName( aElement.getName() );
+                    nameConverter.generateNullMethodName( aElement.getName() );
 
             emitter.indent()
-                   .append( "public boolean ", myNullMethodName, "( ", environment.getCopybookContextClassName(), " aContext" )
+                   .append( "public boolean ", myNullMethodName, "( ", CopybookContext.class.getName(), " aContext" )
                    ;
             
             appendIndexParameterDeclarations( aElement, true );
@@ -814,14 +818,13 @@ public class CopybookClassEmitter
         if ( myPICMarshallerEmitter.isValidMethodNeeded( aElement, aAccessorMethodInfo ) )
         {
             String myValidMethodName =
-                    environment.getNameConverter()
-                               .generateValidMethodName( aElement.getName(),
-                                                         aAccessorMethodInfo.getDataType(),
-                                                         aIsDefaultAccessor,
-                                                         aHasMultipleDatatypes              );
+                    nameConverter.generateValidMethodName( aElement.getName(),
+                                                           aAccessorMethodInfo.getDataType(),
+                                                           aIsDefaultAccessor,
+                                                           aHasMultipleDatatypes              );
 
             emitter.indent()
-                   .append( "public boolean ", myValidMethodName, "( ", environment.getCopybookContextClassName(), " aContext" )
+                   .append( "public boolean ", myValidMethodName, "( ", CopybookContext.class.getName(), " aContext" )
                    ;
             
             appendIndexParameterDeclarations( aElement, true );
@@ -863,16 +866,15 @@ public class CopybookClassEmitter
         assert aJavaType           != null;
         
         String myGetterMethodName =
-                environment.getNameConverter()
-                           .generateGetterMethodName( aElement.getName(),
-                                                      aAccessorMethodInfo.getDataType(),
-                                                      aIsDefaultAccessor,
-                                                      aHasMultipleDatatypes              );
+                nameConverter.generateGetterMethodName( aElement.getName(),
+                                                        aAccessorMethodInfo.getDataType(),
+                                                        aIsDefaultAccessor,
+                                                        aHasMultipleDatatypes              );
         
         PICMarshallerEmitter myPICMarshallerEmitter = getMarshallerEmitter( aElement );
 
         emitter.indent()
-               .append( "public ", aJavaType, " ", myGetterMethodName, "( ", environment.getCopybookContextClassName(), " aContext" )
+               .append( "public ", aJavaType, " ", myGetterMethodName, "( ", CopybookContext.class.getName(), " aContext" )
                ;
   
         appendIndexParameterDeclarations( aElement, true );
@@ -915,16 +917,15 @@ public class CopybookClassEmitter
         assert aJavaType           != null;
         
         String mySetterMethodName =
-                environment.getNameConverter()
-                           .generateSetterMethodName( aElement.getName(),
-                                                      aAccessorMethodInfo.getDataType(),
-                                                      aIsDefaultAccessor,
-                                                      aHasMultipleDatatypes              );
+                nameConverter.generateSetterMethodName( aElement.getName(),
+                                                        aAccessorMethodInfo.getDataType(),
+                                                        aIsDefaultAccessor,
+                                                        aHasMultipleDatatypes              );
         
         PICMarshallerEmitter myPICMarshallerEmitter = getMarshallerEmitter( aElement );
         
         emitter.indent()
-               .append( "public void ", mySetterMethodName, "( ", environment.getCopybookContextClassName(), " aContext"                               )
+               .append( "public void ", mySetterMethodName, "( ", CopybookContext.class.getName(), " aContext"                               )
                ;
   
         appendIndexParameterDeclarations( aElement, true );
@@ -960,13 +961,12 @@ public class CopybookClassEmitter
         assert aLevel88Element != null;
         
         String myConditionNameMethodName =
-                environment.getNameConverter()
-                           .generateConditionNameMethodName( aLevel88Element.getName() );
+                nameConverter.generateConditionNameMethodName( aLevel88Element.getName() );
         
         PICMarshallerEmitter myPICMarshallerEmitter = getMarshallerEmitter( aElement );
 
         emitter.indent()
-               .append( "public boolean ", myConditionNameMethodName, "( ", environment.getCopybookContextClassName(), " aContext" )
+               .append( "public boolean ", myConditionNameMethodName, "( ", CopybookContext.class.getName(), " aContext" )
                ;
   
         appendIndexParameterDeclarations( aElement, true );

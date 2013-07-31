@@ -18,6 +18,11 @@ package com.xylocore.copybook.generator.domain.config;
 
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
 
 /**
  * FILLIN
@@ -25,6 +30,14 @@ import java.util.Map;
  * @author      Eric R. Medley
  */
 
+@XmlAccessorType( XmlAccessType.PROPERTY )
+@XmlSeeAlso
+(
+    {
+        DataElementConfig.class,
+        GroupElementConfig.class
+    }
+)
 public abstract class ElementConfig
     implements
         ConfigEntityDescribable,
@@ -50,6 +63,7 @@ public abstract class ElementConfig
      * 
      * @return
      */
+    @XmlAttribute( name = "id", required = true )
     public String getId()
     {
         return id;

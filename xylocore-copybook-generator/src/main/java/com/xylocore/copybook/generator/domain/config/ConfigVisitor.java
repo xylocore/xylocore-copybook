@@ -31,7 +31,7 @@ public class ConfigVisitor
      * 
      * @param       aEnvironment
      */
-    public void visitEnvironment( Environment aEnvironment )
+    public void visitMetadata( Metadata aMetadata )
     {
     }
     
@@ -41,7 +41,7 @@ public class ConfigVisitor
      * 
      * @param       aEnvironment
      */
-    public void leaveEnvironment( Environment aEnvironment )
+    public void leaveMetadata( Metadata aMetadata )
     {
     }
     
