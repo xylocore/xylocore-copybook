@@ -29,7 +29,6 @@ This place the generated Java file in /home/dev/gen/com/example/MyCopybook.java.
 The copybook file can have any extension or, if you would like the copybook to be
 read from standard in, you can specify -.
 
-
 Things To Do
 ------------
 
@@ -42,6 +41,12 @@ class in Java code.
 representations).
 * Add proper handling of SYNC.
 * Complete the Maven plugin for generation.
+
+Copybook Features Not Supported
+-------------------------------
+
+* Variable length tables (OCCURS DEPENDING ON).
+* SYNC keyword and alignment.
 
 Copybook Testing
 ----------------

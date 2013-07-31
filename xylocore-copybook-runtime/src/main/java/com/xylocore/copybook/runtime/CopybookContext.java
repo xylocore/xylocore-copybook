@@ -63,19 +63,7 @@ public class CopybookContext
      */
     public CopybookContext()
     {
-        standardError = CopybookError.None;
-        platformError = null;
-    }
-    
-
-    /**
-     * FILLIN
-     * 
-     * @return
-     */
-    public PlatformDataBehavior getDataBehavior()
-    {
-        return dataBehavior;
+        clearError();
     }
     
     
@@ -92,6 +80,17 @@ public class CopybookContext
         }
         
         return myString;
+    }
+    
+
+    /**
+     * FILLIN
+     * 
+     * @return
+     */
+    public PlatformDataBehavior getDataBehavior()
+    {
+        return dataBehavior;
     }
     
     
